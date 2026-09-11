@@ -1,0 +1,15 @@
+pandas>=2.0
+numpy>=1.24
+scikit-learn>=1.3
+statsmodels>=0.14
+fastapi>=0.110
+uvicorn[standard]>=0.29
+pydantic>=2.6
+python-dateutil>=2.8
+pytest>=8.0
+httpx>=0.27
+
+# ---- Optional extras (uncomment if desired) ----
+# xgboost>=2.0          # drop-in boostmodel upgrade, auto-detected if installed
+# shap>=0.45            # SHAP TreeExplainer, auto-detected if installed
+# openai>=1.30          # enables the LLM-backed copilot mode (any OpenAI-compatible endpoint)
