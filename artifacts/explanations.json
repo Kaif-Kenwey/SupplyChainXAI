@@ -1,0 +1,786 @@
+[
+  {
+    "sku": "P101",
+    "components": [
+      {
+        "factor": "forecast demand",
+        "units": 2147.5,
+        "direction": "increase",
+        "detail": "model demand over 15d protection window",
+        "impact_pct": 97.0
+      },
+      {
+        "factor": "safety stock",
+        "units": 67.5,
+        "direction": "increase",
+        "detail": "z=1.6449 at 95% service level \u00d7 \u03c3=41 (includes supplier lead-time variability)",
+        "impact_pct": 3.0
+      },
+      {
+        "factor": "inventory position",
+        "units": -1367,
+        "direction": "decrease",
+        "detail": "on-hand 472 + on-order 895",
+        "impact_pct": 61.7
+      },
+      {
+        "factor": "pack rounding",
+        "units": 2.0,
+        "direction": "increase",
+        "detail": "rounded up to pack size multiples",
+        "impact_pct": 0.1
+      }
+    ],
+    "drivers": [
+      {
+        "factor": "forecast demand",
+        "units": 2147.5,
+        "direction": "increase",
+        "detail": "model demand over 15d protection window",
+        "impact_pct": 97.0
+      },
+      {
+        "factor": "safety stock",
+        "units": 67.5,
+        "direction": "increase",
+        "detail": "z=1.6449 at 95% service level \u00d7 \u03c3=41 (includes supplier lead-time variability)",
+        "impact_pct": 3.0
+      },
+      {
+        "factor": "inventory position",
+        "units": -1367,
+        "direction": "decrease",
+        "detail": "on-hand 472 + on-order 895",
+        "impact_pct": 61.7
+      },
+      {
+        "factor": "pack rounding",
+        "units": 2.0,
+        "direction": "increase",
+        "detail": "rounded up to pack size multiples",
+        "impact_pct": 0.1
+      },
+      {
+        "factor": "supplier selection",
+        "direction": "neutral",
+        "impact_pct": 0.0,
+        "detail": "S1 scored 0.547 vs runner-up S3 at 0.556 (weights: price 0.45, reliability 0.35, lead time 0.20; penalties applied for drift/reliability)"
+      }
+    ],
+    "narrative": "Buy 850 units of P101 (Hex Bolt M8 Grade 8.8 (Box)) from Apex Industrial Components (S1) at 3.91/unit \u2014 total 3,323.50. Order by 2025-12-26; stock is projected to run out around 2026-01-10. Why: the requirement is driven by forecast demand (+2148u, 97%), safety stock (+68u, 3%), pack rounding (+2u, 0%) offset by inventory position (-1367u). Supplier choice: S1 scored 0.547 vs runner-up S3 at 0.556 (weights: price 0.45, reliability 0.35, lead time 0.20; penalties applied for drift/reliability).",
+    "action": "BUY",
+    "quantity": 850,
+    "supplier_id": "S1"
+  },
+  {
+    "sku": "P102",
+    "components": [
+      {
+        "factor": "forecast demand",
+        "units": 1630.7,
+        "direction": "increase",
+        "detail": "model demand over 16d protection window",
+        "impact_pct": 97.2
+      },
+      {
+        "factor": "safety stock",
+        "units": 46.2,
+        "direction": "increase",
+        "detail": "z=1.6449 at 95% service level \u00d7 \u03c3=28 (includes supplier lead-time variability)",
+        "impact_pct": 2.8
+      },
+      {
+        "factor": "inventory position",
+        "units": -1182,
+        "direction": "decrease",
+        "detail": "on-hand 1182 + on-order 0",
+        "impact_pct": 70.5
+      },
+      {
+        "factor": "pack rounding",
+        "units": 165.1,
+        "direction": "increase",
+        "detail": "rounded up to pack size multiples",
+        "impact_pct": 9.8
+      }
+    ],
+    "drivers": [
+      {
+        "factor": "forecast demand",
+        "units": 1630.7,
+        "direction": "increase",
+        "detail": "model demand over 16d protection window",
+        "impact_pct": 97.2
+      },
+      {
+        "factor": "safety stock",
+        "units": 46.2,
+        "direction": "increase",
+        "detail": "z=1.6449 at 95% service level \u00d7 \u03c3=28 (includes supplier lead-time variability)",
+        "impact_pct": 2.8
+      },
+      {
+        "factor": "inventory position",
+        "units": -1182,
+        "direction": "decrease",
+        "detail": "on-hand 1182 + on-order 0",
+        "impact_pct": 70.5
+      },
+      {
+        "factor": "pack rounding",
+        "units": 165.1,
+        "direction": "increase",
+        "detail": "rounded up to pack size multiples",
+        "impact_pct": 9.8
+      },
+      {
+        "factor": "supplier selection",
+        "direction": "neutral",
+        "impact_pct": 0.0,
+        "detail": "S5 scored 0.571 vs runner-up S1 at 0.571 (weights: price 0.45, reliability 0.35, lead time 0.20; penalties applied for drift/reliability)"
+      },
+      {
+        "factor": "supplier lead-time drift",
+        "direction": "increase",
+        "impact_pct": 11.5,
+        "detail": "recent POs run +12% slower \u2014 widened the protection window from 9d to 10.0d"
+      }
+    ],
+    "narrative": "Buy 660 units of P102 (Rubber Gasket 100mm) from Shakti Polymers & Seals (S5) at 7.80/unit \u2014 total 5,148.00. Order by 2025-12-26; stock is projected to run out around 2026-01-12. Why: the requirement is driven by forecast demand (+1631u, 97%), safety stock (+46u, 3%), pack rounding (+165u, 10%) offset by inventory position (-1182u). Supplier choice: S5 scored 0.571 vs runner-up S1 at 0.571 (weights: price 0.45, reliability 0.35, lead time 0.20; penalties applied for drift/reliability). Attention: recent POs run +12% slower \u2014 widened the protection window from 9d to 10.0d.",
+    "action": "BUY",
+    "quantity": 660,
+    "supplier_id": "S5"
+  },
+  {
+    "sku": "P110",
+    "components": [
+      {
+        "factor": "forecast demand",
+        "units": 685.1,
+        "direction": "increase",
+        "detail": "model demand over 25d protection window",
+        "impact_pct": 94.7
+      },
+      {
+        "factor": "safety stock",
+        "units": 38.5,
+        "direction": "increase",
+        "detail": "z=1.6449 at 95% service level \u00d7 \u03c3=23 (includes supplier lead-time variability)",
+        "impact_pct": 5.3
+      },
+      {
+        "factor": "inventory position",
+        "units": -758,
+        "direction": "decrease",
+        "detail": "on-hand 153 + on-order 605",
+        "impact_pct": 104.8
+      },
+      {
+        "factor": "pack rounding",
+        "units": 140,
+        "direction": "increase",
+        "detail": "rounded up to pack size multiples",
+        "impact_pct": 19.3
+      }
+    ],
+    "drivers": [
+      {
+        "factor": "forecast demand",
+        "units": 685.1,
+        "direction": "increase",
+        "detail": "model demand over 25d protection window",
+        "impact_pct": 94.7
+      },
+      {
+        "factor": "safety stock",
+        "units": 38.5,
+        "direction": "increase",
+        "detail": "z=1.6449 at 95% service level \u00d7 \u03c3=23 (includes supplier lead-time variability)",
+        "impact_pct": 5.3
+      },
+      {
+        "factor": "inventory position",
+        "units": -758,
+        "direction": "decrease",
+        "detail": "on-hand 153 + on-order 605",
+        "impact_pct": 104.8
+      },
+      {
+        "factor": "pack rounding",
+        "units": 140,
+        "direction": "increase",
+        "detail": "rounded up to pack size multiples",
+        "impact_pct": 19.3
+      },
+      {
+        "factor": "supplier selection",
+        "direction": "neutral",
+        "impact_pct": 0.0,
+        "detail": "S2 scored 0.599 vs runner-up S6 at 0.629 (weights: price 0.45, reliability 0.35, lead time 0.20; penalties applied for drift/reliability)"
+      },
+      {
+        "factor": "supplier lead-time drift",
+        "direction": "increase",
+        "impact_pct": 17.5,
+        "detail": "recent POs run +18% slower \u2014 widened the protection window from 18d to 21.2d"
+      }
+    ],
+    "narrative": "Buy 140 units of P110 (PLC I/O Module 16-Channel) from VoltEdge Electronics (S2) at 161.92/unit \u2014 total 22,668.80. Order by 2025-12-30; stock is projected to run out around 2026-01-27. Why: the requirement is driven by forecast demand (+685u, 95%), safety stock (+38u, 5%), pack rounding (+140u, 19%) offset by inventory position (-758u). Supplier choice: S2 scored 0.599 vs runner-up S6 at 0.629 (weights: price 0.45, reliability 0.35, lead time 0.20; penalties applied for drift/reliability). Attention: recent POs run +18% slower \u2014 widened the protection window from 18d to 21.2d.",
+    "action": "BUY",
+    "quantity": 140,
+    "supplier_id": "S2"
+  },
+  {
+    "sku": "P103",
+    "components": [
+      {
+        "factor": "forecast demand",
+        "units": 723.5,
+        "direction": "increase",
+        "detail": "model demand over 15d protection window",
+        "impact_pct": 97.1
+      },
+      {
+        "factor": "safety stock",
+        "units": 21.9,
+        "direction": "increase",
+        "detail": "z=1.6449 at 95% service level \u00d7 \u03c3=13 (includes supplier lead-time variability)",
+        "impact_pct": 2.9
+      },
+      {
+        "factor": "inventory position",
+        "units": -676,
+        "direction": "decrease",
+        "detail": "on-hand 141 + on-order 535",
+        "impact_pct": 90.7
+      },
+      {
+        "factor": "pack rounding",
+        "units": 0.6,
+        "direction": "increase",
+        "detail": "rounded up to pack size multiples",
+        "impact_pct": 0.1
+      }
+    ],
+    "drivers": [
+      {
+        "factor": "forecast demand",
+        "units": 723.5,
+        "direction": "increase",
+        "detail": "model demand over 15d protection window",
+        "impact_pct": 97.1
+      },
+      {
+        "factor": "safety stock",
+        "units": 21.9,
+        "direction": "increase",
+        "detail": "z=1.6449 at 95% service level \u00d7 \u03c3=13 (includes supplier lead-time variability)",
+        "impact_pct": 2.9
+      },
+      {
+        "factor": "inventory position",
+        "units": -676,
+        "direction": "decrease",
+        "detail": "on-hand 141 + on-order 535",
+        "impact_pct": 90.7
+      },
+      {
+        "factor": "pack rounding",
+        "units": 0.6,
+        "direction": "increase",
+        "detail": "rounded up to pack size multiples",
+        "impact_pct": 0.1
+      },
+      {
+        "factor": "supplier selection",
+        "direction": "neutral",
+        "impact_pct": 0.0,
+        "detail": "S1 scored 0.578 vs runner-up S5 at 0.729 (weights: price 0.45, reliability 0.35, lead time 0.20; penalties applied for drift/reliability)"
+      }
+    ],
+    "narrative": "Buy 70 units of P103 (Hydraulic Seal Kit 40mm) from Apex Industrial Components (S1) at 29.15/unit \u2014 total 2,040.50. Order by 2025-12-31; stock is projected to run out around 2026-01-15. Why: the requirement is driven by forecast demand (+724u, 97%), safety stock (+22u, 3%), pack rounding (+1u, 0%) offset by inventory position (-676u). Supplier choice: S1 scored 0.578 vs runner-up S5 at 0.729 (weights: price 0.45, reliability 0.35, lead time 0.20; penalties applied for drift/reliability).",
+    "action": "BUY",
+    "quantity": 70,
+    "supplier_id": "S1"
+  },
+  {
+    "sku": "P104",
+    "components": [
+      {
+        "factor": "forecast demand",
+        "units": 2137.0,
+        "direction": "increase",
+        "detail": "model demand over 14d protection window",
+        "impact_pct": 98.6
+      },
+      {
+        "factor": "safety stock",
+        "units": 31.0,
+        "direction": "increase",
+        "detail": "z=1.6449 at 95% service level \u00d7 \u03c3=19 (includes supplier lead-time variability)",
+        "impact_pct": 1.4
+      },
+      {
+        "factor": "inventory position",
+        "units": -3747,
+        "direction": "decrease",
+        "detail": "on-hand 1682 + on-order 2065",
+        "impact_pct": 172.8
+      },
+      {
+        "factor": "pack rounding",
+        "units": 0,
+        "direction": "increase",
+        "detail": "rounded up to pack size multiples",
+        "impact_pct": 0.0
+      }
+    ],
+    "drivers": [
+      {
+        "factor": "forecast demand",
+        "units": 2137.0,
+        "direction": "increase",
+        "detail": "model demand over 14d protection window",
+        "impact_pct": 98.6
+      },
+      {
+        "factor": "safety stock",
+        "units": 31.0,
+        "direction": "increase",
+        "detail": "z=1.6449 at 95% service level \u00d7 \u03c3=19 (includes supplier lead-time variability)",
+        "impact_pct": 1.4
+      },
+      {
+        "factor": "inventory position",
+        "units": -3747,
+        "direction": "decrease",
+        "detail": "on-hand 1682 + on-order 2065",
+        "impact_pct": 172.8
+      }
+    ],
+    "narrative": "Hold P104 (Deep Groove Bearing 6204-2RS): current inventory already covers 25 days \u2014 no purchase needed now. Why: the requirement is driven by forecast demand (+2137u, 99%), safety stock (+31u, 1%), pack rounding (+0u, 0%) offset by inventory position (-3747u).",
+    "action": "HOLD",
+    "quantity": 0,
+    "supplier_id": null
+  },
+  {
+    "sku": "P105",
+    "components": [
+      {
+        "factor": "forecast demand",
+        "units": 473.9,
+        "direction": "increase",
+        "detail": "model demand over 14d protection window",
+        "impact_pct": 96.8
+      },
+      {
+        "factor": "safety stock",
+        "units": 15.6,
+        "direction": "increase",
+        "detail": "z=1.6449 at 95% service level \u00d7 \u03c3=10 (includes supplier lead-time variability)",
+        "impact_pct": 3.2
+      },
+      {
+        "factor": "inventory position",
+        "units": -929,
+        "direction": "decrease",
+        "detail": "on-hand 379 + on-order 550",
+        "impact_pct": 189.8
+      },
+      {
+        "factor": "pack rounding",
+        "units": 0,
+        "direction": "increase",
+        "detail": "rounded up to pack size multiples",
+        "impact_pct": 0.0
+      }
+    ],
+    "drivers": [
+      {
+        "factor": "forecast demand",
+        "units": 473.9,
+        "direction": "increase",
+        "detail": "model demand over 14d protection window",
+        "impact_pct": 96.8
+      },
+      {
+        "factor": "safety stock",
+        "units": 15.6,
+        "direction": "increase",
+        "detail": "z=1.6449 at 95% service level \u00d7 \u03c3=10 (includes supplier lead-time variability)",
+        "impact_pct": 3.2
+      },
+      {
+        "factor": "inventory position",
+        "units": -929,
+        "direction": "decrease",
+        "detail": "on-hand 379 + on-order 550",
+        "impact_pct": 189.8
+      }
+    ],
+    "narrative": "Hold P105 (Pillow Block Unit UCP205): current inventory already covers 27 days \u2014 no purchase needed now. Why: the requirement is driven by forecast demand (+474u, 97%), safety stock (+16u, 3%), pack rounding (+0u, 0%) offset by inventory position (-929u).",
+    "action": "HOLD",
+    "quantity": 0,
+    "supplier_id": null
+  },
+  {
+    "sku": "P106",
+    "components": [
+      {
+        "factor": "forecast demand",
+        "units": 940.6,
+        "direction": "increase",
+        "detail": "model demand over 14d protection window",
+        "impact_pct": 97.8
+      },
+      {
+        "factor": "safety stock",
+        "units": 20.8,
+        "direction": "increase",
+        "detail": "z=1.6449 at 95% service level \u00d7 \u03c3=13 (includes supplier lead-time variability)",
+        "impact_pct": 2.2
+      },
+      {
+        "factor": "inventory position",
+        "units": -8210,
+        "direction": "decrease",
+        "detail": "on-hand 8210 + on-order 0",
+        "impact_pct": 853.9
+      },
+      {
+        "factor": "pack rounding",
+        "units": 0,
+        "direction": "increase",
+        "detail": "rounded up to pack size multiples",
+        "impact_pct": 0.0
+      }
+    ],
+    "drivers": [
+      {
+        "factor": "forecast demand",
+        "units": 940.6,
+        "direction": "increase",
+        "detail": "model demand over 14d protection window",
+        "impact_pct": 97.8
+      },
+      {
+        "factor": "safety stock",
+        "units": 20.8,
+        "direction": "increase",
+        "detail": "z=1.6449 at 95% service level \u00d7 \u03c3=13 (includes supplier lead-time variability)",
+        "impact_pct": 2.2
+      },
+      {
+        "factor": "inventory position",
+        "units": -8210,
+        "direction": "decrease",
+        "detail": "on-hand 8210 + on-order 0",
+        "impact_pct": 853.9
+      }
+    ],
+    "narrative": "Hold P106 (V-Belt A-Section 914mm): current inventory already covers 121 days \u2014 no purchase needed now. Why: the requirement is driven by forecast demand (+941u, 98%), safety stock (+21u, 2%), pack rounding (+0u, 0%) offset by inventory position (-8210u).",
+    "action": "HOLD",
+    "quantity": 0,
+    "supplier_id": null
+  },
+  {
+    "sku": "P107",
+    "components": [
+      {
+        "factor": "forecast demand",
+        "units": 384.5,
+        "direction": "increase",
+        "detail": "model demand over 14d protection window",
+        "impact_pct": 97.8
+      },
+      {
+        "factor": "safety stock",
+        "units": 8.6,
+        "direction": "increase",
+        "detail": "z=1.6449 at 95% service level \u00d7 \u03c3=5 (includes supplier lead-time variability)",
+        "impact_pct": 2.2
+      },
+      {
+        "factor": "inventory position",
+        "units": -778,
+        "direction": "decrease",
+        "detail": "on-hand 298 + on-order 480",
+        "impact_pct": 197.9
+      },
+      {
+        "factor": "pack rounding",
+        "units": 0,
+        "direction": "increase",
+        "detail": "rounded up to pack size multiples",
+        "impact_pct": 0.0
+      }
+    ],
+    "drivers": [
+      {
+        "factor": "forecast demand",
+        "units": 384.5,
+        "direction": "increase",
+        "detail": "model demand over 14d protection window",
+        "impact_pct": 97.8
+      },
+      {
+        "factor": "safety stock",
+        "units": 8.6,
+        "direction": "increase",
+        "detail": "z=1.6449 at 95% service level \u00d7 \u03c3=5 (includes supplier lead-time variability)",
+        "impact_pct": 2.2
+      },
+      {
+        "factor": "inventory position",
+        "units": -778,
+        "direction": "decrease",
+        "detail": "on-hand 298 + on-order 480",
+        "impact_pct": 197.9
+      }
+    ],
+    "narrative": "Hold P107 (Conveyor Roller 600mm): current inventory already covers 28 days \u2014 no purchase needed now. Why: the requirement is driven by forecast demand (+384u, 98%), safety stock (+9u, 2%), pack rounding (+0u, 0%) offset by inventory position (-778u).",
+    "action": "HOLD",
+    "quantity": 0,
+    "supplier_id": null
+  },
+  {
+    "sku": "P108",
+    "components": [
+      {
+        "factor": "forecast demand",
+        "units": 214.3,
+        "direction": "increase",
+        "detail": "model demand over 14d protection window",
+        "impact_pct": 96.6
+      },
+      {
+        "factor": "safety stock",
+        "units": 7.4,
+        "direction": "increase",
+        "detail": "z=1.6449 at 95% service level \u00d7 \u03c3=4 (includes supplier lead-time variability)",
+        "impact_pct": 3.3
+      },
+      {
+        "factor": "inventory position",
+        "units": -560,
+        "direction": "decrease",
+        "detail": "on-hand 225 + on-order 335",
+        "impact_pct": 252.6
+      },
+      {
+        "factor": "pack rounding",
+        "units": 0,
+        "direction": "increase",
+        "detail": "rounded up to pack size multiples",
+        "impact_pct": 0.0
+      }
+    ],
+    "drivers": [
+      {
+        "factor": "forecast demand",
+        "units": 214.3,
+        "direction": "increase",
+        "detail": "model demand over 14d protection window",
+        "impact_pct": 96.6
+      },
+      {
+        "factor": "safety stock",
+        "units": 7.4,
+        "direction": "increase",
+        "detail": "z=1.6449 at 95% service level \u00d7 \u03c3=4 (includes supplier lead-time variability)",
+        "impact_pct": 3.3
+      },
+      {
+        "factor": "inventory position",
+        "units": -560,
+        "direction": "decrease",
+        "detail": "on-hand 225 + on-order 335",
+        "impact_pct": 252.6
+      }
+    ],
+    "narrative": "Hold P108 (AC Induction Motor 2.2kW 4P): current inventory already covers 38 days \u2014 no purchase needed now. Why: the requirement is driven by forecast demand (+214u, 97%), safety stock (+7u, 3%), pack rounding (+0u, 0%) offset by inventory position (-560u).",
+    "action": "HOLD",
+    "quantity": 0,
+    "supplier_id": null
+  },
+  {
+    "sku": "P109",
+    "components": [
+      {
+        "factor": "forecast demand",
+        "units": 1099.6,
+        "direction": "increase",
+        "detail": "model demand over 14d protection window",
+        "impact_pct": 97.2
+      },
+      {
+        "factor": "safety stock",
+        "units": 32.2,
+        "direction": "increase",
+        "detail": "z=1.6449 at 95% service level \u00d7 \u03c3=20 (includes supplier lead-time variability)",
+        "impact_pct": 2.8
+      },
+      {
+        "factor": "inventory position",
+        "units": -2563,
+        "direction": "decrease",
+        "detail": "on-hand 1133 + on-order 1430",
+        "impact_pct": 226.5
+      },
+      {
+        "factor": "pack rounding",
+        "units": 0,
+        "direction": "increase",
+        "detail": "rounded up to pack size multiples",
+        "impact_pct": 0.0
+      }
+    ],
+    "drivers": [
+      {
+        "factor": "forecast demand",
+        "units": 1099.6,
+        "direction": "increase",
+        "detail": "model demand over 14d protection window",
+        "impact_pct": 97.2
+      },
+      {
+        "factor": "safety stock",
+        "units": 32.2,
+        "direction": "increase",
+        "detail": "z=1.6449 at 95% service level \u00d7 \u03c3=20 (includes supplier lead-time variability)",
+        "impact_pct": 2.8
+      },
+      {
+        "factor": "inventory position",
+        "units": -2563,
+        "direction": "decrease",
+        "detail": "on-hand 1133 + on-order 1430",
+        "impact_pct": 226.5
+      }
+    ],
+    "narrative": "Hold P109 (Proximity Sensor M12 PNP): current inventory already covers 32 days \u2014 no purchase needed now. Why: the requirement is driven by forecast demand (+1100u, 97%), safety stock (+32u, 3%), pack rounding (+0u, 0%) offset by inventory position (-2563u).",
+    "action": "HOLD",
+    "quantity": 0,
+    "supplier_id": null
+  },
+  {
+    "sku": "P111",
+    "components": [
+      {
+        "factor": "forecast demand",
+        "units": 1920.4,
+        "direction": "increase",
+        "detail": "model demand over 14d protection window",
+        "impact_pct": 98.0
+      },
+      {
+        "factor": "safety stock",
+        "units": 38.3,
+        "direction": "increase",
+        "detail": "z=1.6449 at 95% service level \u00d7 \u03c3=23 (includes supplier lead-time variability)",
+        "impact_pct": 2.0
+      },
+      {
+        "factor": "inventory position",
+        "units": -3538,
+        "direction": "decrease",
+        "detail": "on-hand 1038 + on-order 2500",
+        "impact_pct": 180.6
+      },
+      {
+        "factor": "pack rounding",
+        "units": 0,
+        "direction": "increase",
+        "detail": "rounded up to pack size multiples",
+        "impact_pct": 0.0
+      }
+    ],
+    "drivers": [
+      {
+        "factor": "forecast demand",
+        "units": 1920.4,
+        "direction": "increase",
+        "detail": "model demand over 14d protection window",
+        "impact_pct": 98.0
+      },
+      {
+        "factor": "safety stock",
+        "units": 38.3,
+        "direction": "increase",
+        "detail": "z=1.6449 at 95% service level \u00d7 \u03c3=23 (includes supplier lead-time variability)",
+        "impact_pct": 2.0
+      },
+      {
+        "factor": "inventory position",
+        "units": -3538,
+        "direction": "decrease",
+        "detail": "on-hand 1038 + on-order 2500",
+        "impact_pct": 180.6
+      }
+    ],
+    "narrative": "Hold P111 (Control Cable 2.5mm2 (100m)): current inventory already covers 25 days \u2014 no purchase needed now. Why: the requirement is driven by forecast demand (+1920u, 98%), safety stock (+38u, 2%), pack rounding (+0u, 0%) offset by inventory position (-3538u).",
+    "action": "HOLD",
+    "quantity": 0,
+    "supplier_id": null
+  },
+  {
+    "sku": "P112",
+    "components": [
+      {
+        "factor": "forecast demand",
+        "units": 508.1,
+        "direction": "increase",
+        "detail": "model demand over 14d protection window",
+        "impact_pct": 98.0
+      },
+      {
+        "factor": "safety stock",
+        "units": 10.4,
+        "direction": "increase",
+        "detail": "z=1.6449 at 95% service level \u00d7 \u03c3=6 (includes supplier lead-time variability)",
+        "impact_pct": 2.0
+      },
+      {
+        "factor": "inventory position",
+        "units": -1236,
+        "direction": "decrease",
+        "detail": "on-hand 546 + on-order 690",
+        "impact_pct": 238.4
+      },
+      {
+        "factor": "pack rounding",
+        "units": 0,
+        "direction": "increase",
+        "detail": "rounded up to pack size multiples",
+        "impact_pct": 0.0
+      }
+    ],
+    "drivers": [
+      {
+        "factor": "forecast demand",
+        "units": 508.1,
+        "direction": "increase",
+        "detail": "model demand over 14d protection window",
+        "impact_pct": 98.0
+      },
+      {
+        "factor": "safety stock",
+        "units": 10.4,
+        "direction": "increase",
+        "detail": "z=1.6449 at 95% service level \u00d7 \u03c3=6 (includes supplier lead-time variability)",
+        "impact_pct": 2.0
+      },
+      {
+        "factor": "inventory position",
+        "units": -1236,
+        "direction": "decrease",
+        "detail": "on-hand 546 + on-order 690",
+        "impact_pct": 238.4
+      }
+    ],
+    "narrative": "Hold P112 (Safety Relay 24VDC 3NO): current inventory already covers 34 days \u2014 no purchase needed now. Why: the requirement is driven by forecast demand (+508u, 98%), safety stock (+10u, 2%), pack rounding (+0u, 0%) offset by inventory position (-1236u).",
+    "action": "HOLD",
+    "quantity": 0,
+    "supplier_id": null
+  }
+]

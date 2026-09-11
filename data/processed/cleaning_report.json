@@ -1,0 +1,64 @@
+{
+  "steps": [
+    {
+      "table": "multiple",
+      "rule": "SK01",
+      "action": "normalise sku casing/whitespace",
+      "rows_affected": 10
+    },
+    {
+      "table": "sales",
+      "rule": "CL01",
+      "action": "drop exact duplicates",
+      "rows_affected": 10
+    },
+    {
+      "table": "sales",
+      "rule": "CL02",
+      "action": "negative units_sold -> NaN",
+      "rows_affected": 9
+    },
+    {
+      "table": "sales",
+      "rule": "CL04",
+      "action": "drop rows with un-imputable quantity",
+      "rows_affected": 19
+    },
+    {
+      "table": "multiple",
+      "rule": "SK01",
+      "action": "normalise sku casing/whitespace",
+      "rows_affected": 0
+    },
+    {
+      "table": "inventory",
+      "rule": "CL01",
+      "action": "drop duplicate sku-date snapshots",
+      "rows_affected": 0
+    },
+    {
+      "table": "inventory",
+      "rule": "CL02",
+      "action": "negative stock floored to 0",
+      "rows_affected": 0
+    },
+    {
+      "table": "multiple",
+      "rule": "SK01",
+      "action": "normalise sku casing/whitespace",
+      "rows_affected": 0
+    },
+    {
+      "table": "purchase_orders",
+      "rule": "CL01",
+      "action": "drop duplicate PO ids",
+      "rows_affected": 0
+    },
+    {
+      "table": "purchase_orders",
+      "rule": "PO01",
+      "action": "swap order/expected date input errors",
+      "rows_affected": 6
+    }
+  ]
+}

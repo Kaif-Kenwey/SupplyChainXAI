@@ -1,0 +1,130 @@
+{
+  "generated_at": "2026-09-11T17:05:41+00:00",
+  "status": "PASS",
+  "checks": [
+    {
+      "table": "sales",
+      "rule": "V01 sku in product master",
+      "severity": "CRITICAL",
+      "passed": true,
+      "failures": 0,
+      "detail": "0 rows reference unknown SKUs"
+    },
+    {
+      "table": "inventory",
+      "rule": "V01 sku in product master",
+      "severity": "CRITICAL",
+      "passed": true,
+      "failures": 0,
+      "detail": "0 rows reference unknown SKUs"
+    },
+    {
+      "table": "purchase_orders",
+      "rule": "V01 sku in product master",
+      "severity": "CRITICAL",
+      "passed": true,
+      "failures": 0,
+      "detail": "0 rows reference unknown SKUs"
+    },
+    {
+      "table": "supply_terms",
+      "rule": "V02 supplier in master",
+      "severity": "CRITICAL",
+      "passed": true,
+      "failures": 0,
+      "detail": "0 rows reference unknown suppliers"
+    },
+    {
+      "table": "purchase_orders",
+      "rule": "V02 supplier in master",
+      "severity": "CRITICAL",
+      "passed": true,
+      "failures": 0,
+      "detail": "0 rows reference unknown suppliers"
+    },
+    {
+      "table": "sales",
+      "rule": "V03 units_sold > 0",
+      "severity": "CRITICAL",
+      "passed": true,
+      "failures": 0,
+      "detail": "non-positive demand rows"
+    },
+    {
+      "table": "sales",
+      "rule": "V04 unit_price > 0",
+      "severity": "CRITICAL",
+      "passed": true,
+      "failures": 0,
+      "detail": "non-positive selling price"
+    },
+    {
+      "table": "sales",
+      "rule": "V05 calendar coverage >= 98% per sku",
+      "severity": "WARNING",
+      "passed": true,
+      "failures": 0,
+      "detail": "skus missing >2% of the daily calendar"
+    },
+    {
+      "table": "inventory",
+      "rule": "V06 stock levels >= 0",
+      "severity": "CRITICAL",
+      "passed": true,
+      "failures": 0,
+      "detail": "negative stock rows"
+    },
+    {
+      "table": "purchase_orders",
+      "rule": "V07 quantity > 0",
+      "severity": "CRITICAL",
+      "passed": true,
+      "failures": 0,
+      "detail": "non-positive PO quantity"
+    },
+    {
+      "table": "purchase_orders",
+      "rule": "V08 delivered >= ordered",
+      "severity": "CRITICAL",
+      "passed": true,
+      "failures": 0,
+      "detail": "delivered before ordered"
+    },
+    {
+      "table": "purchase_orders",
+      "rule": "V09 every sku has >=1 primary supplier",
+      "severity": "CRITICAL",
+      "passed": true,
+      "failures": 0,
+      "detail": "skus without exactly one primary source"
+    },
+    {
+      "table": "supply_terms",
+      "rule": "V10 quoted lead time > 0",
+      "severity": "CRITICAL",
+      "passed": true,
+      "failures": 0,
+      "detail": "non-positive lead times"
+    },
+    {
+      "table": "sales",
+      "rule": "V11 unique sku-date",
+      "severity": "CRITICAL",
+      "passed": true,
+      "failures": 0,
+      "detail": "duplicate demand rows"
+    },
+    {
+      "table": "inventory",
+      "rule": "V12 unique sku-date",
+      "severity": "CRITICAL",
+      "passed": true,
+      "failures": 0,
+      "detail": "duplicate snapshots"
+    }
+  ],
+  "summary": {
+    "total": 15,
+    "failed": 0
+  }
+}

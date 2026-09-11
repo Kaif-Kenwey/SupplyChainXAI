@@ -1,0 +1,13 @@
+sku,name,category,unit_cost,base_demand,trend_per_year,pack_size
+P101,Hex Bolt M8 Grade 8.8 (Box),Fasteners,4.2,140,0.06,50
+P102,Rubber Gasket 100mm,Sealing,7.8,92,0.03,20
+P103,Hydraulic Seal Kit 40mm,Sealing,26.5,46,0.05,10
+P104,Deep Groove Bearing 6204-2RS,Bearings,58.0,84,0.09,20
+P105,Pillow Block Unit UCP205,Bearings,148.0,31,0.04,5
+P106,V-Belt A-Section 914mm,Power Transmission,19.9,67,-0.02,10
+P107,Conveyor Roller 600mm,Power Transmission,96.0,24,0.05,5
+P108,AC Induction Motor 2.2kW 4P,Motors,412.0,13,0.07,2
+P109,Proximity Sensor M12 PNP,Electronics,31.0,58,0.1,10
+P110,PLC I/O Module 16-Channel,Electronics,176.0,19,0.12,4
+P111,Control Cable 2.5mm2 (100m),Electronics,74.0,112,0.08,25
+P112,Safety Relay 24VDC 3NO,Electronics,132.0,27,0.11,5

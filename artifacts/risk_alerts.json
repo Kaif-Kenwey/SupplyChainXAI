@@ -1,0 +1,158 @@
+[
+  {
+    "alert_id": "R3-P104",
+    "type": "demand_spike",
+    "severity": "CRITICAL",
+    "sku": "P104",
+    "supplier_id": null,
+    "message": "P104 demand running +36% vs baseline (145/d vs 107/d, Welch p=0.005). Re-check forecast inputs.",
+    "data": {
+      "recent_mean": 145.2,
+      "baseline_mean": 106.6,
+      "lift_pct": 0.36,
+      "t_stat": 2.78,
+      "p_value": 0.0054
+    }
+  },
+  {
+    "alert_id": "R1-P101",
+    "type": "stockout_risk",
+    "severity": "CRITICAL",
+    "sku": "P101",
+    "supplier_id": "S3",
+    "message": "P101 forecast to breach safety stock in ~10 days (10 days of cover (effective lead 5d incl. drift)); P(stockout before replenishment) = 0%.",
+    "data": {
+      "on_hand": 472,
+      "on_order": 895,
+      "lead_time_days": 5,
+      "demand_over_lead_time": 628.6,
+      "demand_sigma": 203.6,
+      "days_of_cover": 9.5,
+      "stockout_probability": 0.0
+    }
+  },
+  {
+    "alert_id": "R4-S2-P110",
+    "type": "supplier_lead_drift",
+    "severity": "CRITICAL",
+    "sku": "P110",
+    "supplier_id": "S2",
+    "message": "Supplier S2 lead time on P110 up +37% (17d -> 24d over last 90d, 3 POs). De-rank or split volume.",
+    "data": {
+      "baseline_lead_days": 17.3,
+      "recent_lead_days": 23.7,
+      "drift_pct": 0.37,
+      "recent_pos": 3
+    }
+  },
+  {
+    "alert_id": "R5-926",
+    "type": "abnormal_procurement",
+    "severity": "WARNING",
+    "sku": "P104",
+    "supplier_id": "S4",
+    "message": "PO 926 priced 65.36 (2.7\u03c3 above the 78-PO mean 58.52) for P104 from S4. Verify contract / invoice.",
+    "data": {
+      "unit_price": 65.36,
+      "mean_price": 58.52,
+      "z_score": 2.69
+    }
+  },
+  {
+    "alert_id": "R5-937",
+    "type": "abnormal_procurement",
+    "severity": "WARNING",
+    "sku": "P104",
+    "supplier_id": "S4",
+    "message": "PO 937 priced 67.95 (3.7\u03c3 above the 78-PO mean 58.52) for P104 from S4. Verify contract / invoice.",
+    "data": {
+      "unit_price": 67.95,
+      "mean_price": 58.52,
+      "z_score": 3.7
+    }
+  },
+  {
+    "alert_id": "R2-P106",
+    "type": "overstock",
+    "severity": "WARNING",
+    "sku": "P106",
+    "supplier_id": null,
+    "message": "P106 holds 121 days of cover (threshold 90d) \u2014 163,379 in capital tied up. Pause replenishment.",
+    "data": {
+      "days_of_cover": 120.8,
+      "on_hand": 8210,
+      "capital_tied": 163379.0
+    }
+  },
+  {
+    "alert_id": "R1-P110",
+    "type": "stockout_risk",
+    "severity": "WARNING",
+    "sku": "P110",
+    "supplier_id": "S2",
+    "message": "P110 forecast to breach safety stock in ~27 days (27 days of cover (effective lead 25d incl. drift)); P(stockout before replenishment) = 31%.",
+    "data": {
+      "on_hand": 153,
+      "on_order": 605,
+      "lead_time_days": 25,
+      "demand_over_lead_time": 685.1,
+      "demand_sigma": 145.4,
+      "days_of_cover": 26.6,
+      "stockout_probability": 0.308
+    }
+  },
+  {
+    "alert_id": "R4-S4-P105",
+    "type": "supplier_lead_drift",
+    "severity": "WARNING",
+    "sku": "P105",
+    "supplier_id": "S4",
+    "message": "Supplier S4 lead time on P105 up +25% (13d -> 16d over last 90d, 5 POs). De-rank or split volume.",
+    "data": {
+      "baseline_lead_days": 12.8,
+      "recent_lead_days": 16.0,
+      "drift_pct": 0.25,
+      "recent_pos": 5
+    }
+  },
+  {
+    "alert_id": "R4-S5-P103",
+    "type": "supplier_lead_drift",
+    "severity": "WARNING",
+    "sku": "P103",
+    "supplier_id": "S5",
+    "message": "Supplier S5 lead time on P103 up +24% (9d -> 12d over last 90d, 6 POs). De-rank or split volume.",
+    "data": {
+      "baseline_lead_days": 9.4,
+      "recent_lead_days": 11.7,
+      "drift_pct": 0.24,
+      "recent_pos": 6
+    }
+  },
+  {
+    "alert_id": "R6-S3",
+    "type": "supplier_reliability",
+    "severity": "WARNING",
+    "sku": null,
+    "supplier_id": "S3",
+    "message": "Supplier S3 on-time rate 64% across 180 POs \u2014 reliability score 0.77 (floor 0.7).",
+    "data": {
+      "on_time_rate": 0.637,
+      "reliability_score": 0.766,
+      "pos_total": 180
+    }
+  },
+  {
+    "alert_id": "R6-S6",
+    "type": "supplier_reliability",
+    "severity": "WARNING",
+    "sku": null,
+    "supplier_id": "S6",
+    "message": "Supplier S6 on-time rate 56% across 109 POs \u2014 reliability score 0.72 (floor 0.7).",
+    "data": {
+      "on_time_rate": 0.561,
+      "reliability_score": 0.716,
+      "pos_total": 109
+    }
+  }
+]

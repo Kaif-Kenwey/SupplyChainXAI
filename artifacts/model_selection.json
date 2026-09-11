@@ -1,0 +1,19 @@
+{
+  "portfolio_best_model": "XGBoost",
+  "mean_wape_by_model": {
+    "XGBoost": 15.57,
+    "Random Forest": 15.96,
+    "Gradient Boosting": 16.29,
+    "Holt-Winters ES": 18.97,
+    "SARIMA (1,1,1)x(1,0,1)7": 19.16,
+    "Moving Average (28d)": 35.73
+  },
+  "wins_by_model": {
+    "XGBoost": 5,
+    "Gradient Boosting": 4,
+    "Random Forest": 2,
+    "SARIMA (1,1,1)x(1,0,1)7": 1
+  },
+  "improvement_vs_moving_average_pct": 56.4,
+  "narrative": "Across 12 SKUs, XGBoost achieves the lowest average WAPE (15.6%), winning on 5 of 12 products. It cuts the naive 28-day moving-average error by 56%. SARIMA remains competitive on stable, strongly-weekly SKUs, while tree ensembles absorb promo/price/calendar interactions the statistical baselines cannot see \u2014 which is why the selected model feeds the procurement recommendation inputs."
+}
