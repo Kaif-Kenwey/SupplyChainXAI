@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SupplyChainXAI — Procurement Intelligence Dashboard</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <script src="/static/echarts.min.js"></script>
+</head>
+<body>
+  <div class="shell">
+    <!-- ================= topbar ================= -->
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">X</div>
+        <div>
+          <h1>SupplyChain<span>XAI</span></h1>
+          <p>Explainable Demand Forecasting &amp; Procurement Intelligence</p>
+        </div>
+      </div>
+      <div class="top-meta">
+        <span id="snapshot" class="chip">snapshot —</span>
+        <span id="llm-mode" class="chip chip-ok">copilot: grounded</span>
+      </div>
+    </header>
+
+    <div class="body">
+      <!-- ================= sidebar ================= -->
+      <nav class="sidebar" aria-label="Sections">
+        <button class="nav-btn active" data-tab="overview">▤ Overview</button>
+        <button class="nav-btn" data-tab="forecast">◷ Forecast</button>
+        <button class="nav-btn" data-tab="inventory">▦ Inventory Health</button>
+        <button class="nav-btn" data-tab="suppliers">⋐ Suppliers</button>
+        <button class="nav-btn" data-tab="risk">⚠ Risk Monitor</button>
+        <button class="nav-btn" data-tab="recommendations">▣ Recommendations</button>
+        <button class="nav-btn" data-tab="simulator">⇄ What-If Simulator</button>
+        <button class="nav-btn" data-tab="copilot">✦ AI Copilot</button>
+        <div class="sidebar-foot">FastAPI · scikit-learn · statsmodels<br />SQLite analytics store</div>
+      </nav>
+
+      <!-- ================= main ================= -->
+      <main class="main">
+
+        <!-- overview -->
+        <section id="tab-overview" class="tab active">
+          <div class="kpi-grid" id="kpi-grid"></div>
+          <div class="grid-2">
+            <div class="card"><h3>Model bake-off — mean WAPE by model</h3><div id="chart-models" class="chart h280"></div></div>
+            <div class="card"><h3>PO spend by category</h3><div id="chart-spend" class="chart h280"></div></div>
+          </div>
+          <div class="grid-2">
+            <div class="card"><h3>Model-selection narrative</h3><p id="model-narrative" class="narrative"></p></div>
+            <div class="card"><h3>Top risk alerts</h3><div id="overview-alerts" class="alert-list compact"></div></div>
+          </div>
+        </section>
+
+        <!-- forecast -->
+        <section id="tab-forecast" class="tab">
+          <div class="card">
+            <div class="row-between">
+              <h3>Actual vs predicted demand — with 30-day outlook (80% PI)</h3>
+              <select id="sku-select" class="select"></select>
+            </div>
+            <div id="chart-forecast" class="chart h360"></div>
+          </div>
+          <div class="grid-2">
+            <div class="card"><h3>Back-test metrics — hold-out window (per model)</h3>
+              <div class="table-wrap"><table id="table-models"></table></div></div>
+            <div class="card"><h3>Why this forecast?</h3><div id="forecast-explain"></div></div>
+          </div>
+        </section>
+
+        <!-- inventory -->
+        <section id="tab-inventory" class="tab">
+          <div class="card">
+            <h3>Inventory health — days of cover vs forecast burn-rate</h3>
+            <div class="table-wrap"><table id="table-inventory"></table></div>
+          </div>
+        </section>
+
+        <!-- suppliers -->
+        <section id="tab-suppliers" class="tab">
+          <div class="grid-2" id="supplier-cards"></div>
+          <div class="card"><h3>Lead-time: baseline vs recent (drift detection)</h3><div id="chart-supplier-drift" class="chart h300"></div></div>
+        </section>
+
+        <!-- risk -->
+        <section id="tab-risk" class="tab">
+          <div class="card"><h3>Risk monitor — anomaly &amp; alert engine</h3>
+            <div id="risk-list" class="alert-list"></div></div>
+        </section>
+
+        <!-- recommendations -->
+        <section id="tab-recommendations" class="tab">
+          <div class="card"><h3>Procurement recommendations — BUY / HOLD / EXPEDITE</h3>
+            <p class="hint">Quantities come from forecast + safety stock − inventory position, rounded to pack size. Supplier = best effective-cost score (price / reliability / lead time, with drift penalties). Click a card for the full “why”.</p>
+            <div id="rec-list" class="rec-list"></div></div>
+          <div class="card" id="rec-detail-card" hidden><h3 id="rec-detail-title">Why</h3>
+            <div id="rec-detail"></div></div>
+        </section>
+
+        <!-- simulator -->
+        <section id="tab-simulator" class="tab">
+          <div class="card">
+            <h3>What-If Procurement Simulator</h3>
+            <p class="hint">Recomputes the entire procurement plan under stress scenarios: demand shift, supplier lead-time slip, inventory correction, target service level.</p>
+            <div class="sim-grid">
+              <label>Demand <output id="out-demand">+0%</output>
+                <input type="range" id="sim-demand" min="-50" max="100" value="0" step="5" /></label>
+              <label>Supplier lead time <output id="out-lead">+0%</output>
+                <input type="range" id="sim-lead" min="-50" max="100" value="0" step="5" /></label>
+              <label>On-hand inventory <output id="out-inv">+0%</output>
+                <input type="range" id="sim-inv" min="-80" max="50" value="0" step="5" /></label>
+              <label>Service level <output id="out-sl">95%</output>
+                <select id="sim-sl" class="select">
+                  <option value="0.90">90%</option>
+                  <option value="0.95" selected>95%</option>
+                  <option value="0.98">98%</option>
+                  <option value="0.99">99%</option>
+                </select></label>
+            </div>
+            <div class="sim-presets">
+              presets:
+              <button data-p="demand:0.2">demand +20%</button>
+              <button data-p="lead:0.3">lead time +30%</button>
+              <button data-p="inv:-0.15">inventory −15%</button>
+              <button data-p="demand:0.2|lead:0.3">Q4 stress</button>
+              <button data-p="reset">reset</button>
+            </div>
+          </div>
+          <div class="kpi-grid" id="sim-summary"></div>
+          <div class="card"><h3>Per-SKU impact</h3>
+            <div class="table-wrap"><table id="table-sim"></table></div></div>
+        </section>
+
+        <!-- copilot -->
+        <section id="tab-copilot" class="tab">
+          <div class="card copilot-card">
+            <h3>Procurement Copilot <span class="hint">— grounded in the analytics store; it answers only from pipeline data</span></h3>
+            <div id="chat" class="chat"></div>
+            <div class="chat-suggest">
+              <button>Which products will stock out next month?</button>
+              <button>What should I buy for P104?</button>
+              <button>How is supplier S4 performing?</button>
+              <button>What is the demand forecast for P101?</button>
+              <button>Where is our PO spend going?</button>
+            </div>
+            <form id="chat-form" class="chat-form">
+              <input id="chat-input" type="text" placeholder="Ask about stockouts, reorders, forecasts, suppliers…" autocomplete="off" />
+              <button type="submit">Ask</button>
+            </form>
+          </div>
+        </section>
+
+      </main>
+    </div>
+    <footer class="foot">
+      SupplyChainXAI — explainable forecasting · risk detection · procurement optimization · grounded GenAI copilot
+    </footer>
+  </div>
+  <script src="/static/app.js"></script>
+</body>
+</html>
