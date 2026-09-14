@@ -1,19 +1,139 @@
 {
   "portfolio_best_model": "XGBoost",
   "mean_wape_by_model": {
-    "XGBoost": 15.57,
-    "Random Forest": 15.96,
-    "Gradient Boosting": 16.29,
-    "Holt-Winters ES": 18.97,
-    "SARIMA (1,1,1)x(1,0,1)7": 19.16,
-    "Moving Average (28d)": 35.73
+    "XGBoost": 12.15,
+    "Random Forest": 12.24,
+    "Gradient Boosting": 12.42,
+    "SARIMA (1,1,1)x(1,0,1)7": 14.33,
+    "Holt-Winters ES": 14.66,
+    "Moving Average (28d)": 33.75
   },
   "wins_by_model": {
-    "XGBoost": 5,
-    "Gradient Boosting": 4,
-    "Random Forest": 2,
-    "SARIMA (1,1,1)x(1,0,1)7": 1
+    "Random Forest": 4,
+    "XGBoost": 4,
+    "Gradient Boosting": 4
   },
-  "improvement_vs_moving_average_pct": 56.4,
-  "narrative": "Across 12 SKUs, XGBoost achieves the lowest average WAPE (15.6%), winning on 5 of 12 products. It cuts the naive 28-day moving-average error by 56%. SARIMA remains competitive on stable, strongly-weekly SKUs, while tree ensembles absorb promo/price/calendar interactions the statistical baselines cannot see \u2014 which is why the selected model feeds the procurement recommendation inputs."
+  "improvement_vs_moving_average_pct": 64.0,
+  "unstable_combinations": 2,
+  "narrative": "Rolling-origin evaluation across 4 expanding-window folds (30-day horizon each) on 12 SKUs: XGBoost achieves the lowest mean WAPE (12.1%), winning on 4 of 12 products. It cuts the naive Moving Average (28d) error by 64% on mean. 2 model/SKU combination(s) show fold-to-fold instability (WAPE CV > 0.5) \u2014 Holt-Winters ES, which mean-only metrics would hide. Selection uses mean performance across ALL folds \u2014 never a single lucky hold-out.",
+  "selection_metric": "composite",
+  "composite_weights": {
+    "WAPE": 0.5,
+    "MAE": 0.3,
+    "RMSE": 0.2
+  },
+  "evaluation": {
+    "type": "walk_forward_rolling_origin",
+    "horizon_days": 30,
+    "folds": 4,
+    "min_train_days": 365,
+    "stride": 0,
+    "expanding_window": true
+  },
+  "per_sku_selection": {
+    "P101": {
+      "model": "Random Forest",
+      "score": 0.0,
+      "mean_WAPE": 9.51,
+      "std_WAPE": 3.48,
+      "folds": 4,
+      "unstable": false
+    },
+    "P102": {
+      "model": "XGBoost",
+      "score": 0.0001,
+      "mean_WAPE": 11.14,
+      "std_WAPE": 2.88,
+      "folds": 4,
+      "unstable": false
+    },
+    "P103": {
+      "model": "Random Forest",
+      "score": 0.0035,
+      "mean_WAPE": 11.42,
+      "std_WAPE": 3.74,
+      "folds": 4,
+      "unstable": false
+    },
+    "P104": {
+      "model": "XGBoost",
+      "score": 0.0,
+      "mean_WAPE": 14.59,
+      "std_WAPE": 3.92,
+      "folds": 4,
+      "unstable": false
+    },
+    "P105": {
+      "model": "Gradient Boosting",
+      "score": 0.0,
+      "mean_WAPE": 9.77,
+      "std_WAPE": 1.56,
+      "folds": 4,
+      "unstable": false
+    },
+    "P106": {
+      "model": "XGBoost",
+      "score": 0.0033,
+      "mean_WAPE": 16.29,
+      "std_WAPE": 2.28,
+      "folds": 4,
+      "unstable": false
+    },
+    "P107": {
+      "model": "Gradient Boosting",
+      "score": 0.001,
+      "mean_WAPE": 11.65,
+      "std_WAPE": 3.17,
+      "folds": 4,
+      "unstable": false
+    },
+    "P108": {
+      "model": "XGBoost",
+      "score": 0.0,
+      "mean_WAPE": 11.22,
+      "std_WAPE": 2.1,
+      "folds": 4,
+      "unstable": false
+    },
+    "P109": {
+      "model": "Random Forest",
+      "score": 0.0,
+      "mean_WAPE": 11.19,
+      "std_WAPE": 0.26,
+      "folds": 4,
+      "unstable": false
+    },
+    "P110": {
+      "model": "Gradient Boosting",
+      "score": 0.0003,
+      "mean_WAPE": 12.94,
+      "std_WAPE": 3.03,
+      "folds": 4,
+      "unstable": false
+    },
+    "P111": {
+      "model": "Random Forest",
+      "score": 0.0,
+      "mean_WAPE": 11.53,
+      "std_WAPE": 3.58,
+      "folds": 4,
+      "unstable": false
+    },
+    "P112": {
+      "model": "Gradient Boosting",
+      "score": 0.0,
+      "mean_WAPE": 11.05,
+      "std_WAPE": 2.58,
+      "folds": 4,
+      "unstable": false
+    }
+  },
+  "provenance": {
+    "dataset_version": "2ab9ece20309",
+    "feature_version": "f8ead54c5292",
+    "git_commit": "ddc651b",
+    "generated_at": "2026-09-14T16:20:27+00:00",
+    "run_id": "a1c01ac4c333",
+    "random_seed": 42
+  }
 }

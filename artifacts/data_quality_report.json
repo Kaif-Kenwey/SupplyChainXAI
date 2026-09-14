@@ -1,0 +1,248 @@
+{
+  "generated_at": "2026-09-14T16:16:23+00:00",
+  "dataset_version": "2ab9ece20309",
+  "status": "WARN",
+  "checks": [
+    {
+      "table": "products",
+      "rule": "DQ01 schema columns",
+      "severity": "WARNING",
+      "status": "PASS",
+      "failures": 0,
+      "detail": "schema unchanged"
+    },
+    {
+      "table": "suppliers",
+      "rule": "DQ01 schema columns",
+      "severity": "WARNING",
+      "status": "PASS",
+      "failures": 0,
+      "detail": "schema unchanged"
+    },
+    {
+      "table": "supply_terms",
+      "rule": "DQ01 schema columns",
+      "severity": "WARNING",
+      "status": "PASS",
+      "failures": 0,
+      "detail": "schema unchanged"
+    },
+    {
+      "table": "sales",
+      "rule": "DQ01 schema columns",
+      "severity": "WARNING",
+      "status": "PASS",
+      "failures": 0,
+      "detail": "schema unchanged"
+    },
+    {
+      "table": "inventory",
+      "rule": "DQ01 schema columns",
+      "severity": "WARNING",
+      "status": "PASS",
+      "failures": 0,
+      "detail": "schema unchanged"
+    },
+    {
+      "table": "purchase_orders",
+      "rule": "DQ01 schema columns",
+      "severity": "WARNING",
+      "status": "PASS",
+      "failures": 0,
+      "detail": "extra columns (tracked): ['status']"
+    },
+    {
+      "table": "sales",
+      "rule": "DQ02 missing values",
+      "severity": "WARNING",
+      "status": "PASS",
+      "failures": 0,
+      "detail": "0 null cells"
+    },
+    {
+      "table": "inventory",
+      "rule": "DQ02 missing values",
+      "severity": "WARNING",
+      "status": "PASS",
+      "failures": 0,
+      "detail": "0 null cells"
+    },
+    {
+      "table": "purchase_orders",
+      "rule": "DQ02 missing values",
+      "severity": "WARNING",
+      "status": "FAIL",
+      "failures": 10,
+      "detail": "10 null cells"
+    },
+    {
+      "table": "sales",
+      "rule": "DQ03 duplicate sku-date",
+      "severity": "ERROR",
+      "status": "PASS",
+      "failures": 0,
+      "detail": "duplicate demand rows"
+    },
+    {
+      "table": "inventory",
+      "rule": "DQ04 duplicate sku-date",
+      "severity": "ERROR",
+      "status": "PASS",
+      "failures": 0,
+      "detail": "duplicate snapshots"
+    },
+    {
+      "table": "sales",
+      "rule": "DQ05 unparseable dates",
+      "severity": "ERROR",
+      "status": "PASS",
+      "failures": 0,
+      "detail": "0 unparseable date cells"
+    },
+    {
+      "table": "inventory",
+      "rule": "DQ05 unparseable dates",
+      "severity": "ERROR",
+      "status": "PASS",
+      "failures": 0,
+      "detail": "0 unparseable date cells"
+    },
+    {
+      "table": "purchase_orders",
+      "rule": "DQ05 unparseable dates",
+      "severity": "ERROR",
+      "status": "PASS",
+      "failures": 0,
+      "detail": "0 unparseable date cells"
+    },
+    {
+      "table": "sales",
+      "rule": "DQ06 negative units",
+      "severity": "ERROR",
+      "status": "PASS",
+      "failures": 0,
+      "detail": ""
+    },
+    {
+      "table": "sales",
+      "rule": "DQ07 non-positive price",
+      "severity": "ERROR",
+      "status": "PASS",
+      "failures": 0,
+      "detail": ""
+    },
+    {
+      "table": "inventory",
+      "rule": "DQ08 negative stock",
+      "severity": "ERROR",
+      "status": "PASS",
+      "failures": 0,
+      "detail": ""
+    },
+    {
+      "table": "purchase_orders",
+      "rule": "DQ09 non-positive PO quantity",
+      "severity": "ERROR",
+      "status": "PASS",
+      "failures": 0,
+      "detail": ""
+    },
+    {
+      "table": "sales",
+      "rule": "DQ10 unknown SKU",
+      "severity": "ERROR",
+      "status": "PASS",
+      "failures": 0,
+      "detail": "0 rows with unknown SKU"
+    },
+    {
+      "table": "inventory",
+      "rule": "DQ10 unknown SKU",
+      "severity": "ERROR",
+      "status": "PASS",
+      "failures": 0,
+      "detail": "0 rows with unknown SKU"
+    },
+    {
+      "table": "purchase_orders",
+      "rule": "DQ10 unknown SKU",
+      "severity": "ERROR",
+      "status": "PASS",
+      "failures": 0,
+      "detail": "0 rows with unknown SKU"
+    },
+    {
+      "table": "purchase_orders",
+      "rule": "DQ11 unknown supplier",
+      "severity": "ERROR",
+      "status": "PASS",
+      "failures": 0,
+      "detail": "0 rows with unknown supplier"
+    },
+    {
+      "table": "sales",
+      "rule": "DQ12 promo_flag domain",
+      "severity": "WARNING",
+      "status": "PASS",
+      "failures": 0,
+      "detail": "0 rows outside {0,1}"
+    },
+    {
+      "table": "multiple",
+      "rule": "DQ13 sku casing variants",
+      "severity": "WARNING",
+      "status": "PASS",
+      "failures": 0,
+      "detail": "0 lowercase SKU cells"
+    },
+    {
+      "table": "sales",
+      "rule": "DQ14 abnormal demand outliers",
+      "severity": "WARNING",
+      "status": "PASS",
+      "failures": 0,
+      "detail": "0 days beyond 8.0\u03c3 per-SKU"
+    },
+    {
+      "table": "sales",
+      "rule": "DQ15 data freshness",
+      "severity": "PASS",
+      "status": "PASS",
+      "failures": 0,
+      "detail": "latest row is 0 days old (threshold 7)"
+    },
+    {
+      "table": "inventory",
+      "rule": "DQ15 data freshness",
+      "severity": "PASS",
+      "status": "PASS",
+      "failures": 0,
+      "detail": "latest row is 0 days old (threshold 7)"
+    }
+  ],
+  "errors": [],
+  "warnings": [
+    {
+      "table": "purchase_orders",
+      "rule": "DQ02 missing values",
+      "severity": "WARNING",
+      "status": "FAIL",
+      "failures": 10,
+      "detail": "10 null cells"
+    }
+  ],
+  "statistics": {
+    "rows": {
+      "sales": 13133,
+      "inventory": 13152,
+      "purchase_orders": 938,
+      "products": 12,
+      "suppliers": 6,
+      "supply_terms": 26
+    },
+    "date_min": "2023-01-01",
+    "date_max": "2025-12-31",
+    "skus": 12,
+    "null_cells_total": 10
+  }
+}

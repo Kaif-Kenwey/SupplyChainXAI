@@ -1,0 +1,117 @@
+{
+  "generated_at": "2026-09-14T16:21:14+00:00",
+  "snapshot_date": "2025-12-31",
+  "basis_legend": {
+    "observed": "computed from transactional data \u2014 no assumptions",
+    "estimated": "depends on model output or documented approximation",
+    "simulated": "assumes a cost heuristic on synthetic data \u2014 directional, not financial truth"
+  },
+  "kpis": [
+    {
+      "key": "inventory_carrying_value",
+      "value": 664208.5,
+      "basis": "observed",
+      "unit": "currency_units",
+      "definition": "on-hand units \u00d7 unit cost at snapshot"
+    },
+    {
+      "key": "working_capital_tied_in_inventory",
+      "value": 664208.5,
+      "basis": "observed",
+      "unit": "currency_units",
+      "definition": "same asset base as carrying value, viewed as working capital"
+    },
+    {
+      "key": "open_po_count",
+      "value": 10,
+      "basis": "observed",
+      "unit": "count",
+      "definition": ""
+    },
+    {
+      "key": "open_po_committed_spend",
+      "value": 818713.45,
+      "basis": "observed",
+      "unit": "currency_units",
+      "definition": "open PO quantity \u00d7 unit price"
+    },
+    {
+      "key": "supplier_on_time_delivery",
+      "value": 0.6584,
+      "basis": "observed",
+      "unit": "fraction",
+      "definition": "delivered POs on or before expected date (n=928)"
+    },
+    {
+      "key": "stockout_days_trailing_90d",
+      "value": 73,
+      "basis": "observed",
+      "unit": "sku-days",
+      "definition": "snapshot days with on_hand = 0 across all SKUs"
+    },
+    {
+      "key": "in_stock_rate_trailing_90d",
+      "value": 0.9324,
+      "basis": "observed",
+      "unit": "fraction",
+      "definition": "1 \u2212 stockout sku-days / observed sku-days (demand-censored proxy)"
+    },
+    {
+      "key": "inventory_days_of_cover",
+      "value": 19.0,
+      "basis": "estimated",
+      "unit": "days",
+      "definition": "portfolio mean on-hand \u00f7 forecast daily demand (excess threshold 90d)"
+    },
+    {
+      "key": "excess_inventory_value",
+      "value": 41667.74,
+      "basis": "estimated",
+      "unit": "currency_units",
+      "definition": "value of stock beyond 90 days of forecast cover"
+    },
+    {
+      "key": "estimated_stockout_units_avoided",
+      "value": 1427.4,
+      "basis": "simulated",
+      "unit": "units",
+      "definition": "\u03a3 min(daily demand \u00d7 effective lead, order qty) over active BUY/EXPEDITE \u2014 assumes orders arrive before the projected stockout date"
+    },
+    {
+      "key": "procurement_savings_opportunity",
+      "value": 278.6,
+      "basis": "simulated",
+      "unit": "currency_units",
+      "definition": "\u03a3 (chosen price \u2212 runner-up price) \u00d7 qty where the runner-up is cheaper \u2014 ignores switching cost, capacity and risk"
+    },
+    {
+      "key": "new_order_carrying_cost_pa",
+      "value": 3920.64,
+      "basis": "simulated",
+      "unit": "currency_units",
+      "definition": "new order value \u00d7 20% annual holding-cost assumption"
+    },
+    {
+      "key": "supplier_lead_time_reliability_note",
+      "value": "lead-time drift alerts feed supplier choice automatically",
+      "basis": "observed",
+      "unit": "text",
+      "definition": "cross-reference: risk engine R4/R6 alerts"
+    }
+  ],
+  "index": {
+    "inventory_carrying_value": 664208.5,
+    "working_capital_tied_in_inventory": 664208.5,
+    "open_po_count": 10,
+    "open_po_committed_spend": 818713.45,
+    "supplier_on_time_delivery": 0.6584,
+    "stockout_days_trailing_90d": 73,
+    "in_stock_rate_trailing_90d": 0.9324,
+    "inventory_days_of_cover": 19.0,
+    "excess_inventory_value": 41667.74,
+    "estimated_stockout_units_avoided": 1427.4,
+    "procurement_savings_opportunity": 278.6,
+    "new_order_carrying_cost_pa": 3920.64,
+    "supplier_lead_time_reliability_note": "lead-time drift alerts feed supplier choice automatically"
+  }
+}

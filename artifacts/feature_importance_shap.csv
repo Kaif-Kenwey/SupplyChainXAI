@@ -1,0 +1,181 @@
+sku,model,feature,importance,method
+P101,Random Forest,dow,42.925424,shap
+P101,Random Forest,month,0.127495,shap
+P101,Random Forest,weekofyear,0.486868,shap
+P101,Random Forest,trend_idx,4.996946,shap
+P101,Random Forest,lag_1,0.497766,shap
+P101,Random Forest,lag_7,0.828921,shap
+P101,Random Forest,lag_14,0.449262,shap
+P101,Random Forest,lag_28,0.580896,shap
+P101,Random Forest,roll_mean_7,0.674895,shap
+P101,Random Forest,roll_std_7,0.718128,shap
+P101,Random Forest,roll_mean_28,0.697195,shap
+P101,Random Forest,roll_std_28,0.920345,shap
+P101,Random Forest,promo_flag,8.575959,shap
+P101,Random Forest,unit_price,0.413195,shap
+P101,Random Forest,stockout_flag,0.0,shap
+P102,XGBoost,dow,23.059818,shap
+P102,XGBoost,month,0.250459,shap
+P102,XGBoost,weekofyear,2.896431,shap
+P102,XGBoost,trend_idx,1.331783,shap
+P102,XGBoost,lag_1,1.129545,shap
+P102,XGBoost,lag_7,2.505942,shap
+P102,XGBoost,lag_14,1.321538,shap
+P102,XGBoost,lag_28,0.883494,shap
+P102,XGBoost,roll_mean_7,1.267784,shap
+P102,XGBoost,roll_std_7,0.834775,shap
+P102,XGBoost,roll_mean_28,1.979906,shap
+P102,XGBoost,roll_std_28,0.729912,shap
+P102,XGBoost,promo_flag,4.062259,shap
+P102,XGBoost,unit_price,0.30262,shap
+P102,XGBoost,stockout_flag,0.0,shap
+P103,Random Forest,dow,14.144376,shap
+P103,Random Forest,month,0.110224,shap
+P103,Random Forest,weekofyear,0.71693,shap
+P103,Random Forest,trend_idx,0.638256,shap
+P103,Random Forest,lag_1,0.146536,shap
+P103,Random Forest,lag_7,0.095265,shap
+P103,Random Forest,lag_14,0.16985,shap
+P103,Random Forest,lag_28,0.240159,shap
+P103,Random Forest,roll_mean_7,0.22344,shap
+P103,Random Forest,roll_std_7,0.16146,shap
+P103,Random Forest,roll_mean_28,1.772363,shap
+P103,Random Forest,roll_std_28,0.211734,shap
+P103,Random Forest,promo_flag,2.356205,shap
+P103,Random Forest,unit_price,0.171016,shap
+P103,Random Forest,stockout_flag,0.0,shap
+P104,XGBoost,dow,22.391943,shap
+P104,XGBoost,month,0.472439,shap
+P104,XGBoost,weekofyear,2.153337,shap
+P104,XGBoost,trend_idx,3.333893,shap
+P104,XGBoost,lag_1,0.991344,shap
+P104,XGBoost,lag_7,3.396672,shap
+P104,XGBoost,lag_14,1.859284,shap
+P104,XGBoost,lag_28,1.303381,shap
+P104,XGBoost,roll_mean_7,0.862531,shap
+P104,XGBoost,roll_std_7,0.834686,shap
+P104,XGBoost,roll_mean_28,4.398551,shap
+P104,XGBoost,roll_std_28,0.615986,shap
+P104,XGBoost,promo_flag,4.566728,shap
+P104,XGBoost,unit_price,0.314079,shap
+P104,XGBoost,stockout_flag,0.0,shap
+P105,Gradient Boosting,dow,7.970297,shap
+P105,Gradient Boosting,month,0.360336,shap
+P105,Gradient Boosting,weekofyear,0.597234,shap
+P105,Gradient Boosting,trend_idx,0.328011,shap
+P105,Gradient Boosting,lag_1,0.425601,shap
+P105,Gradient Boosting,lag_7,0.354223,shap
+P105,Gradient Boosting,lag_14,0.485628,shap
+P105,Gradient Boosting,lag_28,0.289447,shap
+P105,Gradient Boosting,roll_mean_7,0.356968,shap
+P105,Gradient Boosting,roll_std_7,0.190517,shap
+P105,Gradient Boosting,roll_mean_28,1.397966,shap
+P105,Gradient Boosting,roll_std_28,0.227113,shap
+P105,Gradient Boosting,promo_flag,1.222997,shap
+P105,Gradient Boosting,unit_price,0.128425,shap
+P105,Gradient Boosting,stockout_flag,0.0,shap
+P106,XGBoost,dow,15.777461,shap
+P106,XGBoost,month,0.38712,shap
+P106,XGBoost,weekofyear,1.637054,shap
+P106,XGBoost,trend_idx,0.626152,shap
+P106,XGBoost,lag_1,0.67793,shap
+P106,XGBoost,lag_7,0.707795,shap
+P106,XGBoost,lag_14,0.981565,shap
+P106,XGBoost,lag_28,1.777447,shap
+P106,XGBoost,roll_mean_7,0.717547,shap
+P106,XGBoost,roll_std_7,0.497917,shap
+P106,XGBoost,roll_mean_28,2.439498,shap
+P106,XGBoost,roll_std_28,0.84126,shap
+P106,XGBoost,promo_flag,3.292727,shap
+P106,XGBoost,unit_price,0.442409,shap
+P106,XGBoost,stockout_flag,0.0,shap
+P107,Gradient Boosting,dow,6.386778,shap
+P107,Gradient Boosting,month,0.433788,shap
+P107,Gradient Boosting,weekofyear,0.411679,shap
+P107,Gradient Boosting,trend_idx,0.488244,shap
+P107,Gradient Boosting,lag_1,0.315574,shap
+P107,Gradient Boosting,lag_7,0.501924,shap
+P107,Gradient Boosting,lag_14,0.181564,shap
+P107,Gradient Boosting,lag_28,0.338396,shap
+P107,Gradient Boosting,roll_mean_7,0.198159,shap
+P107,Gradient Boosting,roll_std_7,0.172858,shap
+P107,Gradient Boosting,roll_mean_28,1.068354,shap
+P107,Gradient Boosting,roll_std_28,0.277588,shap
+P107,Gradient Boosting,promo_flag,1.1692,shap
+P107,Gradient Boosting,unit_price,0.136757,shap
+P107,Gradient Boosting,stockout_flag,0.0,shap
+P108,XGBoost,dow,3.452078,shap
+P108,XGBoost,month,0.198983,shap
+P108,XGBoost,weekofyear,0.321957,shap
+P108,XGBoost,trend_idx,0.258496,shap
+P108,XGBoost,lag_1,0.170898,shap
+P108,XGBoost,lag_7,0.461617,shap
+P108,XGBoost,lag_14,0.151807,shap
+P108,XGBoost,lag_28,0.193978,shap
+P108,XGBoost,roll_mean_7,0.151943,shap
+P108,XGBoost,roll_std_7,0.185646,shap
+P108,XGBoost,roll_mean_28,0.917979,shap
+P108,XGBoost,roll_std_28,0.140487,shap
+P108,XGBoost,promo_flag,0.689505,shap
+P108,XGBoost,unit_price,0.094605,shap
+P108,XGBoost,stockout_flag,0.0,shap
+P109,Random Forest,dow,19.063433,shap
+P109,Random Forest,month,0.208985,shap
+P109,Random Forest,weekofyear,0.979077,shap
+P109,Random Forest,trend_idx,0.605656,shap
+P109,Random Forest,lag_1,0.418605,shap
+P109,Random Forest,lag_7,0.215083,shap
+P109,Random Forest,lag_14,0.304063,shap
+P109,Random Forest,lag_28,0.196151,shap
+P109,Random Forest,roll_mean_7,1.107386,shap
+P109,Random Forest,roll_std_7,0.235263,shap
+P109,Random Forest,roll_mean_28,7.167825,shap
+P109,Random Forest,roll_std_28,0.444703,shap
+P109,Random Forest,promo_flag,2.903991,shap
+P109,Random Forest,unit_price,0.268726,shap
+P109,Random Forest,stockout_flag,0.0,shap
+P110,Gradient Boosting,dow,3.055867,shap
+P110,Gradient Boosting,month,0.467005,shap
+P110,Gradient Boosting,weekofyear,0.383554,shap
+P110,Gradient Boosting,trend_idx,0.63535,shap
+P110,Gradient Boosting,lag_1,0.235319,shap
+P110,Gradient Boosting,lag_7,1.265404,shap
+P110,Gradient Boosting,lag_14,1.408553,shap
+P110,Gradient Boosting,lag_28,0.857379,shap
+P110,Gradient Boosting,roll_mean_7,0.259459,shap
+P110,Gradient Boosting,roll_std_7,0.180208,shap
+P110,Gradient Boosting,roll_mean_28,0.853038,shap
+P110,Gradient Boosting,roll_std_28,0.279314,shap
+P110,Gradient Boosting,promo_flag,1.12207,shap
+P110,Gradient Boosting,unit_price,0.077573,shap
+P110,Gradient Boosting,stockout_flag,0.0,shap
+P111,Random Forest,dow,35.5633,shap
+P111,Random Forest,month,0.40378,shap
+P111,Random Forest,weekofyear,1.950962,shap
+P111,Random Forest,trend_idx,1.774894,shap
+P111,Random Forest,lag_1,0.563908,shap
+P111,Random Forest,lag_7,0.482139,shap
+P111,Random Forest,lag_14,0.881187,shap
+P111,Random Forest,lag_28,0.448574,shap
+P111,Random Forest,roll_mean_7,2.819494,shap
+P111,Random Forest,roll_std_7,0.449777,shap
+P111,Random Forest,roll_mean_28,11.519247,shap
+P111,Random Forest,roll_std_28,0.352907,shap
+P111,Random Forest,promo_flag,5.859554,shap
+P111,Random Forest,unit_price,0.574777,shap
+P111,Random Forest,stockout_flag,0.0,shap
+P112,Gradient Boosting,dow,5.799466,shap
+P112,Gradient Boosting,month,0.635483,shap
+P112,Gradient Boosting,weekofyear,0.628484,shap
+P112,Gradient Boosting,trend_idx,0.931172,shap
+P112,Gradient Boosting,lag_1,0.338564,shap
+P112,Gradient Boosting,lag_7,1.386982,shap
+P112,Gradient Boosting,lag_14,1.43118,shap
+P112,Gradient Boosting,lag_28,0.791233,shap
+P112,Gradient Boosting,roll_mean_7,0.104092,shap
+P112,Gradient Boosting,roll_std_7,0.319662,shap
+P112,Gradient Boosting,roll_mean_28,1.538544,shap
+P112,Gradient Boosting,roll_std_28,0.178453,shap
+P112,Gradient Boosting,promo_flag,1.403004,shap
+P112,Gradient Boosting,unit_price,0.168953,shap
+P112,Gradient Boosting,stockout_flag,0.0,shap

@@ -1,12 +1,13 @@
 {
   "snapshot_date": "2025-12-31",
+  "run_id": "a1c01ac4c333",
   "inventory_value": 664208.5,
   "open_po_count": 10,
   "open_po_spend": 818713.45,
   "supplier_on_time_pct": 65.8,
   "skus_tracked": 12,
   "buy_actions": 4,
-  "buy_units": 1720,
-  "buy_cost": 33180.8,
-  "forecast_30d_demand": 26239.0
+  "buy_units": 1560,
+  "buy_cost": 19603.2,
+  "forecast_30d_demand": 26196.0
 }

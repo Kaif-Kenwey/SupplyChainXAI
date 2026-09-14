@@ -1,0 +1,7 @@
+model,skus,mean_WAPE,worst_sku_WAPE,mean_WAPE_std,mean_MAE,mean_bias,unstable_skus
+XGBoost,12,12.1469,16.2934,2.7263,8.1253,-3.2207,0
+Random Forest,12,12.2384,16.8235,2.6463,8.0692,-3.8226,0
+Gradient Boosting,12,12.4164,17.4519,2.5899,8.3602,-2.7072,0
+"SARIMA (1,1,1)x(1,0,1)7",12,14.3348,17.5483,4.0094,9.4149,-2.2894,0
+Holt-Winters ES,12,14.6565,19.115,4.7856,9.4919,-1.3137,2
+Moving Average (28d),12,33.7474,38.4492,2.6433,22.2065,-3.3573,0

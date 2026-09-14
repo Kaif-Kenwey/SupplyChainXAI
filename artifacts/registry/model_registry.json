@@ -1,0 +1,1457 @@
+{
+  "schema": "v1",
+  "models": [
+    {
+      "model_id": "P101-random-forest-2ab9ec",
+      "model_name": "Random Forest",
+      "model_family": "Random Forest",
+      "sku": "P101",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T15:22:01+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 9.5077,
+        "std_WAPE": 3.4795,
+        "composite": 0.0
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "production",
+      "artifact_path": "artifacts/models/P101__random-forest.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 9.51% vs limit 9.98% (production 9.51% \u00d7 1.05)",
+        "promoted": true
+      }
+    },
+    {
+      "model_id": "P102-xgboost-2ab9ec",
+      "model_name": "XGBoost",
+      "model_family": "XGBoost",
+      "sku": "P102",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T15:22:01+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 11.1432,
+        "std_WAPE": 2.8779,
+        "composite": 0.0001
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "production",
+      "artifact_path": "artifacts/models/P102__xgboost.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 11.14% vs limit 11.70% (production 11.14% \u00d7 1.05)",
+        "promoted": true
+      }
+    },
+    {
+      "model_id": "P103-random-forest-2ab9ec",
+      "model_name": "Random Forest",
+      "model_family": "Random Forest",
+      "sku": "P103",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T15:22:01+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 11.4174,
+        "std_WAPE": 3.7396,
+        "composite": 0.0035
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "production",
+      "artifact_path": "artifacts/models/P103__random-forest.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 11.42% vs limit 11.99% (production 11.42% \u00d7 1.05)",
+        "promoted": true
+      }
+    },
+    {
+      "model_id": "P104-xgboost-2ab9ec",
+      "model_name": "XGBoost",
+      "model_family": "XGBoost",
+      "sku": "P104",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T15:22:01+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 14.5902,
+        "std_WAPE": 3.9178,
+        "composite": 0.0
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "production",
+      "artifact_path": "artifacts/models/P104__xgboost.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 14.59% vs limit 15.32% (production 14.59% \u00d7 1.05)",
+        "promoted": true
+      }
+    },
+    {
+      "model_id": "P105-gradient-boosting-2ab9ec",
+      "model_name": "Gradient Boosting",
+      "model_family": "Gradient Boosting",
+      "sku": "P105",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T15:22:01+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 9.7654,
+        "std_WAPE": 1.5603,
+        "composite": 0.0
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "production",
+      "artifact_path": "artifacts/models/P105__gradient-boosting.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 9.77% vs limit 10.25% (production 9.77% \u00d7 1.05)",
+        "promoted": true
+      }
+    },
+    {
+      "model_id": "P106-xgboost-2ab9ec",
+      "model_name": "XGBoost",
+      "model_family": "XGBoost",
+      "sku": "P106",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T15:22:01+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 16.2934,
+        "std_WAPE": 2.2774,
+        "composite": 0.0033
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "production",
+      "artifact_path": "artifacts/models/P106__xgboost.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 16.29% vs limit 17.11% (production 16.29% \u00d7 1.05)",
+        "promoted": true
+      }
+    },
+    {
+      "model_id": "P107-gradient-boosting-2ab9ec",
+      "model_name": "Gradient Boosting",
+      "model_family": "Gradient Boosting",
+      "sku": "P107",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T15:22:01+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 11.6516,
+        "std_WAPE": 3.1669,
+        "composite": 0.001
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "production",
+      "artifact_path": "artifacts/models/P107__gradient-boosting.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 11.65% vs limit 12.23% (production 11.65% \u00d7 1.05)",
+        "promoted": true
+      }
+    },
+    {
+      "model_id": "P108-xgboost-2ab9ec",
+      "model_name": "XGBoost",
+      "model_family": "XGBoost",
+      "sku": "P108",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T15:22:01+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 11.2234,
+        "std_WAPE": 2.1001,
+        "composite": 0.0
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "production",
+      "artifact_path": "artifacts/models/P108__xgboost.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 11.22% vs limit 11.78% (production 11.22% \u00d7 1.05)",
+        "promoted": true
+      }
+    },
+    {
+      "model_id": "P109-random-forest-2ab9ec",
+      "model_name": "Random Forest",
+      "model_family": "Random Forest",
+      "sku": "P109",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T15:22:01+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 11.1946,
+        "std_WAPE": 0.2605,
+        "composite": 0.0
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "production",
+      "artifact_path": "artifacts/models/P109__random-forest.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 11.19% vs limit 11.75% (production 11.19% \u00d7 1.05)",
+        "promoted": true
+      }
+    },
+    {
+      "model_id": "P110-gradient-boosting-2ab9ec",
+      "model_name": "Gradient Boosting",
+      "model_family": "Gradient Boosting",
+      "sku": "P110",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T15:22:01+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 12.9366,
+        "std_WAPE": 3.0264,
+        "composite": 0.0003
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "production",
+      "artifact_path": "artifacts/models/P110__gradient-boosting.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 12.94% vs limit 13.58% (production 12.94% \u00d7 1.05)",
+        "promoted": true
+      }
+    },
+    {
+      "model_id": "P111-random-forest-2ab9ec",
+      "model_name": "Random Forest",
+      "model_family": "Random Forest",
+      "sku": "P111",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T15:22:01+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 11.5328,
+        "std_WAPE": 3.581,
+        "composite": 0.0
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "production",
+      "artifact_path": "artifacts/models/P111__random-forest.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 11.53% vs limit 12.11% (production 11.53% \u00d7 1.05)",
+        "promoted": true
+      }
+    },
+    {
+      "model_id": "P112-gradient-boosting-2ab9ec",
+      "model_name": "Gradient Boosting",
+      "model_family": "Gradient Boosting",
+      "sku": "P112",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T15:22:01+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 11.0492,
+        "std_WAPE": 2.5825,
+        "composite": 0.0
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "production",
+      "artifact_path": "artifacts/models/P112__gradient-boosting.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 11.05% vs limit 11.60% (production 11.05% \u00d7 1.05)",
+        "promoted": true
+      }
+    },
+    {
+      "model_id": "P101-random-forest-2ab9ec",
+      "model_name": "Random Forest",
+      "model_family": "Random Forest",
+      "sku": "P101",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:00:06+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 9.5077,
+        "std_WAPE": 3.4795,
+        "composite": 0.0
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P101__random-forest.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 9.51% vs limit 9.98% (production 9.51% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P102-xgboost-2ab9ec",
+      "model_name": "XGBoost",
+      "model_family": "XGBoost",
+      "sku": "P102",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:00:06+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 11.1432,
+        "std_WAPE": 2.8779,
+        "composite": 0.0001
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P102__xgboost.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 11.14% vs limit 11.70% (production 11.14% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P103-random-forest-2ab9ec",
+      "model_name": "Random Forest",
+      "model_family": "Random Forest",
+      "sku": "P103",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:00:06+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 11.4174,
+        "std_WAPE": 3.7396,
+        "composite": 0.0035
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P103__random-forest.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 11.42% vs limit 11.99% (production 11.42% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P104-xgboost-2ab9ec",
+      "model_name": "XGBoost",
+      "model_family": "XGBoost",
+      "sku": "P104",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:00:06+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 14.5902,
+        "std_WAPE": 3.9178,
+        "composite": 0.0
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P104__xgboost.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 14.59% vs limit 15.32% (production 14.59% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P105-gradient-boosting-2ab9ec",
+      "model_name": "Gradient Boosting",
+      "model_family": "Gradient Boosting",
+      "sku": "P105",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:00:06+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 9.7654,
+        "std_WAPE": 1.5603,
+        "composite": 0.0
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P105__gradient-boosting.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 9.77% vs limit 10.25% (production 9.77% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P106-xgboost-2ab9ec",
+      "model_name": "XGBoost",
+      "model_family": "XGBoost",
+      "sku": "P106",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:00:06+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 16.2934,
+        "std_WAPE": 2.2774,
+        "composite": 0.0033
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P106__xgboost.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 16.29% vs limit 17.11% (production 16.29% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P107-gradient-boosting-2ab9ec",
+      "model_name": "Gradient Boosting",
+      "model_family": "Gradient Boosting",
+      "sku": "P107",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:00:06+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 11.6516,
+        "std_WAPE": 3.1669,
+        "composite": 0.001
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P107__gradient-boosting.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 11.65% vs limit 12.23% (production 11.65% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P108-xgboost-2ab9ec",
+      "model_name": "XGBoost",
+      "model_family": "XGBoost",
+      "sku": "P108",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:00:06+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 11.2234,
+        "std_WAPE": 2.1001,
+        "composite": 0.0
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P108__xgboost.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 11.22% vs limit 11.78% (production 11.22% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P109-random-forest-2ab9ec",
+      "model_name": "Random Forest",
+      "model_family": "Random Forest",
+      "sku": "P109",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:00:06+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 11.1946,
+        "std_WAPE": 0.2605,
+        "composite": 0.0
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P109__random-forest.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 11.19% vs limit 11.75% (production 11.19% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P110-gradient-boosting-2ab9ec",
+      "model_name": "Gradient Boosting",
+      "model_family": "Gradient Boosting",
+      "sku": "P110",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:00:06+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 12.9366,
+        "std_WAPE": 3.0264,
+        "composite": 0.0003
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P110__gradient-boosting.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 12.94% vs limit 13.58% (production 12.94% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P111-random-forest-2ab9ec",
+      "model_name": "Random Forest",
+      "model_family": "Random Forest",
+      "sku": "P111",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:00:06+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 11.5328,
+        "std_WAPE": 3.581,
+        "composite": 0.0
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P111__random-forest.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 11.53% vs limit 12.11% (production 11.53% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P112-gradient-boosting-2ab9ec",
+      "model_name": "Gradient Boosting",
+      "model_family": "Gradient Boosting",
+      "sku": "P112",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:00:06+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 11.0492,
+        "std_WAPE": 2.5825,
+        "composite": 0.0
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P112__gradient-boosting.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 11.05% vs limit 11.60% (production 11.05% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P101-random-forest-2ab9ec",
+      "model_name": "Random Forest",
+      "model_family": "Random Forest",
+      "sku": "P101",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:07:03+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 9.5077,
+        "std_WAPE": 3.4795,
+        "composite": 0.0
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P101__random-forest.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 9.51% vs limit 9.98% (production 9.51% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P102-xgboost-2ab9ec",
+      "model_name": "XGBoost",
+      "model_family": "XGBoost",
+      "sku": "P102",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:07:03+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 11.1432,
+        "std_WAPE": 2.8779,
+        "composite": 0.0001
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P102__xgboost.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 11.14% vs limit 11.70% (production 11.14% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P103-random-forest-2ab9ec",
+      "model_name": "Random Forest",
+      "model_family": "Random Forest",
+      "sku": "P103",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:07:03+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 11.4174,
+        "std_WAPE": 3.7396,
+        "composite": 0.0035
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P103__random-forest.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 11.42% vs limit 11.99% (production 11.42% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P104-xgboost-2ab9ec",
+      "model_name": "XGBoost",
+      "model_family": "XGBoost",
+      "sku": "P104",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:07:03+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 14.5902,
+        "std_WAPE": 3.9178,
+        "composite": 0.0
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P104__xgboost.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 14.59% vs limit 15.32% (production 14.59% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P105-gradient-boosting-2ab9ec",
+      "model_name": "Gradient Boosting",
+      "model_family": "Gradient Boosting",
+      "sku": "P105",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:07:03+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 9.7654,
+        "std_WAPE": 1.5603,
+        "composite": 0.0
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P105__gradient-boosting.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 9.77% vs limit 10.25% (production 9.77% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P106-xgboost-2ab9ec",
+      "model_name": "XGBoost",
+      "model_family": "XGBoost",
+      "sku": "P106",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:07:03+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 16.2934,
+        "std_WAPE": 2.2774,
+        "composite": 0.0033
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P106__xgboost.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 16.29% vs limit 17.11% (production 16.29% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P107-gradient-boosting-2ab9ec",
+      "model_name": "Gradient Boosting",
+      "model_family": "Gradient Boosting",
+      "sku": "P107",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:07:03+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 11.6516,
+        "std_WAPE": 3.1669,
+        "composite": 0.001
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P107__gradient-boosting.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 11.65% vs limit 12.23% (production 11.65% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P108-xgboost-2ab9ec",
+      "model_name": "XGBoost",
+      "model_family": "XGBoost",
+      "sku": "P108",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:07:03+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 11.2234,
+        "std_WAPE": 2.1001,
+        "composite": 0.0
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P108__xgboost.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 11.22% vs limit 11.78% (production 11.22% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P109-random-forest-2ab9ec",
+      "model_name": "Random Forest",
+      "model_family": "Random Forest",
+      "sku": "P109",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:07:03+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 11.1946,
+        "std_WAPE": 0.2605,
+        "composite": 0.0
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P109__random-forest.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 11.19% vs limit 11.75% (production 11.19% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P110-gradient-boosting-2ab9ec",
+      "model_name": "Gradient Boosting",
+      "model_family": "Gradient Boosting",
+      "sku": "P110",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:07:03+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 12.9366,
+        "std_WAPE": 3.0264,
+        "composite": 0.0003
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P110__gradient-boosting.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 12.94% vs limit 13.58% (production 12.94% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P111-random-forest-2ab9ec",
+      "model_name": "Random Forest",
+      "model_family": "Random Forest",
+      "sku": "P111",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:07:03+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 11.5328,
+        "std_WAPE": 3.581,
+        "composite": 0.0
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P111__random-forest.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 11.53% vs limit 12.11% (production 11.53% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P112-gradient-boosting-2ab9ec",
+      "model_name": "Gradient Boosting",
+      "model_family": "Gradient Boosting",
+      "sku": "P112",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:07:03+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 11.0492,
+        "std_WAPE": 2.5825,
+        "composite": 0.0
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P112__gradient-boosting.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 11.05% vs limit 11.60% (production 11.05% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P101-random-forest-2ab9ec",
+      "model_name": "Random Forest",
+      "model_family": "Random Forest",
+      "sku": "P101",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:16:23+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 9.5077,
+        "std_WAPE": 3.4795,
+        "composite": 0.0
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P101__random-forest.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 9.51% vs limit 9.98% (production 9.51% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P102-xgboost-2ab9ec",
+      "model_name": "XGBoost",
+      "model_family": "XGBoost",
+      "sku": "P102",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:16:23+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 11.1432,
+        "std_WAPE": 2.8779,
+        "composite": 0.0001
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P102__xgboost.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 11.14% vs limit 11.70% (production 11.14% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P103-random-forest-2ab9ec",
+      "model_name": "Random Forest",
+      "model_family": "Random Forest",
+      "sku": "P103",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:16:23+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 11.4174,
+        "std_WAPE": 3.7396,
+        "composite": 0.0035
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P103__random-forest.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 11.42% vs limit 11.99% (production 11.42% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P104-xgboost-2ab9ec",
+      "model_name": "XGBoost",
+      "model_family": "XGBoost",
+      "sku": "P104",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:16:23+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 14.5902,
+        "std_WAPE": 3.9178,
+        "composite": 0.0
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P104__xgboost.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 14.59% vs limit 15.32% (production 14.59% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P105-gradient-boosting-2ab9ec",
+      "model_name": "Gradient Boosting",
+      "model_family": "Gradient Boosting",
+      "sku": "P105",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:16:23+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 9.7654,
+        "std_WAPE": 1.5603,
+        "composite": 0.0
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P105__gradient-boosting.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 9.77% vs limit 10.25% (production 9.77% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P106-xgboost-2ab9ec",
+      "model_name": "XGBoost",
+      "model_family": "XGBoost",
+      "sku": "P106",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:16:23+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 16.2934,
+        "std_WAPE": 2.2774,
+        "composite": 0.0033
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P106__xgboost.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 16.29% vs limit 17.11% (production 16.29% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P107-gradient-boosting-2ab9ec",
+      "model_name": "Gradient Boosting",
+      "model_family": "Gradient Boosting",
+      "sku": "P107",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:16:23+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 11.6516,
+        "std_WAPE": 3.1669,
+        "composite": 0.001
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P107__gradient-boosting.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 11.65% vs limit 12.23% (production 11.65% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P108-xgboost-2ab9ec",
+      "model_name": "XGBoost",
+      "model_family": "XGBoost",
+      "sku": "P108",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:16:23+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 11.2234,
+        "std_WAPE": 2.1001,
+        "composite": 0.0
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P108__xgboost.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 11.22% vs limit 11.78% (production 11.22% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P109-random-forest-2ab9ec",
+      "model_name": "Random Forest",
+      "model_family": "Random Forest",
+      "sku": "P109",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:16:23+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 11.1946,
+        "std_WAPE": 0.2605,
+        "composite": 0.0
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P109__random-forest.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 11.19% vs limit 11.75% (production 11.19% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P110-gradient-boosting-2ab9ec",
+      "model_name": "Gradient Boosting",
+      "model_family": "Gradient Boosting",
+      "sku": "P110",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:16:23+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 12.9366,
+        "std_WAPE": 3.0264,
+        "composite": 0.0003
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P110__gradient-boosting.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 12.94% vs limit 13.58% (production 12.94% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P111-random-forest-2ab9ec",
+      "model_name": "Random Forest",
+      "model_family": "Random Forest",
+      "sku": "P111",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:16:23+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 11.5328,
+        "std_WAPE": 3.581,
+        "composite": 0.0
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P111__random-forest.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 11.53% vs limit 12.11% (production 11.53% \u00d7 1.05)"
+      }
+    },
+    {
+      "model_id": "P112-gradient-boosting-2ab9ec",
+      "model_name": "Gradient Boosting",
+      "model_family": "Gradient Boosting",
+      "sku": "P112",
+      "version": "2ab9ece20309",
+      "training_timestamp": "2026-09-14T16:16:23+00:00",
+      "dataset_version": "2ab9ece20309",
+      "feature_version": "f8ead54c5292",
+      "code_version": "ddc651b",
+      "metrics": {
+        "mean_WAPE": 11.0492,
+        "std_WAPE": 2.5825,
+        "composite": 0.0
+      },
+      "selection_reason": "lowest composite across 4 walk-forward folds",
+      "status": "candidate",
+      "artifact_path": "artifacts/models/P112__gradient-boosting.joblib",
+      "evaluation": {
+        "folds": 4,
+        "unstable": false
+      },
+      "promotion_gates": {
+        "validation_gate": true,
+        "data_quality_gate": true,
+        "artifact_gate": true,
+        "wape_gate": true,
+        "wape_detail": "candidate 11.05% vs limit 11.60% (production 11.05% \u00d7 1.05)"
+      }
+    }
+  ]
+}

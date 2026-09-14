@@ -1,0 +1,14 @@
+{
+  "type": "walk_forward_rolling_origin",
+  "horizon_days": 30,
+  "n_folds": 4,
+  "min_train_days": 365,
+  "stride": 0,
+  "expanding_window": true,
+  "selection_metric": "composite",
+  "composite_weights": {
+    "WAPE": 0.5,
+    "MAE": 0.3,
+    "RMSE": 0.2
+  }
+}

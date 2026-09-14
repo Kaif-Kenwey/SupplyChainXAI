@@ -25,14 +25,14 @@
     "sku": "P102",
     "product_name": "Rubber Gasket 100mm",
     "action": "BUY",
-    "quantity": 660,
+    "quantity": 580,
     "supplier_id": "S5",
     "supplier_name": "Shakti Polymers & Seals",
     "unit_price": 7.8,
-    "total_cost": 5148.0,
-    "order_by": "2025-12-26",
-    "expected_stockout_date": "2026-01-12",
-    "coverage_days": 18.5,
+    "total_cost": 4524.0,
+    "order_by": "2025-12-27",
+    "expected_stockout_date": "2026-01-13",
+    "coverage_days": 18.4,
     "runner_up": {
       "supplier_id": "S1",
       "supplier_name": "Apex Industrial Components",
@@ -40,28 +40,6 @@
       "lead_days": 7.0,
       "on_time_rate": 0.93,
       "score": 0.5712
-    },
-    "drivers": []
-  },
-  {
-    "sku": "P110",
-    "product_name": "PLC I/O Module 16-Channel",
-    "action": "BUY",
-    "quantity": 140,
-    "supplier_id": "S2",
-    "supplier_name": "VoltEdge Electronics",
-    "unit_price": 161.92,
-    "total_cost": 22668.8,
-    "order_by": "2025-12-30",
-    "expected_stockout_date": "2026-01-27",
-    "coverage_days": 31.9,
-    "runner_up": {
-      "supplier_id": "S6",
-      "supplier_name": "GlobalDrive Motors AG",
-      "unit_price": 202.4,
-      "lead_days": 14.0,
-      "on_time_rate": 0.755,
-      "score": 0.629
     },
     "drivers": []
   },
@@ -84,6 +62,28 @@
       "lead_days": 13.2,
       "on_time_rate": 0.707,
       "score": 0.7287
+    },
+    "drivers": []
+  },
+  {
+    "sku": "P110",
+    "product_name": "PLC I/O Module 16-Channel",
+    "action": "BUY",
+    "quantity": 60,
+    "supplier_id": "S2",
+    "supplier_name": "VoltEdge Electronics",
+    "unit_price": 161.92,
+    "total_cost": 9715.2,
+    "order_by": "2026-01-01",
+    "expected_stockout_date": "2026-01-29",
+    "coverage_days": 31.1,
+    "runner_up": {
+      "supplier_id": "S6",
+      "supplier_name": "GlobalDrive Motors AG",
+      "unit_price": 202.4,
+      "lead_days": 14.0,
+      "on_time_rate": 0.755,
+      "score": 0.629
     },
     "drivers": []
   },
@@ -142,8 +142,8 @@
     "unit_price": 101.76,
     "total_cost": 0.0,
     "order_by": null,
-    "expected_stockout_date": "2026-01-29",
-    "coverage_days": 28.0,
+    "expected_stockout_date": "2026-01-27",
+    "coverage_days": 26.3,
     "runner_up": null,
     "drivers": []
   },
@@ -158,7 +158,7 @@
     "total_cost": 0.0,
     "order_by": null,
     "expected_stockout_date": "2026-02-07",
-    "coverage_days": 38.0,
+    "coverage_days": 37.6,
     "runner_up": null,
     "drivers": []
   },
@@ -172,8 +172,8 @@
     "unit_price": 33.48,
     "total_cost": 0.0,
     "order_by": null,
-    "expected_stockout_date": "2026-02-01",
-    "coverage_days": 31.9,
+    "expected_stockout_date": "2026-02-02",
+    "coverage_days": 32.3,
     "runner_up": null,
     "drivers": []
   },
@@ -188,7 +188,7 @@
     "total_cost": 0.0,
     "order_by": null,
     "expected_stockout_date": "2026-01-26",
-    "coverage_days": 25.4,
+    "coverage_days": 25.1,
     "runner_up": null,
     "drivers": []
   },
@@ -202,8 +202,8 @@
     "unit_price": 116.16,
     "total_cost": 0.0,
     "order_by": null,
-    "expected_stockout_date": "2026-02-04",
-    "coverage_days": 34.2,
+    "expected_stockout_date": "2026-02-05",
+    "coverage_days": 35.1,
     "runner_up": null,
     "drivers": []
   }

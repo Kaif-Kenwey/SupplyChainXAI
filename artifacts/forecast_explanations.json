@@ -1,0 +1,975 @@
+{
+  "P101": {
+    "sku": "P101",
+    "model": "Random Forest",
+    "forecast_daily_mean": 143.5,
+    "top_features": [
+      {
+        "feature": "dow",
+        "share": 0.737
+      },
+      {
+        "feature": "promo_flag",
+        "share": 0.147
+      },
+      {
+        "feature": "trend_idx",
+        "share": 0.086
+      },
+      {
+        "feature": "roll_std_28",
+        "share": 0.016
+      },
+      {
+        "feature": "lag_7",
+        "share": 0.014
+      }
+    ],
+    "attribution_method": "shap",
+    "local_drivers": {
+      "date": "2026-01-01",
+      "top_positive": [
+        {
+          "feature": "dow",
+          "shap_units": 32.31,
+          "feature_value": 3.0
+        },
+        {
+          "feature": "trend_idx",
+          "shap_units": 9.49,
+          "feature_value": 1.0001615777050177
+        },
+        {
+          "feature": "lag_28",
+          "shap_units": 1.49,
+          "feature_value": 221.0
+        }
+      ],
+      "top_negative": [
+        {
+          "feature": "promo_flag",
+          "shap_units": -5.43,
+          "feature_value": 0.0
+        },
+        {
+          "feature": "roll_std_7",
+          "shap_units": -1.57,
+          "feature_value": 109.44013366742045
+        },
+        {
+          "feature": "roll_std_28",
+          "shap_units": -1.41,
+          "feature_value": 72.8590997247318
+        }
+      ]
+    },
+    "drivers": [
+      {
+        "factor": "demand momentum",
+        "direction": "up",
+        "impact_pct": 5.7,
+        "detail": "last-14d average (154/day) vs trailing 28d (146/day)"
+      },
+      {
+        "factor": "promo assumption",
+        "direction": "down",
+        "impact_pct": 3.6,
+        "detail": "1 promo days in the last 28; horizon assumes none (unplannable)"
+      }
+    ],
+    "narrative": "P101 is forecast at ~143 units/day over the next 30 days (-2% vs the trailing-28d level of 146). The winning model (Random Forest) leans mainly on dow (74%), promo_flag (15%), trend_idx (9%). Recent demand momentum is +6% (14d vs 28d), which the model carries into the horizon via its lag features."
+  },
+  "P102": {
+    "sku": "P102",
+    "model": "XGBoost",
+    "forecast_daily_mean": 97.1,
+    "top_features": [
+      {
+        "feature": "dow",
+        "share": 0.668
+      },
+      {
+        "feature": "promo_flag",
+        "share": 0.118
+      },
+      {
+        "feature": "weekofyear",
+        "share": 0.084
+      },
+      {
+        "feature": "lag_7",
+        "share": 0.073
+      },
+      {
+        "feature": "roll_mean_28",
+        "share": 0.057
+      }
+    ],
+    "attribution_method": "shap",
+    "local_drivers": {
+      "date": "2026-01-01",
+      "top_positive": [
+        {
+          "feature": "dow",
+          "shap_units": 14.32,
+          "feature_value": 3.0
+        },
+        {
+          "feature": "weekofyear",
+          "shap_units": 6.62,
+          "feature_value": 1.0
+        },
+        {
+          "feature": "roll_mean_28",
+          "shap_units": 3.34,
+          "feature_value": 92.82142857142857
+        }
+      ],
+      "top_negative": [
+        {
+          "feature": "roll_mean_7",
+          "shap_units": -2.77,
+          "feature_value": 93.14285714285714
+        },
+        {
+          "feature": "promo_flag",
+          "shap_units": -1.6,
+          "feature_value": 0.0
+        },
+        {
+          "feature": "roll_std_7",
+          "shap_units": -0.48,
+          "feature_value": 38.16380733726905
+        }
+      ]
+    },
+    "drivers": [
+      {
+        "factor": "forecast vs recent level",
+        "direction": "up",
+        "impact_pct": 4.6,
+        "detail": "30-day forecast mean 97/day vs trailing 28d 93/day"
+      },
+      {
+        "factor": "promo assumption",
+        "direction": "down",
+        "impact_pct": 3.6,
+        "detail": "1 promo days in the last 28; horizon assumes none (unplannable)"
+      }
+    ],
+    "narrative": "P102 is forecast at ~97 units/day over the next 30 days (+5% vs the trailing-28d level of 93). The winning model (XGBoost) leans mainly on dow (67%), promo_flag (12%), weekofyear (8%)."
+  },
+  "P103": {
+    "sku": "P103",
+    "model": "Random Forest",
+    "forecast_daily_mean": 48.6,
+    "top_features": [
+      {
+        "feature": "dow",
+        "share": 0.721
+      },
+      {
+        "feature": "promo_flag",
+        "share": 0.12
+      },
+      {
+        "feature": "roll_mean_28",
+        "share": 0.09
+      },
+      {
+        "feature": "weekofyear",
+        "share": 0.037
+      },
+      {
+        "feature": "trend_idx",
+        "share": 0.033
+      }
+    ],
+    "attribution_method": "shap",
+    "local_drivers": {
+      "date": "2026-01-01",
+      "top_positive": [
+        {
+          "feature": "dow",
+          "shap_units": 9.96,
+          "feature_value": 3.0
+        },
+        {
+          "feature": "roll_mean_28",
+          "shap_units": 2.92,
+          "feature_value": 48.57142857142857
+        },
+        {
+          "feature": "trend_idx",
+          "shap_units": 1.12,
+          "feature_value": 1.0003140181222874
+        }
+      ],
+      "top_negative": [
+        {
+          "feature": "promo_flag",
+          "shap_units": -1.39,
+          "feature_value": 0.0
+        },
+        {
+          "feature": "roll_std_28",
+          "shap_units": -0.31,
+          "feature_value": 20.344129322327802
+        },
+        {
+          "feature": "unit_price",
+          "shap_units": -0.17,
+          "feature_value": 37.66
+        }
+      ]
+    },
+    "drivers": [
+      {
+        "factor": "demand momentum",
+        "direction": "up",
+        "impact_pct": 6.9,
+        "detail": "last-14d average (52/day) vs trailing 28d (49/day)"
+      },
+      {
+        "factor": "promo assumption",
+        "direction": "down",
+        "impact_pct": 7.1,
+        "detail": "2 promo days in the last 28; horizon assumes none (unplannable)"
+      }
+    ],
+    "narrative": "P103 is forecast at ~49 units/day over the next 30 days (+0% vs the trailing-28d level of 49). The winning model (Random Forest) leans mainly on dow (72%), promo_flag (12%), roll_mean_28 (9%). Recent demand momentum is +7% (14d vs 28d), which the model carries into the horizon via its lag features."
+  },
+  "P104": {
+    "sku": "P104",
+    "model": "XGBoost",
+    "forecast_daily_mean": 155.1,
+    "top_features": [
+      {
+        "feature": "dow",
+        "share": 0.588
+      },
+      {
+        "feature": "promo_flag",
+        "share": 0.12
+      },
+      {
+        "feature": "roll_mean_28",
+        "share": 0.115
+      },
+      {
+        "feature": "lag_7",
+        "share": 0.089
+      },
+      {
+        "feature": "trend_idx",
+        "share": 0.088
+      }
+    ],
+    "attribution_method": "shap",
+    "local_drivers": {
+      "date": "2026-01-01",
+      "top_positive": [
+        {
+          "feature": "trend_idx",
+          "shap_units": 38.65,
+          "feature_value": 1.000390238330922
+        },
+        {
+          "feature": "dow",
+          "shap_units": 24.2,
+          "feature_value": 3.0
+        },
+        {
+          "feature": "roll_mean_28",
+          "shap_units": 19.52,
+          "feature_value": 142.42857142857142
+        }
+      ],
+      "top_negative": [
+        {
+          "feature": "promo_flag",
+          "shap_units": -1.71,
+          "feature_value": 0.0
+        },
+        {
+          "feature": "month",
+          "shap_units": -0.77,
+          "feature_value": 1.0
+        }
+      ]
+    },
+    "drivers": [
+      {
+        "factor": "demand momentum",
+        "direction": "up",
+        "impact_pct": 5.1,
+        "detail": "last-14d average (150/day) vs trailing 28d (142/day)"
+      },
+      {
+        "factor": "forecast vs recent level",
+        "direction": "up",
+        "impact_pct": 8.9,
+        "detail": "30-day forecast mean 155/day vs trailing 28d 142/day"
+      },
+      {
+        "factor": "promo assumption",
+        "direction": "down",
+        "impact_pct": 0.0,
+        "detail": "0 promo days in the last 28; horizon assumes none (unplannable)"
+      }
+    ],
+    "narrative": "P104 is forecast at ~155 units/day over the next 30 days (+9% vs the trailing-28d level of 142). The winning model (XGBoost) leans mainly on dow (59%), promo_flag (12%), roll_mean_28 (12%). Recent demand momentum is +5% (14d vs 28d), which the model carries into the horizon via its lag features."
+  },
+  "P105": {
+    "sku": "P105",
+    "model": "Gradient Boosting",
+    "forecast_daily_mean": 34.3,
+    "top_features": [
+      {
+        "feature": "dow",
+        "share": 0.683
+      },
+      {
+        "feature": "roll_mean_28",
+        "share": 0.12
+      },
+      {
+        "feature": "promo_flag",
+        "share": 0.105
+      },
+      {
+        "feature": "weekofyear",
+        "share": 0.051
+      },
+      {
+        "feature": "lag_14",
+        "share": 0.042
+      }
+    ],
+    "attribution_method": "shap",
+    "local_drivers": {
+      "date": "2026-01-01",
+      "top_positive": [
+        {
+          "feature": "dow",
+          "shap_units": 6.46,
+          "feature_value": 3.0
+        },
+        {
+          "feature": "roll_mean_28",
+          "shap_units": 2.52,
+          "feature_value": 33.32142857142857
+        },
+        {
+          "feature": "trend_idx",
+          "shap_units": 2.2,
+          "feature_value": 1.0004664585395568
+        }
+      ],
+      "top_negative": [
+        {
+          "feature": "promo_flag",
+          "shap_units": -0.68,
+          "feature_value": 0.0
+        },
+        {
+          "feature": "roll_std_7",
+          "shap_units": -0.31,
+          "feature_value": 13.832329280830953
+        },
+        {
+          "feature": "roll_std_28",
+          "shap_units": -0.14,
+          "feature_value": 12.774551007340863
+        }
+      ]
+    },
+    "drivers": [
+      {
+        "factor": "forecast vs recent level",
+        "direction": "up",
+        "impact_pct": 3.0,
+        "detail": "30-day forecast mean 34/day vs trailing 28d 33/day"
+      },
+      {
+        "factor": "promo assumption",
+        "direction": "down",
+        "impact_pct": 0.0,
+        "detail": "0 promo days in the last 28; horizon assumes none (unplannable)"
+      }
+    ],
+    "narrative": "P105 is forecast at ~34 units/day over the next 30 days (+3% vs the trailing-28d level of 33). The winning model (Gradient Boosting) leans mainly on dow (68%), roll_mean_28 (12%), promo_flag (10%)."
+  },
+  "P106": {
+    "sku": "P106",
+    "model": "XGBoost",
+    "forecast_daily_mean": 68.0,
+    "top_features": [
+      {
+        "feature": "dow",
+        "share": 0.633
+      },
+      {
+        "feature": "promo_flag",
+        "share": 0.132
+      },
+      {
+        "feature": "roll_mean_28",
+        "share": 0.098
+      },
+      {
+        "feature": "lag_28",
+        "share": 0.071
+      },
+      {
+        "feature": "weekofyear",
+        "share": 0.066
+      }
+    ],
+    "attribution_method": "shap",
+    "local_drivers": {
+      "date": "2026-01-01",
+      "top_positive": [
+        {
+          "feature": "dow",
+          "shap_units": 10.8,
+          "feature_value": 3.0
+        },
+        {
+          "feature": "roll_mean_28",
+          "shap_units": 3.95,
+          "feature_value": 68.89285714285714
+        },
+        {
+          "feature": "trend_idx",
+          "shap_units": 2.78,
+          "feature_value": 1.0005426787481915
+        }
+      ],
+      "top_negative": [
+        {
+          "feature": "promo_flag",
+          "shap_units": -2.06,
+          "feature_value": 0.0
+        },
+        {
+          "feature": "roll_std_28",
+          "shap_units": -1.42,
+          "feature_value": 35.204523368573895
+        },
+        {
+          "feature": "roll_std_7",
+          "shap_units": -0.64,
+          "feature_value": 27.095070716697848
+        }
+      ]
+    },
+    "drivers": [
+      {
+        "factor": "demand momentum",
+        "direction": "down",
+        "impact_pct": 5.3,
+        "detail": "last-14d average (65/day) vs trailing 28d (69/day)"
+      },
+      {
+        "factor": "promo assumption",
+        "direction": "down",
+        "impact_pct": 10.7,
+        "detail": "3 promo days in the last 28; horizon assumes none (unplannable)"
+      }
+    ],
+    "narrative": "P106 is forecast at ~68 units/day over the next 30 days (-1% vs the trailing-28d level of 69). The winning model (XGBoost) leans mainly on dow (63%), promo_flag (13%), roll_mean_28 (10%). Recent demand momentum is -5% (14d vs 28d), which the model carries into the horizon via its lag features."
+  },
+  "P107": {
+    "sku": "P107",
+    "model": "Gradient Boosting",
+    "forecast_daily_mean": 29.8,
+    "top_features": [
+      {
+        "feature": "dow",
+        "share": 0.664
+      },
+      {
+        "feature": "promo_flag",
+        "share": 0.122
+      },
+      {
+        "feature": "roll_mean_28",
+        "share": 0.111
+      },
+      {
+        "feature": "lag_7",
+        "share": 0.052
+      },
+      {
+        "feature": "trend_idx",
+        "share": 0.051
+      }
+    ],
+    "attribution_method": "shap",
+    "local_drivers": {
+      "date": "2026-01-01",
+      "top_positive": [
+        {
+          "feature": "dow",
+          "shap_units": 4.67,
+          "feature_value": 3.0
+        },
+        {
+          "feature": "trend_idx",
+          "shap_units": 4.29,
+          "feature_value": 1.000618898956826
+        },
+        {
+          "feature": "roll_mean_28",
+          "shap_units": 1.6,
+          "feature_value": 27.0
+        }
+      ],
+      "top_negative": [
+        {
+          "feature": "promo_flag",
+          "shap_units": -0.65,
+          "feature_value": 0.0
+        },
+        {
+          "feature": "roll_std_28",
+          "shap_units": -0.52,
+          "feature_value": 13.109227736669
+        },
+        {
+          "feature": "lag_28",
+          "shap_units": -0.43,
+          "feature_value": 36.0
+        }
+      ]
+    },
+    "drivers": [
+      {
+        "factor": "demand momentum",
+        "direction": "down",
+        "impact_pct": 3.7,
+        "detail": "last-14d average (26/day) vs trailing 28d (27/day)"
+      },
+      {
+        "factor": "forecast vs recent level",
+        "direction": "up",
+        "impact_pct": 10.4,
+        "detail": "30-day forecast mean 30/day vs trailing 28d 27/day"
+      },
+      {
+        "factor": "promo assumption",
+        "direction": "down",
+        "impact_pct": 3.6,
+        "detail": "1 promo days in the last 28; horizon assumes none (unplannable)"
+      }
+    ],
+    "narrative": "P107 is forecast at ~30 units/day over the next 30 days (+10% vs the trailing-28d level of 27). The winning model (Gradient Boosting) leans mainly on dow (66%), promo_flag (12%), roll_mean_28 (11%). Recent demand momentum is -4% (14d vs 28d), which the model carries into the horizon via its lag features."
+  },
+  "P108": {
+    "sku": "P108",
+    "model": "XGBoost",
+    "forecast_daily_mean": 15.6,
+    "top_features": [
+      {
+        "feature": "dow",
+        "share": 0.591
+      },
+      {
+        "feature": "roll_mean_28",
+        "share": 0.157
+      },
+      {
+        "feature": "promo_flag",
+        "share": 0.118
+      },
+      {
+        "feature": "lag_7",
+        "share": 0.079
+      },
+      {
+        "feature": "weekofyear",
+        "share": 0.055
+      }
+    ],
+    "attribution_method": "shap",
+    "local_drivers": {
+      "date": "2026-01-01",
+      "top_positive": [
+        {
+          "feature": "dow",
+          "shap_units": 2.53,
+          "feature_value": 3.0
+        },
+        {
+          "feature": "roll_mean_28",
+          "shap_units": 1.89,
+          "feature_value": 16.107142857142858
+        },
+        {
+          "feature": "trend_idx",
+          "shap_units": 1.42,
+          "feature_value": 1.000695119165461
+        }
+      ],
+      "top_negative": [
+        {
+          "feature": "lag_28",
+          "shap_units": -0.4,
+          "feature_value": 21.0
+        },
+        {
+          "feature": "promo_flag",
+          "shap_units": -0.4,
+          "feature_value": 0.0
+        },
+        {
+          "feature": "month",
+          "shap_units": -0.24,
+          "feature_value": 1.0
+        }
+      ]
+    },
+    "drivers": [
+      {
+        "factor": "demand momentum",
+        "direction": "up",
+        "impact_pct": 5.5,
+        "detail": "last-14d average (17/day) vs trailing 28d (16/day)"
+      },
+      {
+        "factor": "forecast vs recent level",
+        "direction": "down",
+        "impact_pct": 3.2,
+        "detail": "30-day forecast mean 16/day vs trailing 28d 16/day"
+      },
+      {
+        "factor": "promo assumption",
+        "direction": "down",
+        "impact_pct": 3.6,
+        "detail": "1 promo days in the last 28; horizon assumes none (unplannable)"
+      }
+    ],
+    "narrative": "P108 is forecast at ~16 units/day over the next 30 days (-3% vs the trailing-28d level of 16). The winning model (XGBoost) leans mainly on dow (59%), roll_mean_28 (16%), promo_flag (12%). Recent demand momentum is +6% (14d vs 28d), which the model carries into the horizon via its lag features."
+  },
+  "P109": {
+    "sku": "P109",
+    "model": "Random Forest",
+    "forecast_daily_mean": 78.2,
+    "top_features": [
+      {
+        "feature": "dow",
+        "share": 0.611
+      },
+      {
+        "feature": "roll_mean_28",
+        "share": 0.23
+      },
+      {
+        "feature": "promo_flag",
+        "share": 0.093
+      },
+      {
+        "feature": "roll_mean_7",
+        "share": 0.035
+      },
+      {
+        "feature": "weekofyear",
+        "share": 0.031
+      }
+    ],
+    "attribution_method": "shap",
+    "local_drivers": {
+      "date": "2026-01-01",
+      "top_positive": [
+        {
+          "feature": "roll_mean_28",
+          "shap_units": 16.42,
+          "feature_value": 78.42857142857143
+        },
+        {
+          "feature": "dow",
+          "shap_units": 15.05,
+          "feature_value": 3.0
+        },
+        {
+          "feature": "trend_idx",
+          "shap_units": 4.28,
+          "feature_value": 1.0007713393740958
+        }
+      ],
+      "top_negative": [
+        {
+          "feature": "promo_flag",
+          "shap_units": -1.85,
+          "feature_value": 0.0
+        },
+        {
+          "feature": "month",
+          "shap_units": -0.55,
+          "feature_value": 1.0
+        },
+        {
+          "feature": "weekofyear",
+          "shap_units": -0.4,
+          "feature_value": 1.0
+        }
+      ]
+    },
+    "drivers": [
+      {
+        "factor": "promo assumption",
+        "direction": "down",
+        "impact_pct": 0.0,
+        "detail": "0 promo days in the last 28; horizon assumes none (unplannable)"
+      }
+    ],
+    "narrative": "P109 is forecast at ~78 units/day over the next 30 days (-0% vs the trailing-28d level of 78). The winning model (Random Forest) leans mainly on dow (61%), roll_mean_28 (23%), promo_flag (9%)."
+  },
+  "P110": {
+    "sku": "P110",
+    "model": "Gradient Boosting",
+    "forecast_daily_mean": 26.6,
+    "top_features": [
+      {
+        "feature": "dow",
+        "share": 0.396
+      },
+      {
+        "feature": "lag_14",
+        "share": 0.183
+      },
+      {
+        "feature": "lag_7",
+        "share": 0.164
+      },
+      {
+        "feature": "promo_flag",
+        "share": 0.146
+      },
+      {
+        "feature": "lag_28",
+        "share": 0.111
+      }
+    ],
+    "attribution_method": "shap",
+    "local_drivers": {
+      "date": "2026-01-01",
+      "top_positive": [
+        {
+          "feature": "trend_idx",
+          "shap_units": 3.23,
+          "feature_value": 1.0008475595827304
+        },
+        {
+          "feature": "dow",
+          "shap_units": 2.7,
+          "feature_value": 3.0
+        },
+        {
+          "feature": "lag_14",
+          "shap_units": 1.8,
+          "feature_value": 39.0
+        }
+      ],
+      "top_negative": [
+        {
+          "feature": "promo_flag",
+          "shap_units": -0.57,
+          "feature_value": 0.0
+        },
+        {
+          "feature": "month",
+          "shap_units": -0.56,
+          "feature_value": 1.0
+        },
+        {
+          "feature": "weekofyear",
+          "shap_units": -0.34,
+          "feature_value": 1.0
+        }
+      ]
+    },
+    "drivers": [
+      {
+        "factor": "demand momentum",
+        "direction": "down",
+        "impact_pct": 3.6,
+        "detail": "last-14d average (27/day) vs trailing 28d (28/day)"
+      },
+      {
+        "factor": "forecast vs recent level",
+        "direction": "down",
+        "impact_pct": 5.3,
+        "detail": "30-day forecast mean 27/day vs trailing 28d 28/day"
+      },
+      {
+        "factor": "promo assumption",
+        "direction": "down",
+        "impact_pct": 0.0,
+        "detail": "0 promo days in the last 28; horizon assumes none (unplannable)"
+      }
+    ],
+    "narrative": "P110 is forecast at ~27 units/day over the next 30 days (-5% vs the trailing-28d level of 28). The winning model (Gradient Boosting) leans mainly on dow (40%), lag_14 (18%), lag_7 (16%). Recent demand momentum is -4% (14d vs 28d), which the model carries into the horizon via its lag features."
+  },
+  "P111": {
+    "sku": "P111",
+    "model": "Random Forest",
+    "forecast_daily_mean": 140.0,
+    "top_features": [
+      {
+        "feature": "dow",
+        "share": 0.616
+      },
+      {
+        "feature": "roll_mean_28",
+        "share": 0.2
+      },
+      {
+        "feature": "promo_flag",
+        "share": 0.102
+      },
+      {
+        "feature": "roll_mean_7",
+        "share": 0.049
+      },
+      {
+        "feature": "weekofyear",
+        "share": 0.034
+      }
+    ],
+    "attribution_method": "shap",
+    "local_drivers": {
+      "date": "2026-01-01",
+      "top_positive": [
+        {
+          "feature": "dow",
+          "shap_units": 25.15,
+          "feature_value": 3.0
+        },
+        {
+          "feature": "roll_mean_28",
+          "shap_units": 18.4,
+          "feature_value": 141.75
+        },
+        {
+          "feature": "trend_idx",
+          "shap_units": 5.46,
+          "feature_value": 1.0009237797913653
+        }
+      ],
+      "top_negative": [
+        {
+          "feature": "promo_flag",
+          "shap_units": -3.54,
+          "feature_value": 0.0
+        },
+        {
+          "feature": "month",
+          "shap_units": -1.4,
+          "feature_value": 1.0
+        },
+        {
+          "feature": "lag_14",
+          "shap_units": -0.98,
+          "feature_value": 140.0
+        }
+      ]
+    },
+    "drivers": [
+      {
+        "factor": "demand momentum",
+        "direction": "down",
+        "impact_pct": 4.0,
+        "detail": "last-14d average (136/day) vs trailing 28d (142/day)"
+      },
+      {
+        "factor": "promo assumption",
+        "direction": "down",
+        "impact_pct": 0.0,
+        "detail": "0 promo days in the last 28; horizon assumes none (unplannable)"
+      }
+    ],
+    "narrative": "P111 is forecast at ~140 units/day over the next 30 days (-1% vs the trailing-28d level of 142). The winning model (Random Forest) leans mainly on dow (62%), roll_mean_28 (20%), promo_flag (10%). Recent demand momentum is -4% (14d vs 28d), which the model carries into the horizon via its lag features."
+  },
+  "P112": {
+    "sku": "P112",
+    "model": "Gradient Boosting",
+    "forecast_daily_mean": 36.3,
+    "top_features": [
+      {
+        "feature": "dow",
+        "share": 0.502
+      },
+      {
+        "feature": "roll_mean_28",
+        "share": 0.133
+      },
+      {
+        "feature": "lag_14",
+        "share": 0.124
+      },
+      {
+        "feature": "promo_flag",
+        "share": 0.121
+      },
+      {
+        "feature": "lag_7",
+        "share": 0.12
+      }
+    ],
+    "attribution_method": "shap",
+    "local_drivers": {
+      "date": "2026-01-01",
+      "top_positive": [
+        {
+          "feature": "dow",
+          "shap_units": 4.39,
+          "feature_value": 3.0
+        },
+        {
+          "feature": "trend_idx",
+          "shap_units": 4.0,
+          "feature_value": 1.001
+        },
+        {
+          "feature": "lag_14",
+          "shap_units": 3.18,
+          "feature_value": 47.0
+        }
+      ],
+      "top_negative": [
+        {
+          "feature": "roll_std_7",
+          "shap_units": -1.12,
+          "feature_value": 21.702534414210707
+        },
+        {
+          "feature": "month",
+          "shap_units": -0.88,
+          "feature_value": 1.0
+        },
+        {
+          "feature": "promo_flag",
+          "shap_units": -0.82,
+          "feature_value": 0.0
+        }
+      ]
+    },
+    "drivers": [
+      {
+        "factor": "forecast vs recent level",
+        "direction": "down",
+        "impact_pct": 6.9,
+        "detail": "30-day forecast mean 36/day vs trailing 28d 39/day"
+      },
+      {
+        "factor": "promo assumption",
+        "direction": "down",
+        "impact_pct": 3.6,
+        "detail": "1 promo days in the last 28; horizon assumes none (unplannable)"
+      }
+    ],
+    "narrative": "P112 is forecast at ~36 units/day over the next 30 days (-7% vs the trailing-28d level of 39). The winning model (Gradient Boosting) leans mainly on dow (50%), roll_mean_28 (13%), lag_14 (12%)."
+  }
+}

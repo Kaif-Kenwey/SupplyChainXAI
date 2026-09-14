@@ -85,23 +85,6 @@
     }
   },
   {
-    "alert_id": "R1-P110",
-    "type": "stockout_risk",
-    "severity": "WARNING",
-    "sku": "P110",
-    "supplier_id": "S2",
-    "message": "P110 forecast to breach safety stock in ~27 days (27 days of cover (effective lead 25d incl. drift)); P(stockout before replenishment) = 31%.",
-    "data": {
-      "on_hand": 153,
-      "on_order": 605,
-      "lead_time_days": 25,
-      "demand_over_lead_time": 685.1,
-      "demand_sigma": 145.4,
-      "days_of_cover": 26.6,
-      "stockout_probability": 0.308
-    }
-  },
-  {
     "alert_id": "R4-S4-P105",
     "type": "supplier_lead_drift",
     "severity": "WARNING",

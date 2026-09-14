@@ -1,0 +1,157 @@
+{
+  "generated_at": "2026-09-14T16:21:38+00:00",
+  "status": "critical",
+  "model_version": "2ab9ece20309",
+  "model_name": "XGBoost",
+  "models_by_sku": {
+    "P101": "Random Forest",
+    "P102": "XGBoost",
+    "P103": "Random Forest",
+    "P104": "XGBoost",
+    "P105": "Gradient Boosting",
+    "P106": "XGBoost",
+    "P107": "Gradient Boosting",
+    "P108": "XGBoost",
+    "P109": "Random Forest",
+    "P110": "Gradient Boosting",
+    "P111": "Random Forest",
+    "P112": "Gradient Boosting"
+  },
+  "last_trained": "2026-09-14T16:16:23+00:00",
+  "metrics": {
+    "wape_current_fold": 17.54,
+    "wape_reference": 12.15,
+    "wape_reference_previous_folds": 16.27,
+    "wape_baseline": 33.75,
+    "per_sku_wape_current_fold": {
+      "P101": 14.96,
+      "P102": 12.22,
+      "P103": 13.96,
+      "P104": 17.92,
+      "P105": 7.68,
+      "P106": 16.19,
+      "P107": 13.51,
+      "P108": 11.64,
+      "P109": 12.93,
+      "P110": 11.08,
+      "P111": 12.21,
+      "P112": 10.15
+    }
+  },
+  "drift": {
+    "status": "critical",
+    "by_sku": {
+      "P101": "warning",
+      "P102": "warning",
+      "P103": "healthy",
+      "P104": "critical",
+      "P105": "critical",
+      "P106": "critical"
+    },
+    "detail": {
+      "P101": [
+        "lag_28"
+      ],
+      "P102": [
+        "lag_1",
+        "lag_7"
+      ],
+      "P103": [],
+      "P104": [
+        "lag_1",
+        "lag_28",
+        "lag_7"
+      ],
+      "P105": [
+        "lag_1",
+        "lag_28",
+        "lag_7"
+      ],
+      "P106": [
+        "lag_1",
+        "lag_28",
+        "lag_7"
+      ]
+    }
+  },
+  "interval_coverage": {
+    "target_coverage": 0.8,
+    "nominal_interval": "80%",
+    "observed_coverage": 0.493,
+    "coverage_error": 0.307,
+    "calibration_status": "warning",
+    "sigma_scale_for_target": 1.929,
+    "per_sku": {
+      "P101": {
+        "observed_coverage": 0.667,
+        "n_days": 90,
+        "flag": "under-covering"
+      },
+      "P102": {
+        "observed_coverage": 0.511,
+        "n_days": 90,
+        "flag": "under-covering"
+      },
+      "P103": {
+        "observed_coverage": 0.589,
+        "n_days": 90,
+        "flag": "under-covering"
+      },
+      "P104": {
+        "observed_coverage": 0.233,
+        "n_days": 90,
+        "flag": "under-covering"
+      },
+      "P105": {
+        "observed_coverage": 0.644,
+        "n_days": 90,
+        "flag": "under-covering"
+      },
+      "P106": {
+        "observed_coverage": 0.478,
+        "n_days": 90,
+        "flag": "under-covering"
+      },
+      "P107": {
+        "observed_coverage": 0.611,
+        "n_days": 90,
+        "flag": "under-covering"
+      },
+      "P108": {
+        "observed_coverage": 0.517,
+        "n_days": 89,
+        "flag": "under-covering"
+      },
+      "P109": {
+        "observed_coverage": 0.472,
+        "n_days": 89,
+        "flag": "under-covering"
+      },
+      "P110": {
+        "observed_coverage": 0.333,
+        "n_days": 90,
+        "flag": "under-covering"
+      },
+      "P111": {
+        "observed_coverage": 0.4,
+        "n_days": 90,
+        "flag": "under-covering"
+      },
+      "P112": {
+        "observed_coverage": 0.467,
+        "n_days": 90,
+        "flag": "under-covering"
+      }
+    }
+  },
+  "data_quality_status": "WARN",
+  "retraining": {
+    "retrain_required": true,
+    "reasons": [
+      "data/feature drift status = critical",
+      "prediction-interval coverage 0.49 < minimum 0.70"
+    ],
+    "evaluated_at": "2025-12-31T00:00:00+00:00"
+  },
+  "recommendation": "Retrain: data/feature drift status = critical; prediction-interval coverage 0.49 < minimum 0.70"
+}
