@@ -16,6 +16,7 @@ Method (classic periodic-review inventory policy, fully transparent):
                          with a reliability floor and drift penalties
     order-by date      = expected stock-out date - supplier lead time
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -31,7 +32,7 @@ from supplychainxai.risk.engine import lead_time_intelligence, sps_norm_cdf
 class Recommendation:
     sku: str
     product_name: str
-    action: str                          # BUY | HOLD | EXPEDITE
+    action: str  # BUY | HOLD | EXPEDITE
     quantity: int
     supplier_id: str | None
     supplier_name: str
@@ -41,7 +42,7 @@ class Recommendation:
     expected_stockout_date: str | None
     coverage_days: float
     runner_up: dict | None = None
-    drivers: list[dict] = field(default_factory=list)   # filled by explain layer
+    drivers: list[dict] = field(default_factory=list)  # filled by explain layer
 
 
 def _delivered(po: pd.DataFrame) -> pd.DataFrame:
@@ -58,12 +59,19 @@ def _supplier_stats(purchase_orders: pd.DataFrame) -> pd.DataFrame:
         return pd.DataFrame(columns=["supplier_id", "on_time_rate", "avg_lead"])
     po["lead"] = (po["delivered_date"] - po["order_date"]).dt.days
     po["on_time"] = po["delivered_date"] <= po["expected_date"]
-    return po.groupby("supplier_id").agg(on_time_rate=("on_time", "mean"),
-                                         avg_lead=("lead", "mean")).reset_index()
+    return (
+        po.groupby("supplier_id")
+        .agg(on_time_rate=("on_time", "mean"), avg_lead=("lead", "mean"))
+        .reset_index()
+    )
 
 
-def choose_supplier(sku: str, data, sup_stats: pd.DataFrame,
-                    reliability_target: float = config.SUPPLIER_RELIABILITY_FLOOR) -> tuple[dict | None, dict | None]:
+def choose_supplier(
+    sku: str,
+    data,
+    sup_stats: pd.DataFrame,
+    reliability_target: float = config.SUPPLIER_RELIABILITY_FLOOR,
+) -> tuple[dict | None, dict | None]:
     """Score all suppliers eligible for the SKU; return (best, runner-up)."""
     terms = data.supply_terms[data.supply_terms["sku"] == sku].copy()
     if terms.empty:
@@ -86,45 +94,62 @@ def choose_supplier(sku: str, data, sup_stats: pd.DataFrame,
     for t in terms.itertuples():
         proven = t.supplier_id in set(sup_stats["supplier_id"])
         if proven:
-            ot_observed = float(sup_stats.loc[sup_stats["supplier_id"] == t.supplier_id,
-                                              "on_time_rate"].iloc[0])
-            ot_target = float(data.suppliers.set_index("supplier_id")
-                              .loc[t.supplier_id, "target_otd"])
-            ot = 0.5 * ot_observed + 0.5 * ot_target        # observed + contract SLA
+            ot_observed = float(
+                sup_stats.loc[sup_stats["supplier_id"] == t.supplier_id, "on_time_rate"].iloc[0]
+            )
+            ot_target = float(
+                data.suppliers.set_index("supplier_id").loc[t.supplier_id, "target_otd"]
+            )
+            ot = 0.5 * ot_observed + 0.5 * ot_target  # observed + contract SLA
         else:
-            ot = float(data.suppliers.set_index("supplier_id")
-                       .loc[t.supplier_id, "target_otd"])    # SLA only, unproven
+            ot = float(
+                data.suppliers.set_index("supplier_id").loc[t.supplier_id, "target_otd"]
+            )  # SLA only, unproven
         lt = float(t.quoted_lead_days) * (1.0 + max(drift.get(t.supplier_id, 0.0), 0.0))
         price_score = t.unit_price / terms["unit_price"].max()
-        rows.append({
-            "supplier_id": t.supplier_id, "supplier_name": names.get(t.supplier_id, t.supplier_id),
-            "unit_price": float(t.unit_price), "lead_days": round(lt, 1),
-            "quoted_lead_days": int(t.quoted_lead_days), "on_time_rate": round(ot, 3),
-            "lead_drift": round(drift.get(t.supplier_id, 0.0), 3),
-            "is_primary": bool(t.is_primary),
-            "proven": proven,
-            "score": round(config.W_PRICE * price_score
-                           + config.W_RELIABILITY * (1 - ot)
-                           + config.W_LEAD_TIME * min(lt / 30.0, 1.0)
-                           + (0.15 if drift.get(t.supplier_id, 0.0) >= config.LEADTIME_DRIFT_PCT else 0)
-                           + (0.10 if ot < reliability_target else 0)
-                           + (0.0 if proven else 0.05), 4),
-        })
+        rows.append(
+            {
+                "supplier_id": t.supplier_id,
+                "supplier_name": names.get(t.supplier_id, t.supplier_id),
+                "unit_price": float(t.unit_price),
+                "lead_days": round(lt, 1),
+                "quoted_lead_days": int(t.quoted_lead_days),
+                "on_time_rate": round(ot, 3),
+                "lead_drift": round(drift.get(t.supplier_id, 0.0), 3),
+                "is_primary": bool(t.is_primary),
+                "proven": proven,
+                "score": round(
+                    config.W_PRICE * price_score
+                    + config.W_RELIABILITY * (1 - ot)
+                    + config.W_LEAD_TIME * min(lt / 30.0, 1.0)
+                    + (0.15 if drift.get(t.supplier_id, 0.0) >= config.LEADTIME_DRIFT_PCT else 0)
+                    + (0.10 if ot < reliability_target else 0)
+                    + (0.0 if proven else 0.05),
+                    4,
+                ),
+            }
+        )
     rows.sort(key=lambda r: r["score"])
     return (rows[0] if rows else None), (rows[1] if len(rows) > 1 else None)
 
 
-def recommend_sku(sku: str, data, forecasts: pd.DataFrame, sup_stats: pd.DataFrame,
-                  inventory_override: dict | None = None,
-                  demand_multiplier: float = 1.0,
-                  service_level: float = config.SERVICE_LEVEL,
-                  today: pd.Timestamp | None = None) -> Recommendation:
+def recommend_sku(
+    sku: str,
+    data,
+    forecasts: pd.DataFrame,
+    sup_stats: pd.DataFrame,
+    inventory_override: dict | None = None,
+    demand_multiplier: float = 1.0,
+    service_level: float = config.SERVICE_LEVEL,
+    today: pd.Timestamp | None = None,
+) -> Recommendation:
     state = data.inventory.sort_values("date").groupby("sku").tail(1).set_index("sku")
     products = data.products.set_index("sku")
     fc = forecasts[forecasts["sku"] == sku].sort_values("date")
     if fc.empty or sku not in state.index:
-        return Recommendation(sku, products.loc[sku, "name"], "HOLD", 0, None, "",
-                              0.0, 0.0, None, None, 0.0)
+        return Recommendation(
+            sku, products.loc[sku, "name"], "HOLD", 0, None, "", 0.0, 0.0, None, None, 0.0
+        )
 
     best, runner = choose_supplier(sku, data, sup_stats)
     lead = int(best["lead_days"]) if best else 7
@@ -133,9 +158,15 @@ def recommend_sku(sku: str, data, forecasts: pd.DataFrame, sup_stats: pd.DataFra
     demand = fc["prediction"].iloc[:horizon].to_numpy() * demand_multiplier
     gross = float(demand.sum())
     pi_width = float(np.mean(fc["upper_80"].iloc[:horizon] - fc["prediction"].iloc[:horizon]))
-    sigma_h = pi_width / 1.2816 * np.sqrt(horizon)                      # de-normalise PI
-    sigma_h = sigma_h + (lead - (best["quoted_lead_days"] if best else lead)) * float(demand.mean()) * 0.5 if best else sigma_h
-    z = {0.90: 1.2816, 0.95: 1.6449, 0.98: 2.0537, 0.99: 2.3263}.get(round(service_level, 2), 1.6449)
+    sigma_h = pi_width / 1.2816 * np.sqrt(horizon)  # de-normalise PI
+    sigma_h = (
+        sigma_h + (lead - (best["quoted_lead_days"] if best else lead)) * float(demand.mean()) * 0.5
+        if best
+        else sigma_h
+    )
+    z = {0.90: 1.2816, 0.95: 1.6449, 0.98: 2.0537, 0.99: 2.3263}.get(
+        round(service_level, 2), 1.6449
+    )
     safety = z * max(sigma_h, 0.0)
 
     row = state.loc[sku]
@@ -153,18 +184,22 @@ def recommend_sku(sku: str, data, forecasts: pd.DataFrame, sup_stats: pd.DataFra
     days_to_stockout = position / daily
     today = today or fc["date"].iloc[0]
     stockout_date = today + pd.Timedelta(days=float(days_to_stockout))
-    order_by = stockout_date - pd.Timedelta(days=lead) - pd.Timedelta(days=config.REVIEW_PERIOD_DAYS)
+    order_by = (
+        stockout_date - pd.Timedelta(days=lead) - pd.Timedelta(days=config.REVIEW_PERIOD_DAYS)
+    )
 
     if qty == 0:
         action = "HOLD"
     elif days_to_stockout < lead:
-        action = "EXPEDITE"                              # will break before arrival
+        action = "EXPEDITE"  # will break before arrival
     else:
         action = "BUY"
 
     total_cost = qty * float(best["unit_price"]) if best else 0.0
     return Recommendation(
-        sku=sku, product_name=str(products.loc[sku, "name"]), action=action,
+        sku=sku,
+        product_name=str(products.loc[sku, "name"]),
+        action=action,
         quantity=qty,
         supplier_id=best["supplier_id"] if best and qty > 0 else None,
         supplier_name=best["supplier_name"] if best and qty > 0 else "",
@@ -173,8 +208,19 @@ def recommend_sku(sku: str, data, forecasts: pd.DataFrame, sup_stats: pd.DataFra
         order_by=str(order_by.date()) if qty > 0 else None,
         expected_stockout_date=str(stockout_date.date()),
         coverage_days=round((position + qty) / daily, 1),
-        runner_up={k: runner[k] for k in ("supplier_id", "supplier_name", "unit_price",
-                                          "lead_days", "on_time_rate", "score")} if runner and qty > 0 else None,
+        runner_up={
+            k: runner[k]
+            for k in (
+                "supplier_id",
+                "supplier_name",
+                "unit_price",
+                "lead_days",
+                "on_time_rate",
+                "score",
+            )
+        }
+        if runner and qty > 0
+        else None,
     )
 
 
@@ -197,12 +243,15 @@ def stockout_probability(rec_state: dict, mu_lt: float, sigma_lt: float) -> floa
 
 
 # ------------------------------------------------------- what-if simulator
-def simulate_scenario(data, forecasts: pd.DataFrame,
-                      demand_pct: float = 0.0,
-                      lead_time_pct: float = 0.0,
-                      inventory_pct: float = 0.0,
-                      service_level: float = config.SERVICE_LEVEL,
-                      baseline: list[Recommendation] | None = None) -> dict:
+def simulate_scenario(
+    data,
+    forecasts: pd.DataFrame,
+    demand_pct: float = 0.0,
+    lead_time_pct: float = 0.0,
+    inventory_pct: float = 0.0,
+    service_level: float = config.SERVICE_LEVEL,
+    baseline: list[Recommendation] | None = None,
+) -> dict:
     """Recompute the whole procurement plan under a scenario.
 
     Question the simulator answers: "what if demand rises 20%, our supplier
@@ -224,7 +273,7 @@ def simulate_scenario(data, forecasts: pd.DataFrame,
             continue
         base_rec = next((r for r in baseline if r.sku == sku), None)
 
-        best, runner = choose_supplier(sku, data, sup_stats)
+        best, _runner = choose_supplier(sku, data, sup_stats)
         if best is None:
             continue
         lead = max(1, int(round(best["lead_days"] * (1.0 + lead_time_pct))))
@@ -235,15 +284,18 @@ def simulate_scenario(data, forecasts: pd.DataFrame,
         pi_w = float(np.mean(fc["upper_80"].iloc[:horizon] - fc["prediction"].iloc[:horizon]))
         sigma_daily = pi_w / 1.2816
         daily_mean = float(demand.mean()) or 1.0
-        sigma_lt = float(np.sqrt((sigma_daily * np.sqrt(horizon)) ** 2
-                                 + (daily_mean * lead * 0.25) ** 2)) + 1.0
+        sigma_lt = (
+            float(np.sqrt((sigma_daily * np.sqrt(horizon)) ** 2 + (daily_mean * lead * 0.25) ** 2))
+            + 1.0
+        )
 
         row = state.loc[sku]
         on_hand = int(row["on_hand"]) * (1.0 + inventory_pct)
         position = on_hand + int(row["on_order"])
 
         z = {0.90: 1.2816, 0.95: 1.6449, 0.98: 2.0537, 0.99: 2.3263}.get(
-            round(service_level, 2), 1.6449)
+            round(service_level, 2), 1.6449
+        )
         safety = z * sigma_lt
         net = gross + safety - position
         pack = int(products.loc[sku, "pack_size"])
@@ -253,17 +305,23 @@ def simulate_scenario(data, forecasts: pd.DataFrame,
         cost = qty * float(best["unit_price"])
         coverage = (position + qty) / daily_mean
 
-        per_sku.append({
-            "sku": sku, "name": str(products.loc[sku, "name"]),
-            "action": "BUY" if qty > 0 else "HOLD",
-            "quantity": qty, "cost": round(cost, 2),
-            "supplier_id": best["supplier_id"] if qty > 0 else None,
-            "supplier_id_baseline": base_rec.supplier_id if base_rec else None,
-            "stockout_probability": round(p_stockout, 3),
-            "stockout_probability_baseline": _baseline_stockout_prob(data, fc, sku, state, lt_intel),
-            "coverage_days": round(coverage, 1),
-            "coverage_days_baseline": base_rec.coverage_days if base_rec else None,
-        })
+        per_sku.append(
+            {
+                "sku": sku,
+                "name": str(products.loc[sku, "name"]),
+                "action": "BUY" if qty > 0 else "HOLD",
+                "quantity": qty,
+                "cost": round(cost, 2),
+                "supplier_id": best["supplier_id"] if qty > 0 else None,
+                "supplier_id_baseline": base_rec.supplier_id if base_rec else None,
+                "stockout_probability": round(p_stockout, 3),
+                "stockout_probability_baseline": _baseline_stockout_prob(
+                    data, fc, sku, state, lt_intel
+                ),
+                "coverage_days": round(coverage, 1),
+                "coverage_days_baseline": base_rec.coverage_days if base_rec else None,
+            }
+        )
         if qty > 0:
             buys += 1
             tot_cost += cost
@@ -273,8 +331,12 @@ def simulate_scenario(data, forecasts: pd.DataFrame,
 
     n = max(len(per_sku), 1)
     return {
-        "scenario": {"demand_pct": demand_pct, "lead_time_pct": lead_time_pct,
-                     "inventory_pct": inventory_pct, "service_level": service_level},
+        "scenario": {
+            "demand_pct": demand_pct,
+            "lead_time_pct": lead_time_pct,
+            "inventory_pct": inventory_pct,
+            "service_level": service_level,
+        },
         "summary": {
             "procurement_units": tot_units,
             "procurement_cost": round(tot_cost, 2),
@@ -288,13 +350,18 @@ def simulate_scenario(data, forecasts: pd.DataFrame,
 
 def _baseline_stockout_prob(data, fc: pd.DataFrame, sku: str, state, lt_intel) -> float:
     from supplychainxai.risk.engine import effective_lead
+
     lead, lead_std, _ = effective_lead(sku, data.supply_terms, lt_intel)
     horizon = min(len(fc), lead)
     daily_fc = fc["prediction"].iloc[:horizon]
     mu_lt = float(daily_fc.sum())
     sigma_daily = float(np.mean(fc["upper_80"].iloc[:horizon] - daily_fc)) / 1.2816
-    sigma_lt = float(np.sqrt((sigma_daily * np.sqrt(horizon)) ** 2
-                             + (mu_lt / max(lead, 1) * lead_std) ** 2)) + 1.0
+    sigma_lt = (
+        float(
+            np.sqrt((sigma_daily * np.sqrt(horizon)) ** 2 + (mu_lt / max(lead, 1) * lead_std) ** 2)
+        )
+        + 1.0
+    )
     row = state.loc[sku]
     position = int(row["on_hand"]) + int(row["on_order"])
     return float(round(1.0 - sps_norm_cdf((position - mu_lt) / sigma_lt), 3))

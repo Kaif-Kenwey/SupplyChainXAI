@@ -13,3 +13,8 @@ httpx>=0.27
 # xgboost>=2.0          # drop-in boostmodel upgrade, auto-detected if installed
 # shap>=0.45            # SHAP TreeExplainer, auto-detected if installed
 # openai>=1.30          # enables the LLM-backed copilot mode (any OpenAI-compatible endpoint)
+
+# ---- PostgreSQL mode (optional; SQLite remains the default) ----
+# DATABASE_URL=postgresql://... activates the PG warehouse path
+sqlalchemy>=2.0
+psycopg2-binary>=2.9

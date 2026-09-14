@@ -8,17 +8,14 @@ Pipeline (RAG-style, but the "vector store" is the analytics warehouse itself):
 Every answer cites the queries/tables it came from. Unknown intents are
 refused rather than hallucinated — enforced by design, not by prompt hope.
 """
+
 from __future__ import annotations
 
 import re
 from dataclasses import dataclass, field
 
-import numpy as np
-import pandas as pd
-
 from supplychainxai.copilot import llm
 from supplychainxai.data import store
-from supplychainxai.risk.engine import Alert
 
 
 @dataclass
@@ -28,7 +25,7 @@ class CopilotResult:
     answer: str
     sources: list[str] = field(default_factory=list)
     context: dict = field(default_factory=dict)
-    engine: str = "narrator"        # narrator | llm
+    engine: str = "narrator"  # narrator | llm
 
 
 SKU_RE = re.compile(r"\bP\s?-?(\d{3})\b", re.IGNORECASE)
@@ -52,35 +49,52 @@ def retrieve(intent: str, sku: str | None, ctx) -> tuple[dict, list[str]]:
                  FROM dim_product p
                  JOIN fact_inventory i ON i.sku = p.sku
                       AND i.date = (SELECT MAX(date) FROM fact_inventory)
-                WHERE p.sku = ?""", (sku,))
+                WHERE p.sku = ?""",
+            (sku,),
+        )
         if len(row):
             context["product"] = row.to_dict("records")[0]
             sources.append("SQL: dim_product × fact_inventory (latest snapshot)")
 
     if intent in ("stockout", "risk"):
-        alerts = [a for a in ctx.risk_alerts
-                  if a.type in ("stockout_risk", "demand_spike")
-                  and (sku is None or a.sku == sku)]
+        alerts = [
+            a
+            for a in ctx.risk_alerts
+            if a.type in ("stockout_risk", "demand_spike") and (sku is None or a.sku == sku)
+        ]
         context["stockout_risk_alerts"] = [
-            {"sku": a.sku, "severity": a.severity, "message": a.message,
-             **a.data} for a in alerts[:8]]
+            {"sku": a.sku, "severity": a.severity, "message": a.message, **a.data}
+            for a in alerts[:8]
+        ]
         sources.append("artifacts: risk engine (stockout_risk / demand_spike alerts)")
 
     if intent in ("reorder", "explain"):
-        recs = [r for r in ctx.recommendations if r.action in ("BUY", "EXPEDITE")
-                and (sku is None or r.sku == sku)]
-        context["recommendations"] = [{
-            "sku": r.sku, "action": r.action, "quantity": r.quantity,
-            "supplier_id": r.supplier_id, "unit_price": r.unit_price,
-            "total_cost": r.total_cost, "order_by": r.order_by,
-            "expected_stockout_date": r.expected_stockout_date,
-        } for r in recs[:8]]
+        recs = [
+            r
+            for r in ctx.recommendations
+            if r.action in ("BUY", "EXPEDITE") and (sku is None or r.sku == sku)
+        ]
+        context["recommendations"] = [
+            {
+                "sku": r.sku,
+                "action": r.action,
+                "quantity": r.quantity,
+                "supplier_id": r.supplier_id,
+                "unit_price": r.unit_price,
+                "total_cost": r.total_cost,
+                "order_by": r.order_by,
+                "expected_stockout_date": r.expected_stockout_date,
+            }
+            for r in recs[:8]
+        ]
         sources.append("artifacts: procurement recommendation engine")
         if sku:
             expl = next((e for e in ctx.explanations if e["sku"] == sku), None)
             if expl:
                 context["explanation"] = {
-                    "components": expl["components"], "narrative": expl["narrative"]}
+                    "components": expl["components"],
+                    "narrative": expl["narrative"],
+                }
                 sources.append("artifacts: explainability layer")
 
     if intent == "forecast":
@@ -88,10 +102,16 @@ def retrieve(intent: str, sku: str | None, ctx) -> tuple[dict, list[str]]:
         if sku:
             fc = fc[fc["sku"] == sku]
         if len(fc):
-            agg = (fc.groupby("sku")
-                     .agg(mean_daily=("prediction", "mean"),
-                          day1=("date", "min"), day30=("date", "max"),
-                          model=("model", "first")).reset_index())
+            agg = (
+                fc.groupby("sku")
+                .agg(
+                    mean_daily=("prediction", "mean"),
+                    day1=("date", "min"),
+                    day30=("date", "max"),
+                    model=("model", "first"),
+                )
+                .reset_index()
+            )
             context["forecast"] = agg.to_dict("records")
             sources.append("artifacts: forecasts.csv (winning model, 30d)")
 
@@ -109,11 +129,14 @@ def retrieve(intent: str, sku: str | None, ctx) -> tuple[dict, list[str]]:
              GROUP BY s.supplier_id ORDER BY pos_total DESC"""
         context["suppliers"] = store.query(q).to_dict("records")
         sources.append("SQL: dim_supplier × fact_purchase_orders (OTD %, avg lead)")
-        drift = [a for a in ctx.risk_alerts if a.type in ("supplier_lead_drift",
-                                                          "supplier_reliability")]
+        drift = [
+            a for a in ctx.risk_alerts if a.type in ("supplier_lead_drift", "supplier_reliability")
+        ]
         if drift:
-            context["supplier_alerts"] = [{"supplier_id": a.supplier_id, "sku": a.sku,
-                                           "message": a.message} for a in drift[:6]]
+            context["supplier_alerts"] = [
+                {"supplier_id": a.supplier_id, "sku": a.sku, "message": a.message}
+                for a in drift[:6]
+            ]
             sources.append("artifacts: risk engine (supplier alerts)")
 
     if intent == "spend":
@@ -134,19 +157,22 @@ def _fmt(x: float) -> str:
     return f"{x:,.0f}" if abs(x) >= 10 else f"{x:,.1f}"
 
 
-def narrator_answer(question: str, intent: str, sku: str | None,
-                    context: dict, ctx) -> str:
+def narrator_answer(question: str, intent: str, sku: str | None, context: dict, ctx) -> str:
     if not context:
-        return ("I don't have that in the analytics data. I can answer about stockouts, "
-                "reorder recommendations, forecasts, supplier performance, and risk alerts.")
+        return (
+            "I don't have that in the analytics data. I can answer about stockouts, "
+            "reorder recommendations, forecasts, supplier performance, and risk alerts."
+        )
 
     if intent in ("stockout", "risk"):
         alerts = context.get("stockout_risk_alerts", [])
         if not alerts:
             return "No stockout or demand-spike alerts are currently active in the risk engine."
         crit = [a for a in alerts if a["severity"] == "CRITICAL"]
-        lines = [f"{len(alerts)} active alert(s){' — ' + str(len(crit)) + ' critical' if crit else ''}. "
-                 f"Most urgent: {alerts[0]['message']}"]
+        lines = [
+            f"{len(alerts)} active alert(s){' — ' + str(len(crit)) + ' critical' if crit else ''}. "
+            f"Most urgent: {alerts[0]['message']}"
+        ]
         for a in alerts[1:4]:
             lines.append(f"- {a['message']}")
         return " ".join(lines)
@@ -157,27 +183,38 @@ def narrator_answer(question: str, intent: str, sku: str | None,
             if sku:
                 r = recs[0]
                 expl = context.get("explanation", {})
-                head = (f"{r['action']} {_fmt(r['quantity'])} units of {r['sku']} from "
-                        f"{r['supplier_id']} at {r['unit_price']:.2f} "
-                        f"(total {r['total_cost']:,.0f}). Order by {r['order_by']}; "
-                        f"stockout projected {r['expected_stockout_date']}.")
+                head = (
+                    f"{r['action']} {_fmt(r['quantity'])} units of {r['sku']} from "
+                    f"{r['supplier_id']} at {r['unit_price']:.2f} "
+                    f"(total {r['total_cost']:,.0f}). Order by {r['order_by']}; "
+                    f"stockout projected {r['expected_stockout_date']}."
+                )
                 if expl.get("narrative"):
                     return f"{head} Why: {expl['narrative']}"
                 return head
             total = sum(r["total_cost"] for r in recs)
             units = sum(r["quantity"] for r in recs)
-            return (f"{len(recs)} SKUs need replenishment: {_fmt(units)} units, "
-                    f"{total:,.0f} total cost. Top actions: "
-                    + "; ".join(f"{r['sku']} → buy {_fmt(r['quantity'])} from {r['supplier_id']}"
-                                for r in recs[:3]) + ".")
+            return (
+                f"{len(recs)} SKUs need replenishment: {_fmt(units)} units, "
+                f"{total:,.0f} total cost. Top actions: "
+                + "; ".join(
+                    f"{r['sku']} → buy {_fmt(r['quantity'])} from {r['supplier_id']}"
+                    for r in recs[:3]
+                )
+                + "."
+            )
         if sku:  # SKU asked explicitly but it is a HOLD
             p = context.get("product", {})
             alerts = [a for a in ctx.risk_alerts if a.sku == sku]
             extra = f" Watch: {alerts[0].message}" if alerts else ""
-            return (f"{sku} has no open purchase action — its inventory position "
-                    f"({_fmt(p.get('on_hand', 0))} on hand + {_fmt(p.get('on_order', 0))} on order) "
-                    f"covers the protection window.{extra}")
-        return "No purchase actions are required right now — all SKUs are above their reorder points."
+            return (
+                f"{sku} has no open purchase action — its inventory position "
+                f"({_fmt(p.get('on_hand', 0))} on hand + {_fmt(p.get('on_order', 0))} on order) "
+                f"covers the protection window.{extra}"
+            )
+        return (
+            "No purchase actions are required right now — all SKUs are above their reorder points."
+        )
 
     if intent == "forecast":
         rows = context.get("forecast", [])
@@ -186,24 +223,37 @@ def narrator_answer(question: str, intent: str, sku: str | None,
         if sku:
             r = rows[0]
             d1, d30 = str(r["day1"])[:10], str(r["day30"])[:10]
-            return (f"{sku} is forecast at ~{_fmt(r['mean_daily'])} units/day over the "
-                    f"next 30 days ({d1} to {d30}), model: {r['model']}.")
+            return (
+                f"{sku} is forecast at ~{_fmt(r['mean_daily'])} units/day over the "
+                f"next 30 days ({d1} to {d30}), model: {r['model']}."
+            )
         top = sorted(rows, key=lambda r: -r["mean_daily"])[:5]
-        return ("Highest forecast demand: "
-                + ", ".join(f"{r['sku']} ~{_fmt(r['mean_daily'])}/day" for r in top) + ".")
+        return (
+            "Highest forecast demand: "
+            + ", ".join(f"{r['sku']} ~{_fmt(r['mean_daily'])}/day" for r in top)
+            + "."
+        )
 
     if intent == "supplier":
         sups = context.get("suppliers", [])
         alerts = context.get("supplier_alerts", [])
         if sups:
-            best = max((s for s in sups if s["on_time_pct"] is not None),
-                       key=lambda s: s["on_time_pct"], default=None)
-            worst = min((s for s in sups if s["on_time_pct"] is not None),
-                        key=lambda s: s["on_time_pct"], default=None)
+            best = max(
+                (s for s in sups if s["on_time_pct"] is not None),
+                key=lambda s: s["on_time_pct"],
+                default=None,
+            )
+            worst = min(
+                (s for s in sups if s["on_time_pct"] is not None),
+                key=lambda s: s["on_time_pct"],
+                default=None,
+            )
             lines = []
             if best:
-                lines.append(f"Best on-time delivery: {best['name']} ({best['supplier_id']}) "
-                             f"at {best['on_time_pct']}% across {best['pos_total']} POs.")
+                lines.append(
+                    f"Best on-time delivery: {best['name']} ({best['supplier_id']}) "
+                    f"at {best['on_time_pct']}% across {best['pos_total']} POs."
+                )
             if worst:
                 lines.append(f"Lowest: {worst['name']} at {worst['on_time_pct']}%.")
             for a in alerts[:2]:
@@ -216,11 +266,16 @@ def narrator_answer(question: str, intent: str, sku: str | None,
         if not rows:
             return "I don't have PO spend data yet."
         total = sum(r["spend"] for r in rows)
-        return (f"Total PO spend {_fmt(total)} across {len(rows)} categories. Top: "
-                + ", ".join(f"{r['category']} {_fmt(r['spend'])}" for r in rows[:3]) + ".")
+        return (
+            f"Total PO spend {_fmt(total)} across {len(rows)} categories. Top: "
+            + ", ".join(f"{r['category']} {_fmt(r['spend'])}" for r in rows[:3])
+            + "."
+        )
 
-    return ("I can answer about stockouts, reorder recommendations, forecasts, "
-            "supplier performance, and risk alerts.")
+    return (
+        "I can answer about stockouts, reorder recommendations, forecasts, "
+        "supplier performance, and risk alerts."
+    )
 
 
 # ---------------------------------------------------------------- intents
@@ -249,11 +304,16 @@ def ask(question: str, ctx) -> dict:
     if intent == "unknown" and sku:
         intent = "reorder"
     if intent == "unknown":
-        return CopilotResult(question=question, intent="unknown",
-                             answer=("I can answer about stockouts, reorder "
-                                     "recommendations, forecasts, supplier performance, "
-                                     "and risk alerts. Try: 'Which products will stock "
-                                     "out next month?'")).__dict__
+        return CopilotResult(
+            question=question,
+            intent="unknown",
+            answer=(
+                "I can answer about stockouts, reorder "
+                "recommendations, forecasts, supplier performance, "
+                "and risk alerts. Try: 'Which products will stock "
+                "out next month?'"
+            ),
+        ).__dict__
 
     context, sources = retrieve(intent, sku, ctx)
     answer = llm.llm_answer(question, context)
@@ -262,6 +322,12 @@ def ask(question: str, ctx) -> dict:
         answer = narrator_answer(question, intent, sku, context, ctx)
         engine = "narrator"
 
-    result = CopilotResult(question=question, intent=intent, answer=answer,
-                           sources=sources, context=context, engine=engine)
+    result = CopilotResult(
+        question=question,
+        intent=intent,
+        answer=answer,
+        sources=sources,
+        context=context,
+        engine=engine,
+    )
     return result.__dict__

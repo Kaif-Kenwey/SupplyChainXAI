@@ -1,4 +1,5 @@
 """Stage 1 — Ingestion: load raw CSV/Excel-style files with schema enforcement."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -11,37 +12,67 @@ from supplychainxai import config
 
 SCHEMAS: dict[str, dict] = {
     "products": {
-        "dtypes": {"sku": "string", "name": "string", "category": "string",
-                   "unit_cost": "float64", "base_demand": "float64",
-                   "trend_per_year": "float64", "pack_size": "int64"},
+        "dtypes": {
+            "sku": "string",
+            "name": "string",
+            "category": "string",
+            "unit_cost": "float64",
+            "base_demand": "float64",
+            "trend_per_year": "float64",
+            "pack_size": "int64",
+        },
         "date_cols": [],
     },
     "suppliers": {
-        "dtypes": {"supplier_id": "string", "name": "string", "country": "string",
-                   "target_otd": "float64"},
+        "dtypes": {
+            "supplier_id": "string",
+            "name": "string",
+            "country": "string",
+            "target_otd": "float64",
+        },
         "date_cols": [],
     },
     "supply_terms": {
-        "dtypes": {"sku": "string", "supplier_id": "string", "unit_price": "float64",
-                   "quoted_lead_days": "int64", "lead_time_std": "float64",
-                   "is_primary": "boolean"},
+        "dtypes": {
+            "sku": "string",
+            "supplier_id": "string",
+            "unit_price": "float64",
+            "quoted_lead_days": "int64",
+            "lead_time_std": "float64",
+            "is_primary": "boolean",
+        },
         "date_cols": [],
     },
     "sales": {
-        "dtypes": {"date": "datetime64[ns]", "sku": "string", "units_sold": "float64",
-                   "unit_price": "float64", "promo_flag": "float64"},
+        "dtypes": {
+            "date": "datetime64[ns]",
+            "sku": "string",
+            "units_sold": "float64",
+            "unit_price": "float64",
+            "promo_flag": "float64",
+        },
         "date_cols": ["date"],
     },
     "inventory": {
-        "dtypes": {"date": "datetime64[ns]", "sku": "string", "on_hand": "float64",
-                   "on_order": "float64"},
+        "dtypes": {
+            "date": "datetime64[ns]",
+            "sku": "string",
+            "on_hand": "float64",
+            "on_order": "float64",
+        },
         "date_cols": ["date"],
     },
     "purchase_orders": {
-        "dtypes": {"po_id": "string", "sku": "string", "supplier_id": "string",
-                   "order_date": "datetime64[ns]", "expected_date": "datetime64[ns]",
-                   "delivered_date": "datetime64[ns]", "quantity": "float64",
-                   "unit_price": "float64"},
+        "dtypes": {
+            "po_id": "string",
+            "sku": "string",
+            "supplier_id": "string",
+            "order_date": "datetime64[ns]",
+            "expected_date": "datetime64[ns]",
+            "delivered_date": "datetime64[ns]",
+            "quantity": "float64",
+            "unit_price": "float64",
+        },
         "date_cols": ["order_date", "expected_date", "delivered_date"],
     },
 }

@@ -1,0 +1,63 @@
+# SupplyChainXAI — production-like local stack.
+#
+#   docker compose up --build          # API + PostgreSQL (+ optional MLflow)
+#   docker compose --profile mlflow up # also starts the MLflow tracking server
+#
+# The API container initialises the analytics store in PostgreSQL on boot
+# (scripts/init_store.py) and serves the dashboard + REST API on :8000.
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: scx
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-scx_dev_password}
+      POSTGRES_DB: scx
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U scx -d scx"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  api:
+    build: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://scx:${POSTGRES_PASSWORD:-scx_dev_password}@postgres:5432/scx
+      SCX_ENVIRONMENT: production-like
+      # Optional LLM copilot (never required):
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      SCX_LLM_MODEL: ${SCX_LLM_MODEL:-gpt-4o-mini}
+      # When the mlflow profile is up, the tracker can be enabled:
+      MLFLOW_TRACKING_URI: ${MLFLOW_TRACKING_URI:-}
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    restart: unless-stopped
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.17.2
+    profiles: ["mlflow"]
+    command: >
+      --backend-store-uri sqlite:////mlflow/mlflow.db
+      --artifacts-destination /mlflow/artifacts
+      --host 0.0.0.0 --port 5000
+    volumes:
+      - mlflowdata:/mlflow
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  mlflowdata:

@@ -9,6 +9,7 @@ Rules (each returns an audit count):
   PO01 expected_date < order_date -> swap correction (input error)
   PO02 missing delivered_date   -> status stays 'OPEN'
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -23,8 +24,9 @@ class CleanReport:
     steps: list[dict] = field(default_factory=list)
 
     def add(self, table: str, rule: str, action: str, rows_affected: int) -> None:
-        self.steps.append({"table": table, "rule": rule, "action": action,
-                           "rows_affected": int(rows_affected)})
+        self.steps.append(
+            {"table": table, "rule": rule, "action": action, "rows_affected": int(rows_affected)}
+        )
 
     def total_fixed(self) -> int:
         return int(sum(s["rows_affected"] for s in self.steps))
@@ -68,7 +70,7 @@ def clean_inventory(inv: pd.DataFrame, report: CleanReport) -> pd.DataFrame:
 
     neg = int(((df["on_hand"] < 0) | (df["on_order"] < 0)).sum())
     for col in ("on_hand", "on_order"):
-        df.loc[df[col] < 0, col] = 0          # physically floored at zero
+        df.loc[df[col] < 0, col] = 0  # physically floored at zero
     report.add("inventory", "CL02", "negative stock floored to 0", neg)
     return df.fillna({"on_hand": 0, "on_order": 0}).reset_index(drop=True)
 

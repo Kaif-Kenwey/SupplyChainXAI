@@ -6,6 +6,7 @@ re-words it. If no LLM endpoint is configured, the deterministic narrator
 produces the answer directly from the same context — the copilot is always
 grounded, with or without an API key.
 """
+
 from __future__ import annotations
 
 import json
@@ -39,6 +40,7 @@ def llm_answer(question: str, context: dict) -> str | None:
         return None
     try:
         from openai import OpenAI
+
         client = OpenAI()  # reads OPENAI_API_KEY / OPENAI_BASE_URL from env
         resp = client.chat.completions.create(
             model=os.getenv("SCX_LLM_MODEL", "gpt-4o-mini"),
@@ -46,9 +48,11 @@ def llm_answer(question: str, context: dict) -> str | None:
             max_tokens=350,
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user",
-                 "content": f"CONTEXT JSON:\n{build_context_block(context)}\n\n"
-                            f"QUESTION: {question}"},
+                {
+                    "role": "user",
+                    "content": f"CONTEXT JSON:\n{build_context_block(context)}\n\n"
+                    f"QUESTION: {question}",
+                },
             ],
         )
         return (resp.choices[0].message.content or "").strip() or None
