@@ -200,3 +200,9 @@ table.sim-delta-up { color: var(--emerald); }
   .nav-btn { font-size: 11px; padding: 10px 6px; text-align: center; }
   .sidebar-foot { display: none; }
 }
+
+/* ---- model ops additions ---- */
+td.def { max-width: 420px; font-size: 11px; color: #8b93a7; }
+.pill.pill-ok { background: rgba(45, 212, 167, 0.14); color: #2dd4a7; }
+.pill.pill-low { background: rgba(245, 179, 66, 0.14); color: #f5b342; }
+.pill.pill-over { background: rgba(139, 147, 167, 0.16); color: #aab2c5; }

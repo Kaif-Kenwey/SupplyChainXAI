@@ -34,8 +34,9 @@
         <button class="nav-btn" data-tab="risk">⚠ Risk Monitor</button>
         <button class="nav-btn" data-tab="recommendations">▣ Recommendations</button>
         <button class="nav-btn" data-tab="simulator">⇄ What-If Simulator</button>
+        <button class="nav-btn" data-tab="mlops">⚙ Model Ops</button>
         <button class="nav-btn" data-tab="copilot">✦ AI Copilot</button>
-        <div class="sidebar-foot">FastAPI · scikit-learn · statsmodels<br />SQLite analytics store</div>
+        <div class="sidebar-foot">FastAPI · scikit-learn · statsmodels<br />walk-forward eval · MLflow-ready</div>
       </nav>
 
       <!-- ================= main ================= -->
@@ -133,6 +134,22 @@
             <div class="table-wrap"><table id="table-sim"></table></div></div>
         </section>
 
+        <!-- model ops (MLOps) -->
+        <section id="tab-mlops" class="tab">
+          <div class="grid-2">
+            <div class="card"><h3>Model health</h3><div id="mh-card">loading…</div></div>
+            <div class="card"><h3>Data health</h3><div id="dh-card">loading…</div></div>
+          </div>
+          <div class="card"><h3>Experiments — walk-forward evaluation (portfolio)</h3>
+            <p class="hint" id="exp-cfg"></p>
+            <div class="table-wrap"><table id="table-experiments"></table></div>
+          </div>
+          <div class="card"><h3>Business impact <span class="hint">— every metric is labelled observed / estimated / simulated</span></h3>
+            <div class="kpi-grid" id="bkpi-grid"></div>
+            <div class="table-wrap" style="margin-top:12px"><table id="table-bkpi"></table></div>
+          </div>
+        </section>
+
         <!-- copilot -->
         <section id="tab-copilot" class="tab">
           <div class="card copilot-card">
@@ -155,7 +172,7 @@
       </main>
     </div>
     <footer class="foot">
-      SupplyChainXAI — explainable forecasting · risk detection · procurement optimization · grounded GenAI copilot
+      SupplyChainXAI — explainable forecasting · risk detection · procurement optimization · monitoring &amp; retraining · grounded GenAI copilot
     </footer>
   </div>
   <script src="/static/app.js"></script>

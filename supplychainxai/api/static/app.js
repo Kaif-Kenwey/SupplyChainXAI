@@ -237,12 +237,26 @@ async function loadRecs() {
 
 async function showRecDetail(sku) {
   const expl = await api(`/api/recommendations/${sku}/explain`);
+  const fe = expl.forecast_explanation || {};
+  const impList = expl.shap_importance?.length ? expl.shap_importance : expl.feature_importance;
+  const impLabel = expl.shap_importance?.length
+    ? "Forecast model drivers (SHAP mean |contribution|)"
+    : "Forecast model drivers (permutation importance)";
   $("#rec-detail-card").hidden = false;
   $("#rec-detail-title").textContent = `Why — ${sku}`;
   $("#rec-detail").innerHTML = `
     <p class="narrative">${esc(expl.explanation.narrative || "")}</p>
-    ${expl.feature_importance?.length ? `<h3 style="margin-top:12px">Forecast model drivers (permutation importance)</h3>
-      <div class="components">${expl.feature_importance.map((f) => `
+    ${fe.local_drivers ? `<h3 style="margin-top:12px">Why this demand level? (SHAP, day-1 of horizon)</h3>
+      <div class="components">
+        ${fe.local_drivers.top_positive.map((d) => `
+          <div class="comp"><span>▲ ${esc(d.feature)}</span><div class="cbar"><i style="width:${Math.min(100, d.shap_units * 40)}%"></i></div>
+          <span class="num">+${d.shap_units} u</span></div>`).join("")}
+        ${fe.local_drivers.top_negative.map((d) => `
+          <div class="comp dec"><span>▼ ${esc(d.feature)}</span><div class="cbar"><i style="width:${Math.min(100, -d.shap_units * 40)}%"></i></div>
+          <span class="num">${d.shap_units} u</span></div>`).join("")}
+      </div>` : ""}
+    ${impList?.length ? `<h3 style="margin-top:12px">${impLabel}</h3>
+      <div class="components">${impList.map((f) => `
         <div class="comp"><span>${esc(f.feature)}</span>
         <div class="cbar"><i style="width:${Math.min(100, f.importance * 100)}%"></i></div>
         <span class="num">${f.importance.toFixed(3)}</span></div>`).join("")}</div>` : ""}`;
@@ -313,6 +327,101 @@ $$(".sim-presets button").forEach((b) => b.addEventListener("click", () => {
   runSim();
 }));
 
+/* ================= model ops (MLOps) ================= */
+const statusPill = (s) =>
+  `<span class="pill ${s === "healthy" || s === "PASS" || s === "ready" ? "pill-ok" : s === "critical" || s === "FAIL" ? "pill-crit" : "pill-low"}">${esc(s)}</span>`;
+
+async function loadMlops() {
+  const [mh, dq, exp, bk] = await Promise.all([
+    api("/api/model-health").catch(() => null),
+    api("/api/data-quality").catch(() => null),
+    api("/api/experiments").catch(() => null),
+    api("/api/business-kpis").catch(() => null),
+  ]);
+
+  // ---- model health
+  if (mh) {
+    const m = mh.metrics || {};
+    const cov = mh.interval_coverage || {};
+    $("#mh-card").innerHTML = `
+      <div class="row-between"><div class="kpi"><div class="label">status</div>
+        <div class="value ${mh.status === "healthy" ? "ok" : mh.status === "critical" ? "bad" : "warn"}">${esc(mh.status.toUpperCase())}</div></div>
+        ${statusPill(mh.status)}</div>
+      <div class="components" style="margin-top:10px">
+        <div class="comp"><span>production model</span><div></div><span class="num">${esc(mh.model_name || "—")} · v${esc(mh.model_version || "—")}</span></div>
+        <div class="comp"><span>last trained</span><div></div><span class="num">${esc((mh.last_trained || "—").slice(0, 19))}</span></div>
+        <div class="comp"><span>WAPE — current fold</span><div class="cbar"><i style="width:${Math.min(100, (m.wape_current_fold || 0) * 2.5)}%"></i></div><span class="num">${m.wape_current_fold ?? "—"}%</span></div>
+        <div class="comp"><span>WAPE — previous folds</span><div></div><span class="num">${m.wape_reference_previous_folds ?? "—"}%</span></div>
+        <div class="comp"><span>WAPE — MA baseline</span><div></div><span class="num">${m.wape_baseline ?? "—"}%</span></div>
+        <div class="comp"><span>drift status</span><div></div><span class="num">${esc((mh.drift || {}).status || "—")}</span></div>
+        <div class="comp"><span>PI coverage (target 80%)</span><div class="cbar"><i style="width:${Math.round((cov.observed_coverage ?? 0) * 100)}%"></i></div><span class="num">${cov.observed_coverage != null ? pct(cov.observed_coverage, 0) : "—"}</span></div>
+      </div>
+      <p class="narrative" style="margin-top:10px">${esc(mh.recommendation || "")}</p>`;
+  } else {
+    $("#mh-card").innerHTML = "<p class='hint'>model health not generated yet — run scripts/train.py</p>";
+  }
+
+  // ---- data health
+  if (dq) {
+    const s = dq.summary || {};
+    const st = dq.statistics || {};
+    $("#dh-card").innerHTML = `
+      <div class="row-between"><div class="kpi"><div class="label">data quality</div>
+        <div class="value ${dq.status === "PASS" ? "ok" : dq.status === "FAIL" ? "bad" : "warn"}">${esc(dq.status)}</div></div>
+        ${statusPill(dq.status)}</div>
+      <div class="components" style="margin-top:10px">
+        <div class="comp"><span>checks run</span><div></div><span class="num">${s.checks ?? 0}</span></div>
+        <div class="comp dec"><span>errors (pipeline stops)</span><div></div><span class="num">${s.errors ?? 0}</span></div>
+        <div class="comp"><span>warnings (recorded)</span><div></div><span class="num">${s.warnings ?? 0}</span></div>
+        <div class="comp"><span>dataset version</span><div></div><span class="num">${esc(dq.dataset_version || "—")}</span></div>
+        <div class="comp"><span>rows (sales / inv / POs)</span><div></div><span class="num">${fmt(st.rows?.sales ?? 0)} / ${fmt(st.rows?.inventory ?? 0)} / ${fmt(st.rows?.purchase_orders ?? 0)}</span></div>
+        <div class="comp"><span>date range</span><div></div><span class="num">${esc(st.date_min || "?")} → ${esc(st.date_max || "?")}</span></div>
+      </div>
+      <p class="hint" style="margin-top:10px">${esc(dq.dataset_manifest?.provenance_statement || "synthetic dataset — generated, reproducible, not real production data")}</p>`;
+  } else {
+    $("#dh-card").innerHTML = "<p class='hint'>data-quality report not generated yet — run scripts/train.py</p>";
+  }
+
+  // ---- experiments
+  if (exp) {
+    const cfg = exp.evaluation || {};
+    $("#exp-cfg").textContent =
+      `${cfg.type || "walk-forward"} · horizon ${cfg.horizon_days ?? "?"}d × ${cfg.n_folds ?? "?"} folds · min train ${cfg.min_train_days ?? "?"}d · selection: ${cfg.selection_metric || "composite"} · dataset ${exp.narrative?.provenance?.dataset_version || ""}`;
+    $("#table-experiments").innerHTML = `
+      <thead><tr><th>Model</th><th>SKUs</th><th>Mean WAPE</th><th>Worst SKU</th><th>Mean σ(WAPE)</th><th>Mean MAE</th><th>Mean bias</th><th>Unstable SKUs</th></tr></thead>
+      <tbody>${(exp.portfolio || []).map((r, i) => `
+        <tr class="${i === 0 ? "best" : ""}"><td>${esc(r.model)}</td>
+        <td class="num">${r.skus}</td><td class="num">${r.mean_WAPE}%</td>
+        <td class="num">${r.worst_sku_WAPE}%</td><td class="num">${r.mean_WAPE_std}</td>
+        <td class="num">${r.mean_MAE}</td><td class="num">${r.mean_bias}</td>
+        <td class="num">${r.unstable_skus}</td></tr>`).join("")}</tbody>`;
+  }
+
+  // ---- business impact
+  if (bk) {
+    const cls = { observed: "pill-ok", estimated: "pill-low", simulated: "pill-over" };
+    const pick = ["inventory_carrying_value", "in_stock_rate_trailing_90d", "stockout_days_trailing_90d",
+      "supplier_on_time_delivery", "inventory_days_of_cover", "excess_inventory_value",
+      "estimated_stockout_units_avoided", "procurement_savings_opportunity"];
+    const byKey = Object.fromEntries((bk.kpis || []).map((k) => [k.key, k]));
+    $("#bkpi-grid").innerHTML = pick.filter((k) => byKey[k]).map((k) => {
+      const m = byKey[k];
+      const v = typeof m.value === "number" ? (k.includes("rate") || k.includes("delivery") ? pct(m.value, 1) : "$" + fmt(m.value)) : String(m.value ?? "—");
+      return `<div class="kpi"><div class="label">${esc(m.key.replace(/_/g, " "))}</div>
+        <div class="value">${esc(v)}</div>
+        <div class="sub"><span class="pill ${cls[m.basis]}">${m.basis}</span></div></div>`;
+    }).join("");
+
+    $("#table-bkpi").innerHTML = `
+      <thead><tr><th>Metric</th><th>Value</th><th>Basis</th><th>Definition</th></tr></thead>
+      <tbody>${(bk.kpis || []).map((m) => `
+        <tr><td>${esc(m.key.replace(/_/g, " "))}</td>
+        <td class="num">${typeof m.value === "number" ? fmt(m.value, 2) : esc(m.value ?? "—")}</td>
+        <td><span class="pill ${cls[m.basis]}">${m.basis}</span></td>
+        <td class="def">${esc(m.definition || "")}</td></tr>`).join("")}</tbody>`;
+  }
+}
+
 /* ================= copilot ================= */
 function addBubble(cls, text, sources) {
   const div = document.createElement("div");
@@ -362,7 +471,7 @@ $$(".chat-suggest button").forEach((b) => b.addEventListener("click", () => askQ
   const loaded = new Set(["overview"]);
   const fns = {
     forecast: loadForecast, inventory: loadInventory, suppliers: loadSuppliers,
-    risk: loadRisk, recommendations: loadRecs,
+    risk: loadRisk, recommendations: loadRecs, mlops: loadMlops,
   };
   $$(".nav-btn").forEach((b) => b.addEventListener("click", () => {
     const t = b.dataset.tab;
