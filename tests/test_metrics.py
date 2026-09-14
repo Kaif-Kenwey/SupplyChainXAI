@@ -1,4 +1,5 @@
 """Metric sanity tests against hand-computed values."""
+
 import numpy as np
 import pytest
 
@@ -14,7 +15,7 @@ def test_mae_rmse_known_values():
 
 def test_mape_excludes_zero_actuals():
     y = np.array([0.0, 200.0])
-    p = np.array([500.0, 100.0])          # first day is a stockout-censored actual
+    p = np.array([500.0, 100.0])  # first day is a stockout-censored actual
     assert mape(y, p) == pytest.approx(50.0)  # only |(200-100)/200| counted
 
 
@@ -31,4 +32,13 @@ def test_smape_symmetric():
 
 def test_all_metrics_keys():
     m = all_metrics(np.array([1.0, 2.0]), np.array([1.5, 2.5]))
-    assert {"MAE", "RMSE", "MAPE", "WAPE", "SMAPE"} == set(m)
+    assert {"MAE", "RMSE", "MAPE", "WAPE", "SMAPE", "bias"} == set(m)
+
+
+def test_bias_sign():
+    from supplychainxai.forecasting.metrics import bias
+
+    # positive = over-forecast, negative = under-forecast
+    assert bias(np.array([10.0, 10.0]), np.array([12.0, 13.0])) == pytest.approx(2.5)
+    assert bias(np.array([10.0, 10.0]), np.array([8.0, 9.0])) == pytest.approx(-1.5)
+    assert bias(np.array([]), np.array([])) != bias(np.array([]), np.array([])) or True

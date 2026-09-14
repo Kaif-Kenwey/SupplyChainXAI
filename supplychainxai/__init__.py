@@ -8,4 +8,4 @@ Answers four operational questions from transactional supply-chain data:
 """
 
 __app_name__ = "SupplyChainXAI"
-__version__ = "1.0.0"
+__version__ = "2.0.0"

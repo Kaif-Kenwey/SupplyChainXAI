@@ -1,0 +1,145 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: lint + format check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements-dev.txt
+      - run: ruff check supplychainxai/ scripts/ tests/
+      - run: ruff format --check supplychainxai/ scripts/ tests/
+
+  tests:
+    name: unit + integration tests (SQLite)
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt -r requirements-dev.txt
+      - name: Run test suite (no API key required, no external services)
+        env:
+          SCX_ENVIRONMENT: ci
+        run: pytest tests/ -q
+
+  postgres:
+    name: integration tests (PostgreSQL)
+    runs-on: ubuntu-latest
+    needs: lint
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: scx_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt -r requirements-dev.txt
+      - name: Store round-trip on PostgreSQL
+        env:
+          TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/scx_test
+        run: pytest tests/integration/test_postgres.py -q
+
+  pipeline:
+    name: end-to-end pipeline validation
+    runs-on: ubuntu-latest
+    needs: tests
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Regenerate dataset + run the pipeline (reduced eval profile)
+        env:
+          SCX_EVAL__FOLDS: "2"
+          SCX_ENVIRONMENT: ci
+        run: |
+          python scripts/generate_data.py
+          python scripts/train.py
+      - name: Verify artifacts + boot the API + hit health/readiness
+        run: |
+          test -s artifacts/forecasts.csv
+          test -s artifacts/risk_alerts.json
+          test -s artifacts/recommendations.json
+          test -s artifacts/explanations.json
+          test -s artifacts/data_quality_report.json
+          test -s artifacts/monitoring/model_health.json
+          test -s artifacts/business_kpis.json
+          test -s artifacts/registry/model_registry.json
+          test -s data/processed/metadata/dataset_manifest.json
+          nohup uvicorn supplychainxai.api.app:app --port 8000 &
+          for i in $(seq 1 30); do curl -fsS http://localhost:8000/health && break || sleep 1; done
+          curl -fsS http://localhost:8000/ready | tee /dev/stderr | grep -q '"status": "ready"'
+          curl -fsS http://localhost:8000/api/model-health | grep -q '"status"'
+          curl -fsS http://localhost:8000/api/business-kpis | grep -q '"kpis"'
+          curl -fsS "http://localhost:8000/api/recommendations" > /dev/null
+          curl -fsS "http://localhost:8000/api/forecast/P104" > /dev/null
+
+  docker:
+    name: docker build + smoke test
+    runs-on: ubuntu-latest
+    needs: tests
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t supplychainxai:ci .
+      - name: Container starts, /health + /ready respond
+        run: |
+          docker run -d --name scx -p 8000:8000 supplychainxai:ci
+          for i in $(seq 1 40); do
+            curl -fsS http://localhost:8000/health && break || sleep 2
+          done
+          curl -fsS http://localhost:8000/health | grep -q '"status": "ok"'
+          curl -fsS http://localhost:8000/ready | grep -q '"status": "ready"'
+          curl -fsS http://localhost:8000/api/kpis > /dev/null
+          docker rm -f scx > /dev/null
+
+  security:
+    name: dependency audit + secret scan
+    runs-on: ubuntu-latest
+    needs: tests
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install pip-audit
+      - name: pip-audit (advisory report; may fail on transitive findings)
+        run: pip-audit -r requirements.txt || true
+      - name: secret scan (token patterns must not be committed)
+        run: |
+          ! grep -rInE "ghp_[A-Za-z0-9]{20,}|github_pat_|sk-[A-Za-z0-9]{20,}" \
+            --exclude-dir=.git . | grep -v ".env.example"

@@ -7,16 +7,28 @@ Builds one supervised row per (sku, date) with:
   commercial  : promo flag, selling price
   operational : stockout flag (sales censored when on-hand hit zero)
 """
+
 from __future__ import annotations
 
 import numpy as np
 import pandas as pd
 
 FEATURE_COLUMNS = [
-    "dow", "month", "weekofyear", "trend_idx",
-    "lag_1", "lag_7", "lag_14", "lag_28",
-    "roll_mean_7", "roll_std_7", "roll_mean_28", "roll_std_28",
-    "promo_flag", "unit_price", "stockout_flag",
+    "dow",
+    "month",
+    "weekofyear",
+    "trend_idx",
+    "lag_1",
+    "lag_7",
+    "lag_14",
+    "lag_28",
+    "roll_mean_7",
+    "roll_std_7",
+    "roll_mean_28",
+    "roll_std_28",
+    "promo_flag",
+    "unit_price",
+    "stockout_flag",
 ]
 
 
@@ -56,11 +68,12 @@ def model_frame(df: pd.DataFrame, sku: str) -> pd.DataFrame:
 def future_calendar(last_date: pd.Timestamp, horizon: int) -> pd.DataFrame:
     """Known-in-advance exogenous features for the forecast horizon."""
     dates = pd.date_range(last_date + pd.Timedelta(days=1), periods=horizon, freq="D")
-    n0 = last_date.value // 86_400_000_000_000  # fallback trend continuation
-    return pd.DataFrame({
-        "date": dates,
-        "dow": dates.dayofweek.astype("float64"),
-        "month": dates.month.astype("float64"),
-        "weekofyear": dates.isocalendar().week.astype("float64").to_numpy(),
-        "trend_idx": np.linspace(1.0, 1.0 + horizon / 1_000.0, horizon),
-    })
+    return pd.DataFrame(
+        {
+            "date": dates,
+            "dow": dates.dayofweek.astype("float64"),
+            "month": dates.month.astype("float64"),
+            "weekofyear": dates.isocalendar().week.astype("float64").to_numpy(),
+            "trend_idx": np.linspace(1.0, 1.0 + horizon / 1_000.0, horizon),
+        }
+    )

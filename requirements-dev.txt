@@ -1,0 +1,4 @@
+# Development / CI tooling (not needed to run the application)
+ruff>=0.6
+pytest>=8.0
+httpx>=0.27

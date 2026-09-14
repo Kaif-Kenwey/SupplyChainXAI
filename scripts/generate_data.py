@@ -21,6 +21,7 @@ validation stages of the pipeline have genuine work to do.
 Usage:
     python scripts/generate_data.py            # writes 6 CSVs into data/raw/
 """
+
 from __future__ import annotations
 
 import sys
@@ -32,7 +33,7 @@ import pandas as pd
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from supplychainxai import config  # noqa: E402
+from supplychainxai import config
 
 RNG = np.random.default_rng(42)
 
@@ -74,15 +75,19 @@ SUPPLY_TERMS = {
     "P106": [("S4", 1.00, 11, 2.5, True), ("S1", 0.96, 8, 2.2, False)],
     "P107": [("S4", 1.00, 15, 3.5, True), ("S1", 1.06, 10, 2.5, False)],
     "P108": [("S6", 1.00, 18, 4.0, True), ("S1", 1.14, 12, 3.0, False)],
-    "P109": [("S2", 0.90, 16, 4.5, True), ("S1", 1.08, 9, 2.0, False), ("S6", 1.20, 13, 3.0, False)],
+    "P109": [
+        ("S2", 0.90, 16, 4.5, True),
+        ("S1", 1.08, 9, 2.0, False),
+        ("S6", 1.20, 13, 3.0, False),
+    ],
     "P110": [("S2", 0.92, 18, 5.0, True), ("S6", 1.15, 14, 3.2, False)],
     "P111": [("S2", 0.94, 15, 4.0, True), ("S1", 1.05, 8, 2.0, False)],
     "P112": [("S6", 1.00, 16, 3.5, True), ("S2", 0.88, 20, 5.5, False)],
 }
 
-PRICE_ANOMALY = ("S4", "P104")   # +15% unit price in the final 60 days
-LEAD_DRIFT = ("S4", "P104", 0.50, 90)   # +50% lead-time drift, final 90 days
-DEMAND_SPIKE = ("P104", 0.50, 60)       # +50% demand ramp, final 60 days
+PRICE_ANOMALY = ("S4", "P104")  # +15% unit price in the final 60 days
+LEAD_DRIFT = ("S4", "P104", 0.50, 90)  # +50% lead-time drift, final 90 days
+DEMAND_SPIKE = ("P104", 0.50, 60)  # +50% demand ramp, final 60 days
 
 
 # --------------------------------------------------------------------------
@@ -91,10 +96,22 @@ DEMAND_SPIKE = ("P104", 0.50, 60)       # +50% demand ramp, final 60 days
 def yearly_seasonality(dates: pd.DatetimeIndex, category: str) -> np.ndarray:
     """Category-specific annual cycle: manufacturing push in Q4, summer dip."""
     doy = dates.dayofyear.to_numpy()
-    phase = {"Fasteners": 0.0, "Sealing": 0.8, "Bearings": 1.3,
-             "Power Transmission": 1.6, "Motors": 2.0, "Electronics": 2.6}[category]
-    amp = {"Fasteners": 0.05, "Sealing": 0.10, "Bearings": 0.14,
-           "Power Transmission": 0.12, "Motors": 0.16, "Electronics": 0.20}[category]
+    phase = {
+        "Fasteners": 0.0,
+        "Sealing": 0.8,
+        "Bearings": 1.3,
+        "Power Transmission": 1.6,
+        "Motors": 2.0,
+        "Electronics": 2.6,
+    }[category]
+    amp = {
+        "Fasteners": 0.05,
+        "Sealing": 0.10,
+        "Bearings": 0.14,
+        "Power Transmission": 0.12,
+        "Motors": 0.16,
+        "Electronics": 0.20,
+    }[category]
     return 1.0 + amp * np.sin(2 * np.pi * (doy - 15) / 365.25 + phase)
 
 
@@ -127,8 +144,9 @@ def simulate_demand(dates, sku, base, trend, category) -> pd.DataFrame:
 
     demand = base * trend_f * seas * dow * promo_mult * noise * spike
     demand = np.clip(np.round(demand), 0, None).astype(int)
-    return pd.DataFrame({"date": dates, "sku": sku, "demand_true": demand,
-                         "promo_flag": promo.astype(int)})
+    return pd.DataFrame(
+        {"date": dates, "sku": sku, "demand_true": demand, "promo_flag": promo.astype(int)}
+    )
 
 
 # --------------------------------------------------------------------------
@@ -137,11 +155,10 @@ def simulate_demand(dates, sku, base, trend, category) -> pd.DataFrame:
 def simulate_sku(df: pd.DataFrame, terms, start_inv: int) -> tuple[pd.DataFrame, list[dict]]:
     rows, pos = [], []
     on_hand = float(start_inv)
-    open_pos: list[dict] = []       # {qty, arrive, supplier, expected, order_date, price}
+    open_pos: list[dict] = []  # {qty, arrive, supplier, expected, order_date, price}
     po_counter = 0
     bulk_done = False
-    base_daily = max(df["demand_true"].mean(), 1.0)
-    lead_primary = [t for t in terms if t[4]][0]
+    lead_primary = next(t for t in terms if t[4])
 
     for i, rec in df.iterrows():
         # ---- arrivals
@@ -156,7 +173,7 @@ def simulate_sku(df: pd.DataFrame, terms, start_inv: int) -> tuple[pd.DataFrame,
 
         # ---- reorder decision (adaptive: tracks recent demand, like a real buyer)
         ip = on_hand + sum(po["quantity"] for po in open_pos)
-        recent = df["demand_true"].iloc[max(0, i - 13): i + 1].mean()
+        recent = df["demand_true"].iloc[max(0, i - 13) : i + 1].mean()
         rop = recent * lead_primary[2] * 1.25
         if ip < rop and not open_pos:
             # slow movers occasionally get bulk-ordered (P106/P107 stories):
@@ -176,7 +193,7 @@ def simulate_sku(df: pd.DataFrame, terms, start_inv: int) -> tuple[pd.DataFrame,
                 pidx *= 1.15
             actual_lead = RNG.normal(lead * 0.92, lstd)
             if RNG.random() < 0.05:
-                actual_lead += lstd * 2.5                       # occasional bad delay
+                actual_lead += lstd * 2.5  # occasional bad delay
             if (sup, rec["sku"]) == LEAD_DRIFT[:2] and rec["date"] >= pd.Timestamp("2025-10-02"):
                 actual_lead *= 1.0 + LEAD_DRIFT[2] * min(1.0, 0.4 + 0.6 * RNG.random())
             actual_lead = max(2.0, actual_lead)
@@ -184,16 +201,41 @@ def simulate_sku(df: pd.DataFrame, terms, start_inv: int) -> tuple[pd.DataFrame,
             arrive = rec["date"] + pd.Timedelta(days=float(round(actual_lead)))
             expected = rec["date"] + pd.Timedelta(days=int(lead))
             unit_price = round(rec["unit_cost"] * pidx * float(RNG.normal(1.0, 0.02)), 2)
-            po = {"po_id": f"PO-{rec['sku']}-{po_counter:04d}", "sku": rec["sku"], "supplier_id": sup,
-                  "order_date": rec["date"], "expected_date": expected, "arrive": arrive,
-                  "quantity": qty, "unit_price": unit_price}
+            po = {
+                "po_id": f"PO-{rec['sku']}-{po_counter:04d}",
+                "sku": rec["sku"],
+                "supplier_id": sup,
+                "order_date": rec["date"],
+                "expected_date": expected,
+                "arrive": arrive,
+                "quantity": qty,
+                "unit_price": unit_price,
+            }
             open_pos.append(po)
-            pos.append({k: po[k] for k in ("po_id", "sku", "supplier_id", "order_date",
-                                           "expected_date", "arrive", "quantity", "unit_price")})
+            pos.append(
+                {
+                    k: po[k]
+                    for k in (
+                        "po_id",
+                        "sku",
+                        "supplier_id",
+                        "order_date",
+                        "expected_date",
+                        "arrive",
+                        "quantity",
+                        "unit_price",
+                    )
+                }
+            )
 
-        rows.append({"date": rec["date"], "sku": rec["sku"],
-                     "on_hand": int(on_hand),
-                     "on_order": int(sum(po["quantity"] for po in open_pos))})
+        rows.append(
+            {
+                "date": rec["date"],
+                "sku": rec["sku"],
+                "on_hand": int(on_hand),
+                "on_order": int(sum(po["quantity"] for po in open_pos)),
+            }
+        )
     return pd.DataFrame(rows), pos
 
 
@@ -205,10 +247,10 @@ def corrupt(sales: pd.DataFrame, pos_df: pd.DataFrame) -> tuple[pd.DataFrame, pd
     idx = RNG.choice(n, size=int(n * 0.003), replace=False)
 
     sales.loc[idx[: len(idx) // 4], "units_sold"] = -sales.loc[idx[: len(idx) // 4], "units_sold"]
-    sales.loc[idx[len(idx) // 4: len(idx) // 2], "units_sold"] = np.nan
-    lower = sales.loc[idx[len(idx) // 2: (3 * len(idx)) // 4], "sku"].index
+    sales.loc[idx[len(idx) // 4 : len(idx) // 2], "units_sold"] = np.nan
+    lower = sales.loc[idx[len(idx) // 2 : (3 * len(idx)) // 4], "sku"].index
     sales.loc[lower, "sku"] = sales.loc[lower, "sku"].str.lower() + " "
-    dup = sales.loc[idx[(3 * len(idx)) // 4:]].copy()
+    dup = sales.loc[idx[(3 * len(idx)) // 4 :]].copy()
     sales = pd.concat([sales, dup], ignore_index=True)
 
     swap = pos_df.sample(6, random_state=7).index
@@ -221,8 +263,18 @@ def corrupt(sales: pd.DataFrame, pos_df: pd.DataFrame) -> tuple[pd.DataFrame, pd
 # --------------------------------------------------------------------------
 def main() -> None:
     dates = pd.date_range(config.SIM_START, config.SIM_END, freq="D")
-    products = pd.DataFrame(PRODUCTS, columns=["sku", "name", "category", "unit_cost",
-                                               "base_demand", "trend_per_year", "pack_size"])
+    products = pd.DataFrame(
+        PRODUCTS,
+        columns=[
+            "sku",
+            "name",
+            "category",
+            "unit_cost",
+            "base_demand",
+            "trend_per_year",
+            "pack_size",
+        ],
+    )
     suppliers = pd.DataFrame(SUPPLIERS, columns=["supplier_id", "name", "country", "target_otd"])
 
     # ---- supply terms (product-supplier contracts)
@@ -230,12 +282,16 @@ def main() -> None:
     for sku, terms in SUPPLY_TERMS.items():
         cost = float(products.loc[products.sku == sku, "unit_cost"].iloc[0])
         for sup, pidx, lead, lstd, primary in terms:
-            term_rows.append({
-                "sku": sku, "supplier_id": sup,
-                "unit_price": round(cost * pidx, 2),
-                "quoted_lead_days": lead, "lead_time_std": lstd,
-                "is_primary": primary,
-            })
+            term_rows.append(
+                {
+                    "sku": sku,
+                    "supplier_id": sup,
+                    "unit_price": round(cost * pidx, 2),
+                    "quoted_lead_days": lead,
+                    "lead_time_std": lstd,
+                    "is_primary": primary,
+                }
+            )
     terms_df = pd.DataFrame(term_rows)
 
     # ---- daily simulation
@@ -246,23 +302,40 @@ def main() -> None:
         markup = RNG.uniform(1.28, 1.45)
         inv, pos = simulate_sku(d, SUPPLY_TERMS[p.sku], start_inv=int(p.base_demand * 25))
         sales = d.rename(columns={"demand_true": "units_sold"})
-        sales["unit_price"] = np.round(p.unit_cost * markup * (1 + 0.02 * np.sin(np.arange(len(d)) / 90)), 2)
+        sales["unit_price"] = np.round(
+            p.unit_cost * markup * (1 + 0.02 * np.sin(np.arange(len(d)) / 90)), 2
+        )
         sales_frames.append(sales)
         inv_frames.append(inv)
         po_rows.extend(pos)
 
     sales = pd.concat(sales_frames, ignore_index=True)[
-        ["date", "sku", "units_sold", "unit_price", "promo_flag"]]
+        ["date", "sku", "units_sold", "unit_price", "promo_flag"]
+    ]
     inventory = pd.concat(inv_frames, ignore_index=True)[["date", "sku", "on_hand", "on_order"]]
-    pos_df = pd.DataFrame(po_rows)[["po_id", "sku", "supplier_id", "order_date",
-                                    "expected_date", "arrive", "quantity", "unit_price"]]
-    pos_df = pos_df.sort_values("order_date").reset_index(drop=True).rename(
-        columns={"arrive": "delivered_date"})
+    pos_df = pd.DataFrame(po_rows)[
+        [
+            "po_id",
+            "sku",
+            "supplier_id",
+            "order_date",
+            "expected_date",
+            "arrive",
+            "quantity",
+            "unit_price",
+        ]
+    ]
+    pos_df = (
+        pos_df.sort_values("order_date")
+        .reset_index(drop=True)
+        .rename(columns={"arrive": "delivered_date"})
+    )
 
     # ---- PO status: anything not yet arrived in the final 30 days stays open
     last_date = sales["date"].max()
     pos_df["delivered_date"] = pos_df["delivered_date"].where(
-        pos_df["delivered_date"] <= last_date, pd.NaT)
+        pos_df["delivered_date"] <= last_date, pd.NaT
+    )
 
     # ---- inject data-quality problems
     sales, pos_df = corrupt(sales, pos_df.copy())

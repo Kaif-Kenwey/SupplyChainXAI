@@ -1,0 +1,27 @@
+# Ruff: lint + format for SupplyChainXAI.
+# The rule set is deliberately pragmatic: correctness + imports + obvious
+# modernisation; intentional broad `except Exception` blocks (optional
+# dependencies must degrade gracefully) are part of the design and not
+# flagged.
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "C4", "RUF"]
+ignore = [
+    "RUF046",  # int() casts kept explicit around numeric coercion
+    "RUF012",  # mutable class attrs: dataclass fields
+    "RUF005",  # list-concat idiom is fine
+    "B008",    # FastAPI-style function-call defaults (Query(...))
+    "B905",    # zip() over equal-length metric lists, by construction
+    "RUF001", "RUF002", "RUF003",  # typographic unicode (em-dash, sigma, x) is intended
+    "E501",    # line length handled by formatter; long literals/documents allowed
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E402", "E501"]
+"scripts/*" = ["E402", "E501"]  # sys.path bootstrap before imports
+
+[tool.ruff.format]
+quote-style = "double"
