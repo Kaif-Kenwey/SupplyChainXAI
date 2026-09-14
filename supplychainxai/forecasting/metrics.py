@@ -1,4 +1,5 @@
 """Forecast evaluation metrics."""
+
 from __future__ import annotations
 
 import numpy as np
@@ -10,7 +11,7 @@ def mae(y_true: np.ndarray, y_pred: np.ndarray) -> float:
 
 def rmse(y_true: np.ndarray, y_pred: np.ndarray) -> float:
     d = np.asarray(y_true) - np.asarray(y_pred)
-    return float(np.sqrt(np.mean(d ** 2)))
+    return float(np.sqrt(np.mean(d**2)))
 
 
 def mape(y_true: np.ndarray, y_pred: np.ndarray) -> float:
@@ -40,7 +41,20 @@ def smape(y_true: np.ndarray, y_pred: np.ndarray) -> float:
     return float(np.mean(np.abs(yt[mask] - yp[mask]) / denom[mask]) * 100)
 
 
+def bias(y_true: np.ndarray, y_pred: np.ndarray) -> float:
+    """Mean error (pred − actual) in units. Positive = systematic over-forecast."""
+    yt, yp = np.asarray(y_true, dtype=float), np.asarray(y_pred, dtype=float)
+    if len(yt) == 0:
+        return float("nan")
+    return float(np.mean(yp - yt))
+
+
 def all_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> dict[str, float]:
-    return {"MAE": mae(y_true, y_pred), "RMSE": rmse(y_true, y_pred),
-            "MAPE": mape(y_true, y_pred), "WAPE": wape(y_true, y_pred),
-            "SMAPE": smape(y_true, y_pred)}
+    return {
+        "MAE": mae(y_true, y_pred),
+        "RMSE": rmse(y_true, y_pred),
+        "MAPE": mape(y_true, y_pred),
+        "WAPE": wape(y_true, y_pred),
+        "SMAPE": smape(y_true, y_pred),
+        "bias": bias(y_true, y_pred),
+    }
