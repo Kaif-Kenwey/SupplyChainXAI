@@ -14,9 +14,10 @@ jobs:
   lint:
     name: lint + format check
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip
@@ -27,10 +28,11 @@ jobs:
   tests:
     name: unit + integration tests (SQLite)
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: lint
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip
@@ -43,6 +45,7 @@ jobs:
   postgres:
     name: integration tests (PostgreSQL)
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: lint
     services:
       postgres:
@@ -59,8 +62,8 @@ jobs:
           --health-timeout 5s
           --health-retries 10
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip
@@ -73,10 +76,11 @@ jobs:
   pipeline:
     name: end-to-end pipeline validation
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     needs: tests
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip
@@ -101,38 +105,54 @@ jobs:
           test -s data/processed/metadata/dataset_manifest.json
           nohup uvicorn supplychainxai.api.app:app --port 8000 &
           for i in $(seq 1 30); do curl -fsS http://localhost:8000/health && break || sleep 1; done
-          curl -fsS http://localhost:8000/ready | tee /dev/stderr | grep -q '"status": "ready"'
-          curl -fsS http://localhost:8000/api/model-health | grep -q '"status"'
-          curl -fsS http://localhost:8000/api/business-kpis | grep -q '"kpis"'
+          # FastAPI emits compact JSON ("k":"v") — assert on parsed bodies,
+          # never on whitespace-sensitive greps.
+          curl -fsS http://localhost:8000/ready | tee /dev/stderr | python3 -c "import json,sys; d=json.load(sys.stdin); assert d['status']=='ready', d"
+          curl -fsS http://localhost:8000/api/model-health | python3 -c "import json,sys; d=json.load(sys.stdin); assert 'status' in d, d"
+          curl -fsS http://localhost:8000/api/business-kpis | python3 -c "import json,sys; d=json.load(sys.stdin); assert 'kpis' in d, d"
           curl -fsS "http://localhost:8000/api/recommendations" > /dev/null
           curl -fsS "http://localhost:8000/api/forecast/P104" > /dev/null
 
   docker:
     name: docker build + smoke test
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     needs: tests
     steps:
-      - uses: actions/checkout@v4
-      - name: Build image
-        run: docker build -t supplychainxai:ci .
+      - uses: actions/checkout@v5
+      - uses: docker/setup-buildx-action@v3
+      - name: Build image (retries absorb registry pull flakes)
+        run: |
+          for attempt in 1 2 3; do
+            if docker buildx build --load \
+                 --cache-from type=gha --cache-to type=gha,mode=max \
+                 -t supplychainxai:ci .; then
+              exit 0
+            fi
+            echo "::warning::docker build attempt ${attempt} failed — retrying"
+            sleep 20
+          done
+          exit 1
       - name: Container starts, /health + /ready respond
         run: |
           docker run -d --name scx -p 8000:8000 supplychainxai:ci
           for i in $(seq 1 40); do
             curl -fsS http://localhost:8000/health && break || sleep 2
           done
-          curl -fsS http://localhost:8000/health | grep -q '"status": "ok"'
-          curl -fsS http://localhost:8000/ready | grep -q '"status": "ready"'
+          # FastAPI emits compact JSON — parse, don't grep for spacing.
+          curl -fsS http://localhost:8000/health | python3 -c "import json,sys; d=json.load(sys.stdin); assert d['status']=='ok', d"
+          curl -fsS http://localhost:8000/ready | python3 -c "import json,sys; d=json.load(sys.stdin); assert d['status']=='ready', d"
           curl -fsS http://localhost:8000/api/kpis > /dev/null
           docker rm -f scx > /dev/null
 
   security:
     name: dependency audit + secret scan
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     needs: tests
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip
@@ -140,6 +160,9 @@ jobs:
       - name: pip-audit (advisory report; may fail on transitive findings)
         run: pip-audit -r requirements.txt || true
       - name: secret scan (token patterns must not be committed)
+        # `[p]`/`[t]`/`[k]` character-class trick keeps this grep from
+        # matching its own pattern text below; .github is excluded because
+        # this workflow legitimately documents the patterns.
         run: |
-          ! grep -rInE "ghp_[A-Za-z0-9]{20,}|github_pat_|sk-[A-Za-z0-9]{20,}" \
-            --exclude-dir=.git . | grep -v ".env.example"
+          ! grep -rInE "gh[p]_[A-Za-z0-9]{20,}|github_pa[t]_|s[k]-[A-Za-z0-9]{20,}" \
+            --exclude-dir=.git --exclude-dir=.github . | grep -v ".env.example"

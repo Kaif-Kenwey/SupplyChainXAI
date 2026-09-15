@@ -130,3 +130,11 @@ def test_to_pg_sql_translation():
     out = to_pg_sql("SELECT AVG(julianday(a.delivered_date) - julianday(a.order_date)) FROM t a")
     assert "julianday" not in out
     assert "EXTRACT(EPOCH FROM (a.delivered_date::timestamp)) / 86400" in out
+
+
+def test_to_pg_sql_placeholders():
+    from supplychainxai.data.store import to_pg_sql
+
+    out = to_pg_sql("SELECT * FROM t WHERE sku = ? AND status = ?")
+    assert "?" not in out
+    assert out == "SELECT * FROM t WHERE sku = %s AND status = %s"

@@ -230,16 +230,20 @@ def _build_db_pg(frames: dict[str, pd.DataFrame]) -> str:
 
 # ------------------------------------------------------------ read path
 _JULIANDAY_RE = re.compile(r"julianday\(([^)]+)\)")
+_QMARK_RE = re.compile(r"\?")
 
 
 def to_pg_sql(sql: str) -> str:
     """Translate the SQLite-isms used by consumer SQL into PostgreSQL.
 
     `julianday(x)` → `EXTRACT(EPOCH FROM x::timestamp) / 86400`, so day-level
-    differences remain day-level. Everything else used (ROUND, CASE WHEN,
-    COUNT, MAX) is portable as written.
+    differences remain day-level, and SQLite's `?` placeholders become
+    psycopg2's `%s` (positional params are unchanged). Everything else used
+    (ROUND, CASE WHEN, COUNT, MAX) is portable as written.
     """
-    return _JULIANDAY_RE.sub(r"EXTRACT(EPOCH FROM (\1::timestamp)) / 86400", sql)
+    return _QMARK_RE.sub(
+        "%s", _JULIANDAY_RE.sub(r"EXTRACT(EPOCH FROM (\1::timestamp)) / 86400", sql)
+    )
 
 
 def query(sql: str, params: tuple = (), db_path: Path | None = None) -> pd.DataFrame:
